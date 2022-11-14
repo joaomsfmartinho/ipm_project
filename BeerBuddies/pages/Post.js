@@ -7,7 +7,7 @@ import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import ModalPoup from '../components/modalPopUp';
+import ModalPoup from '../components/ModalPopup';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));

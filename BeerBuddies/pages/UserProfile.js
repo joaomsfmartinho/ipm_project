@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { Avatar, Title, Drawer } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ModalPoup from '../components/modalPopUp'
+import ModalPoup from '../components/ModalPopup'
 
 const UserProfile = ({ navigation }) => {
 

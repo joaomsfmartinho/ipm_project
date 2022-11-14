@@ -6,7 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import ModalPopup from '../components/modalPopUp';
+import ModalPopup from '../components/ModalPopup';
 
 const SignInScreen = ({ navigation }) => {
 

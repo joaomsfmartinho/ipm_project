@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../components/AuthorizationContext';
 
 const Login = ({ navigation }) => {
     const [token, setToken] = React.useState();

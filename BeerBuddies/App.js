@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { LogBox } from 'react-native';
+import { View, ActivityIndicator, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './routes/RootStack';
 import UserDrawer from './routes/UserDrawer';
-import { AuthContext } from './components/ContextAuthorization';
+import { AuthContext } from './components/AuthorizationContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserProfile from './pages/UserProfile'
@@ -97,7 +98,11 @@ export default function App(props) {
           <RootStack />
 
         }
+
       </NavigationContainer>
+
+
+
     </AuthContext.Provider>
 
   );

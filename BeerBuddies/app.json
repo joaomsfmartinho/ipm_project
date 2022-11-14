@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "BeerBuddies",
+    "name": "Beer Buddies",
     "slug": "BeerBuddies",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -18,12 +18,20 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesIcloudStorage": true,
+      "bundleIdentifier": "ipm.beerbuddies"
     },
     "android": {
+      "package": "ipm.beerbuddies",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBtGDM-jVAUHpVd_kl0-Juqoak6KckbhgE"
+        }
       }
     },
     "web": {

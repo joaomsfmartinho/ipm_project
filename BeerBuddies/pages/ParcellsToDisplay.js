@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, TextInput } from 'react-native';
-import ScrollableModalPopup from '../components/scrollableModalPopup';
+import ScrollableModalPopup from '../components/ScrollableModalPopup';
 
 
 class ParcellsToDisplay extends React.Component {

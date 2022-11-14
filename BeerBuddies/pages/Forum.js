@@ -8,7 +8,7 @@ import {
     Title,
     Searchbar
 } from 'react-native-paper';
-import ModalPoup from '../components/modalPopUp';
+import ModalPoup from '../components/ModalPopup';
 
 const Forum = ({ navigation }) => {
     const [posts, setPosts] = React.useState([]);

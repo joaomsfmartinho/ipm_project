@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, Button, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import { Avatar, Title, Drawer } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../components/AuthorizationContext';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import ModalPoup from '../components/modalPopUp'
+import ModalPoup from '../components/ModalPopup'
 import axios from 'axios';
 
 function UserDrawer(props) {

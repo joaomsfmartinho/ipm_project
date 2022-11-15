@@ -1119,6 +1119,11 @@
   "resolved" "https://registry.npmjs.org/@eva-design/processor/-/processor-2.1.1.tgz"
   "version" "2.1.1"
 
+"@expo-google-fonts/balsamiq-sans@^0.2.2":
+  "integrity" "sha512-JZep2L6FFhu2bUtZdKNkNP4OHMbPClE0nG6ag+3q8rivJizHKbkgSUkzJBsDCbgsGnLA8nwbeBAoHbXQXL603A=="
+  "resolved" "https://registry.npmjs.org/@expo-google-fonts/balsamiq-sans/-/balsamiq-sans-0.2.2.tgz"
+  "version" "0.2.2"
+
 "@expo/bunyan@^4.0.0", "@expo/bunyan@4.0.0":
   "integrity" "sha512-Ydf4LidRB/EBI+YrB+cVLqIseiRfjUI/AeHBgjGMtq3GroraDu81OV7zqophRgupngoL3iS3JUMDMnxO7g39qA=="
   "resolved" "https://registry.npmjs.org/@expo/bunyan/-/bunyan-4.0.0.tgz"

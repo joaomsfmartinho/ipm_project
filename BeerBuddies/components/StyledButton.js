@@ -31,15 +31,15 @@ const styles = StyleSheet.create({
   },
 
   button: {
-      height: 40,
-      borderRadius: 20,
+      height: 55,
+      borderRadius: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#14555d'
+      backgroundColor: '#ffd086'
   },
 
   text: {
-      fontSize: 12,
+      fontSize: 15,
       fontWeight: '500',
       textTransform: 'uppercase',
   },

@@ -1,26 +1,15 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ImageBackground, Text } from 'react-native';
+import { StyleSheet, View, ImageBackground, Text, TouchableHighlight } from 'react-native';
 import StyledButton from '../components/StyledButton';
 import { stopLocationUpdatesAsync } from 'expo-location';
-import {
-  useFonts,
-  BalsamiqSans_400Regular,
-  BalsamiqSans_400Regular_Italic,
-  BalsamiqSans_700Bold,
-  BalsamiqSans_700Bold_Italic,
-} from '@expo-google-fonts/balsamiq-sans'
 import { Button } from 'react-native-paper';
+import {useFonts} from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { Text as TextKitten, Divider } from '@ui-kitten/components';
 
 
 export default function Home( { navigation } ) {
-
-  useFonts({
-    BalsamiqSans_400Regular,
-    BalsamiqSans_400Regular_Italic,
-    BalsamiqSans_700Bold,
-    BalsamiqSans_700Bold_Italic,
-  });
 
   return (
     <View>
@@ -31,11 +20,12 @@ export default function Home( { navigation } ) {
 
       </ImageBackground>
         <View style={styles.titles}>
-          <Text style={styles.title}>Beer Buddies</Text>
+          <TextKitten style={styles.title} category='h5'>Beer Buddies</TextKitten>
         </View>
 
         <View style={styles.buttonsContainer}>
-          <Button
+          <TouchableHighlight onPress={() => { navigation.push('Register') }}
+            underlayColor="#eca921"
             style={{
               marginLeft: '3%',
               marginTop: '5%',
@@ -45,40 +35,42 @@ export default function Home( { navigation } ) {
               borderColor: 'black',
               borderWidth: 0.8,
               justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#ffd086'
-
+              backgroundColor: '#ffd086',
+              
             }}
-            type="register"
-            onPress={() => { navigation.push('Register') }}>
-            <Text style={styles.textButton}>LOG IN</Text>
-          </Button>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={{flex: 1, height: 1, backgroundColor: 'gray', marginTop:'6%'}} />
-              <View>
-                  <Text style={{width: 50, textAlign: 'center', color: 'gray', marginTop:'22%'}}> OR </Text>
-              </View>
-              <View style={{flex: 1, height: 1, backgroundColor: 'gray', marginTop:'6%'}} />
-          </View>
-          <Button
+          >
+            <View style={styles.button}>
+              <TextKitten style={styles.textButton} category="label">LOG IN</TextKitten>
+            </View>
+          </TouchableHighlight>
+          <Divider style={{
+            alignSelf: 'center',
+            width: "100%",
+            marginTop: "5%",
+            height: "0.2%",
+            backgroundColor: "#BEBEBE"
+          }}/>
+          <TouchableHighlight
+            underlayColor="#eca921"
             style={{
               marginLeft: '3%',
               marginTop: '4.5%',
-              marginBottom: '1%',
+              marginBottom: '0.5%',
               width: '95%',
               height: '8.5%',
               borderColor: 'black',
               borderWidth: 0.8,
               borderRadius: 1,
               justifyContent: 'center',
-              alignItems: 'center',
               backgroundColor: '#ffd086'
             }}
           
             onPress={() => { navigation.push('Login') }}
           >
-             <Text style={styles.textButton}>REGISTER</Text>
-          </Button>
+            <View style={styles.button}>
+             <TextKitten style={styles.textButton} category="label">REGISTER</TextKitten>
+            </View>
+          </TouchableHighlight>
         </View>
 
       </View>
@@ -96,36 +88,27 @@ const styles = StyleSheet.create({
   },
 
   titles: {
-    marginTop: '65%',
+    marginTop: '68%',
     width: '100%',
     alignItems: 'center',
   },
 
   title: {
-    fontSize: 35,
+    fontSize: 30,
     color: '#eca921',
-    fontWeight: 'normal',
     textShadowColor: '#000', 
     textShadowOffset: {
       width: 2,
       height: 2
     },
     textShadowRadius: 2,
-    textDecorationStyle: 'solid',
-    fontFamily: 'BalsamiqSans_700Bold',
   },
 
   textButton: {
     fontSize: 15,
-    fontWeight: '700',
     color: '#000',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-
-  subtitle: {
-    fontSize: 16,
-    color: '#5c5e62',
+    width: "100%",
+    textAlign: 'center'
   },
 
   image: {
@@ -138,9 +121,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 
+  button: {
+    alignItems: "center",
+    padding: 10
+  },
+
   buttonsContainer: {
     position: 'absolute',
-    marginTop: '90%',
+    marginTop: '96%',
     width: '100%',
     height: '100%',
   },

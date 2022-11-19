@@ -13,6 +13,8 @@ import About from './pages/About'
 import Map from './pages/Map';
 import PostsStack from './routes/PostsStack';
 import MyParcells from './pages/MyParcells';
+import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
 
 
 const Drawer = createDrawerNavigator();
@@ -79,6 +81,7 @@ export default function App(props) {
   }), []);
 
   return (
+    <ApplicationProvider {...eva} theme={eva.light}>
     <AuthContext.Provider value={authContext}>
 
       <NavigationContainer>
@@ -104,6 +107,7 @@ export default function App(props) {
 
 
     </AuthContext.Provider>
+    </ApplicationProvider>
 
   );
 }

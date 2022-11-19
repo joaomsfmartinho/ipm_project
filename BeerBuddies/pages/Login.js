@@ -8,6 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { AuthContext } from '../components/AuthorizationContext';
 
+const BackIcon = (props) => (
+    <Icon {...props} name='arrow-back'/>
+  );
+
 const Login = ({ navigation }) => {
     const [token, setToken] = React.useState();
     const { signIn } = React.useContext(AuthContext);

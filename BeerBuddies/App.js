@@ -1,22 +1,32 @@
 import React, { useEffect } from "react";
-import { View, ActivityIndicator, LogBox, ToastAndroid } from "react-native";
+import { View, ActivityIndicator, LogBox, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import RootStack from "./routes/RootStack";
 import UserDrawer from "./routes/UserDrawer";
 import { AuthContext } from "./components/AuthorizationContext";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./pages/UserProfile";
-import UserPage from "./pages/UserPage";
+import Notifications from "./pages/Notifications";
 import About from "./pages/About";
 import Map from "./pages/Map";
 import PostsStack from "./routes/PostsStack";
 import MyParcells from "./pages/MyParcells";
-import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  Layout,
+  styled,
+  Text,
+} from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App(props) {
   // var intervalId = window.setInterval(function(){
@@ -84,32 +94,66 @@ export default function App(props) {
     []
   );
 
+  const getBarItem = (route, focused, color, size) => {
+    size = size * 1.4;
+    let iconName;
+    if (route.name === "Map") {
+      iconName = focused ? "map" : "map-outline";
+      return <Ionicons name={iconName} size={size} color={color} />;
+    } else if (route.name === "Notifications") {
+      iconName = focused ? "notifications-sharp" : "notifications-outline";
+      return <Ionicons name={iconName} size={size} color={color} />;
+    } else if (route.name === "Profile") {
+      iconName = focused ? "account-circle" : "account-circle-outline";
+      return (
+        <MaterialCommunityIcons name={iconName} size={size} color={color} />
+      );
+    } else if (route.name == "Search") {
+      iconName = "search";
+      return <FontAwesome name={iconName} size={size} color={color} />;
+    }
+  };
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           {loginState.token != null ? (
-            <Drawer.Navigator
+            <Tab.Navigator
               screenOptions={({ route }) => ({
-                headerShown: route.name === "ForumStack" ? false : true,
+                tabBarIcon: ({ focused, color, size }) =>
+                  getBarItem(route, focused, color, size),
+                tabBarActiveTintColor: "#ffd086",
+                tabBarInactiveTintColor: "gray",
+                tabBarStyle: styles.mainTab,
               })}
-              drawerContent={(props) => <UserDrawer {...props} />}
             >
-              <Drawer.Screen name="Saving Fields" component={UserPage} />
-              <Drawer.Screen name="Perfil" component={UserProfile} />
-              <Drawer.Screen name="Forum" component={PostsStack} />
-              <Drawer.Screen
-                name="MyParcells"
-                component={MyParcells}
-                options={{ title: "As Minhas Parcelas" }}
+              <Tab.Screen
+                name="Notifications"
+                component={Notifications}
+                // TODO: Add Correct number according to db
+                options={{
+                  tabBarShowLabel: false,
+                  tabBarBadge: 0,
+                  tabBarBadgeStyle: styles.badge,
+                }}
               />
-              <Drawer.Screen
+              <Tab.Screen
                 name="Map"
                 component={Map}
-                options={{ title: "Parcelas" }}
+                options={{ tabBarShowLabel: false }}
               />
-              <Drawer.Screen name="Sobre" component={About} />
-            </Drawer.Navigator>
+              <Tab.Screen
+                name="Search"
+                component={MyParcells}
+                options={{ tabBarShowLabel: false }}
+              />
+              <Tab.Screen
+                name="Profile"
+                component={UserProfile}
+                options={{ tabBarShowLabel: false }}
+              />
+            </Tab.Navigator>
           ) : (
             <RootStack />
           )}
@@ -118,3 +162,13 @@ export default function App(props) {
     </ApplicationProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  badge: {
+    backgroundColor: "#ffd086",
+    color: "white",
+  },
+  mainTab: {
+    flex: 0.08,
+  },
+});

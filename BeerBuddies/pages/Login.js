@@ -43,12 +43,12 @@ const Login = ({ navigation }) => {
       })
       .catch((error) => {
         if (error.code === "auth/invalid-email") {
-          console.log("That email address is invalid!");
+          alert("That email address is invalid!");
         }
         if (error.code === "auth/wrong-password") {
-          console.log("Wrong Password!");
+          alert("Wrong Password!");
         }
-        console.log(error);
+        //console.log(error);
       });
   };
 

@@ -69,14 +69,14 @@ export default function UserPage() {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#14555d' barStyle="light-content" />
+      <StatusBar backgroundColor='#fce571' barStyle="light-content" />
 
       <View style={styles.text}>
-        <Text style={styles.text_header}>Saving Fields é uma plataforma onde pode registar os seus terrenos e interagir com outros proprietários</Text>
+        <Text style={styles.text_header}>Beer Buddies is a platform which allows you to find your personal best beer places alongside new people!</Text>
       </View>
 
       <View style={styles.header}>
-        <Text style={styles.text_header}>Equipa</Text>
+        <Text style={styles.text_header}>Team</Text>
       </View>
       <View style={{ flex: 1.5, marginTop: 20 }}>
         <Carousel
@@ -120,13 +120,13 @@ export default function UserPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#14555d'
+    backgroundColor: '#fce571'
   },
   text: {
     flex: 1.2,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    backgroundColor: '#14555d',
+    backgroundColor: '#fce571',
     alignItems: 'center'
   },
   header: {
@@ -134,13 +134,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 20,
-    backgroundColor: '#14555d',
+    backgroundColor: '#fce571',
     alignItems: 'center'
   },
   text_header: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 30
+    textShadowRadius: 10,
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 0, height: 3 },
+    fontSize: 28
   },
   footer: {
     flex: 7,
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text_footer: {
-    color: '#14555d',
+    color: '#fce571',
     fontSize: 25,
   },
 });

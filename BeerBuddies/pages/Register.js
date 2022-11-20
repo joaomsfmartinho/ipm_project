@@ -10,25 +10,27 @@ import {
   StatusBar,
   Alert,
   Image,
+  ImageBackground,
   TouchableHighlight,
 } from "react-native";
-import { Button } from "react-native-paper";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Text as TextKitten, Divider } from "@ui-kitten/components";
-import {auth} from "../firebase"
-import {createUserWithEmailAndPassword} from "firebase/auth"
-import { AuthContext } from '../components/AuthorizationContext';
+import { Text as TextKitten } from "@ui-kitten/components";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { AuthContext } from "../components/AuthorizationContext";
+import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = React.useState({
     name: "",
     email: "",
     password: "",
-    date: new Date(1598051730000),
+    date: new Date(),
     check_textInputChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
@@ -37,29 +39,32 @@ const SignInScreen = ({ navigation }) => {
   const { signIn } = React.useContext(AuthContext);
   const [show, setShow] = useState(false);
   const [selectedValue, setSelectedValue] = React.useState("Male");
+  const [image, setImage] = useState(null);
 
   const handleRegistration = () => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then(response => {
-            storeData(response.user.stsTokenManager.accessToken, data.email);
-            // TODO: Store user info in DB and store Image
-            signIn(response.user.stsTokenManager.accessToken, data.email);
-        })
-        .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
-              }
-            if (error.code === 'auth/wrong-password') {
-                console.log('Wrong Password!');
-            }
-            console.log(error);
-        });
+      .then((response) => {
+        storeData(response.user.stsTokenManager.accessToken, data.email);
+        signIn(response.user.stsTokenManager.accessToken, data.email);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          alert("That email address is already in use!");
+        }
+        if (error.code === "auth/invalid-email") {
+          alert("Invalid email!");
+        }
+        if (error.code === "auth/weak-password") {
+          alert("Password needs at least 6 characters!");
+        }
+        //console.error(error);
+      });
   };
 
   const storeData = async (token, email) => {
-    await AsyncStorage.setItem('email', email);
-    await AsyncStorage.setItem('token', token);
-}
+    await AsyncStorage.setItem("email", email);
+    await AsyncStorage.setItem("token", token);
+  };
 
   const textInputChange = (val) => {
     if (val.length !== 0) {
@@ -100,6 +105,19 @@ const SignInScreen = ({ navigation }) => {
     });
   };
 
+  const handleChooseImage = async () => {
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   const updateSecureTextEntry = () => {
     setData({
       ...data,
@@ -109,12 +127,16 @@ const SignInScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#14555d" barStyle="light-content" />
+      <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
       <View style={styles.header}>
+        <ImageBackground
+          style={styles.image}
+          source={require("../assets/images/beers.png")}
+        ></ImageBackground>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <ScrollView>
-          <Text style={styles.text_footer}>Nome</Text>
+          <Text style={styles.text_footer}>Name</Text>
           <View style={styles.action}>
             <FontAwesome name="user" color="#05375a" size={20} />
             <TextInput
@@ -237,6 +259,29 @@ const SignInScreen = ({ navigation }) => {
           >
             Photo
           </Text>
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+          <TouchableOpacity
+            style={styles.choosePhoto}
+            onPress={() => {
+              handleChooseImage();
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: "#05375a",
+                },
+              ]}
+            >
+              Choose Photo
+            </Text>
+          </TouchableOpacity>
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signIn}
@@ -283,8 +328,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 0,
     backgroundColor: "#white",
+  },
+  image: {
+    width: "50%",
+    height: "60%",
+    marginLeft: "40%",
+    marginTop: "20%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
   },
   footer: {
     flex: Platform.OS === "ios" ? 3 : 5,
@@ -293,11 +347,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingVertical: 30,
-  },
-  text_header: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 30,
   },
   text_footer: {
     color: "#05375a",
@@ -319,6 +368,11 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     marginTop: 50,
+  },
+  choosePhoto: {
+    borderRadius: 10,
+    backgroundColor: "#ffd086",
+    marginRight: 230,
   },
   signIn: {
     width: "100%",

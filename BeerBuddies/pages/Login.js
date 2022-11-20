@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../components/AuthorizationContext';
-import {db, auth} from "../firebase"
+import {auth} from "../firebase"
 import {signInWithEmailAndPassword} from "firebase/auth"
 import { Text as TextKitten, Divider } from '@ui-kitten/components';
 
@@ -28,9 +28,8 @@ const Login = ({ navigation }) => {
     });
 
     const loginUser = () => {
-        signInWithEmailAndPassword(auth, "a@a.com", "123456")
+        signInWithEmailAndPassword(auth, data.email, data.password)
         .then(response => {
-            console.log(response.user.stsTokenManager.accessToken)
             storeData(response.user.stsTokenManager.accessToken, data.email);
             signIn(response.user.stsTokenManager.accessToken, data.email);
         })

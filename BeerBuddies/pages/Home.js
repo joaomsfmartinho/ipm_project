@@ -24,7 +24,7 @@ export default function Home( { navigation } ) {
         </View>
 
         <View style={styles.buttonsContainer}>
-          <TouchableHighlight onPress={() => { navigation.push('Register') }}
+          <TouchableHighlight onPress={() => { navigation.push('Login') }}
             underlayColor="#eca921"
             style={{
               marginLeft: '3%',
@@ -65,7 +65,7 @@ export default function Home( { navigation } ) {
               backgroundColor: '#ffd086'
             }}
           
-            onPress={() => { navigation.push('Login') }}
+            onPress={() => { navigation.push('Register') }}
           >
             <View style={styles.button}>
              <TextKitten style={styles.textButton} category="label">REGISTER</TextKitten>

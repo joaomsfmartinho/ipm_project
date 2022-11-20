@@ -14,12 +14,10 @@ const UserProfile = ({ navigation }) => {
 
   const [email, setEmail] = React.useState(null);
   const [name, setName] = React.useState(null);
-  const [typeAccount, setTypeAccount] = React.useState(null);
-  const [phone, setPhone] = React.useState(null);
-  const [nif, setNif] = React.useState(null);
-  const [address, setAddress] = React.useState(null);
-  const [visible2, setVisible2] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("GESTOR");
+  const [birthdate, setBirthdate] = React.useState(null);
+  const [gender, setGender] = React.useState(null);
+
+
 
   useEffect(() => {
     const fu = async () => {
@@ -30,15 +28,14 @@ const UserProfile = ({ navigation }) => {
     fu()
   }, []);
 
+  const database = ""
+
   const getUser = (email1) => {
-    axios.post('https://saving-fields.appspot.com/rest/user/getUser', { email: email1 })
+    axios.post(database, { email: email1 })
       .then(response => {
-        let accountType = response.data.accountType.toLowerCase();
         setName(response.data.name)
-        setPhone(response.data.phone)
-        setNif(response.data.NIF)
-        setAddress(response.data.address)
-        setTypeAccount(accountType)
+        setBirthdate(response.data.birthdate)
+        setGender(response.data.gender)
       })
       .catch(error => {
       })
@@ -47,17 +44,14 @@ const UserProfile = ({ navigation }) => {
   const updateUser = async () => {
     let email1 = await AsyncStorage.getItem('email');
     let token = await AsyncStorage.getItem('token');
-    axios.put('https://saving-fields.appspot.com/rest/user/updateData', {
+    axios.put(database, {
       email: email1,
       tokenID: token,
       name: name,
-      phone: phone,
-      nif: nif,
-      address: address,
-      type: typeAccount
+      birthdate: birthdate,
+      gender: gender,
     })
       .then(response => {
-        setVisible2(true)
         getUser(email1)
       })
       .catch(error => {
@@ -79,18 +73,19 @@ const UserProfile = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#14555d' barStyle="light-content" />
+      <StatusBar backgroundColor='#ffd086' barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>{name}</Text>
       </View>
-      <Animatable.View
-        animation="fadeInUpBig"
-        style={styles.footer}
-      >
+      <View>
+          <Text style={styles.text_footer}>
+            Photo
+          </Text>
+        </View>
+      <View style={styles.footer}>
         
         <ScrollView>
           
-
           <Text style={[styles.text_footer, {
           }]}>Email</Text>
           <View style={styles.action}>
@@ -110,7 +105,7 @@ const UserProfile = ({ navigation }) => {
 
           <Text style={[styles.text_footer, {
             marginTop: 35
-          }]}>Nome *</Text>
+          }]}>Name</Text>
           <View style={styles.action}>
             <FontAwesome
               name="user"
@@ -124,74 +119,27 @@ const UserProfile = ({ navigation }) => {
               onChangeText={(val) => setName(val)}
             />
           </View>
-
           <Text style={[styles.text_footer, {
             marginTop: 35
-          }]}>Tipo de Conta</Text>
+          }]}>Birth Date</Text>
           <View style={styles.action}>
-            <FontAwesome
-              name="users"
-              color="#05375a"
-              size={20}
-            />
             <TextInput
               style={styles.textInput}
               autoCapitalize="none"
-              defaultValue={typeAccount}
-              editable={false}
+              defaultValue={birthdate}
+            />
+          </View>
+          <Text style={[styles.text_footer, {
+            marginTop: 35
+          }]}>Gender</Text>
+          <View style={styles.action}>
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize="none"
+              defaultValue={gender}
             />
           </View>
 
-          <Text style={[styles.text_footer, {
-            marginTop: 35
-          }]}>Telemóvel *</Text>
-          <View style={styles.action}>
-            <FontAwesome
-              name="phone"
-              color="#05375a"
-              size={20}
-            />
-            <TextInput
-              style={styles.textInput}
-              autoCapitalize="none"
-              defaultValue={phone}
-              keyboardType='number-pad'
-              onChangeText={(val) => setPhone(val)}
-            />
-          </View>
-          <Text style={[styles.text_footer, {
-            marginTop: 35
-          }]}>NIF *</Text>
-          <View style={styles.action}>
-            <FontAwesome
-              name="id-card"
-              color="#05375a"
-              size={20}
-            />
-            <TextInput
-              style={styles.textInput}
-              autoCapitalize="none"
-              defaultValue={nif}
-              keyboardType='number-pad'
-              onChangeText={(val) => setNif(val)}
-            />
-          </View>
-          <Text style={[styles.text_footer, {
-            marginTop: 35
-          }]}>Morada *</Text>
-          <View style={styles.action}>
-            <FontAwesome
-              name="home"
-              color="#05375a"
-              size={20}
-            />
-            <TextInput
-              style={styles.textInput}
-              autoCapitalize="none"
-              defaultValue={address}
-              onChangeText={(val) => setAddress(val)}
-            />
-          </View>
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signIn}
@@ -199,34 +147,10 @@ const UserProfile = ({ navigation }) => {
             >
               <Text style={[styles.textSign, {
                 color: '#fff'
-              }]}>Confirmar</Text>
+              }]}>Edit Profile</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
-      </Animatable.View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ModalPoup visible={visible2}>
-          <View style={{ alignItems: 'center' }}>
-            <View style={styles.headerX}>
-              <TouchableOpacity onPress={() => setVisible2(false)}>
-                <Image
-                  source={require('../assets/images/x.png')}
-                  style={{ height: 30, width: 30 }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{ alignItems: 'center' }}>
-            <Image
-              source={require('../assets/images/success.png')}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
-          </View>
-
-          <Text style={{ marginVertical: 30, fontSize: 20, textAlign: 'center' }}>
-            A sua conta foi atualizada com sucesso!
-          </Text>
-        </ModalPoup>
       </View>
     </View>
   );
@@ -259,14 +183,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#14555d'
   },
   header: {
-    flex: 1,
+    flex: 0,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 0,
     backgroundColor: '#14555d'
   },
   footer: {
-    flex: Platform.OS === 'ios' ? 3 : 5,
+    flex: Platform.OS === 'android' ? 3 : 5,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -291,7 +215,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    marginTop: Platform.OS === 'android' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
   },

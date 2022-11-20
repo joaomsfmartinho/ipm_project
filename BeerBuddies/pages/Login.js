@@ -5,8 +5,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import { AuthContext } from '../components/AuthorizationContext';
+import {db, auth} from "../firebase"
+import {signInWithEmailAndPassword} from "firebase/auth"
+import { Text as TextKitten, Divider } from '@ui-kitten/components';
 
 const BackIcon = (props) => (
     <Icon {...props} name='arrow-back'/>
@@ -26,22 +28,21 @@ const Login = ({ navigation }) => {
     });
 
     const loginUser = () => {
-        axios
-        .post('https:/saving-fields.appspot.com/rest/login', {
-            email: data.email,
-            password: data.password
-        })
+        signInWithEmailAndPassword(auth, "a@a.com", "123456")
         .then(response => {
-            storeData(response.data, data.email);
-            signIn(response.data, data.email);
-            })
-            .catch(error => {
-                if (error.response.data != "") {
-                    Alert.alert('Erro!', error.response.data, [
-                        {text: 'Okay'}
-                    ]);
-                }
-            });
+            console.log(response.user.stsTokenManager.accessToken)
+            storeData(response.user.stsTokenManager.accessToken, data.email);
+            signIn(response.user.stsTokenManager.accessToken, data.email);
+        })
+        .catch(error => {
+            if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+            }
+            if (error.code === 'auth/wrong-password') {
+                console.log('Wrong Password!');
+            }
+            console.log(error);
+        });
     }
 
     const { colors } = useTheme();
@@ -76,7 +77,6 @@ const Login = ({ navigation }) => {
         <View style={styles.container}>
             <StatusBar backgroundColor='#14555d' barStyle="light-content" />
             <View style={styles.header}>
-                <Text style={styles.text_header}>Bem-vindo!</Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -150,20 +150,12 @@ const Login = ({ navigation }) => {
                         }
                     </TouchableOpacity>
                 </View>
-                {data.isValidPassword ? null :
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                        <Text style={styles.errorMsg}>A Password deve ter pelo menos 6 caracteres.</Text>
-                    </Animatable.View>
-                }
-
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
                         onPress={ () =>  { loginUser() } }
                     >
-                            <Text style={[styles.textSign, {
-                                color: '#fff'
-                            }]}>Entrar</Text>
+                        <TextKitten style={styles.textButton} category="label">LOG IN</TextKitten>
                     </TouchableOpacity>
                 </View>
             </Animatable.View>
@@ -176,14 +168,14 @@ export default Login;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#14555d'
+        backgroundColor: '#white'
     },
     header: {
         flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 50,
-        backgroundColor: '#14555d'
+        backgroundColor: '#white'
     },
     footer: {
         flex: 3,
@@ -236,7 +228,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        backgroundColor:'#14555d',
+        backgroundColor:'#ffd086',
         marginTop: '20%'
     },
     textSign: {

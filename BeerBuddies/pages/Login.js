@@ -82,7 +82,7 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#14555d" barStyle="light-content" />
+      <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
       <View style={styles.header}>
         <ImageBackground
           style={styles.image}

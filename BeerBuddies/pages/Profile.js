@@ -8,34 +8,56 @@ import axios from 'axios';
 import { Avatar, Title, Drawer } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPoup from '../components/ModalPopup'
+import { db } from "../firebase";
+import { collection, doc, getDoc } from "firebase/firestore/lite";
 
 
-
+const maxBirthdate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 18)
+  );
 
 const Profile = ({ navigation }) => {
 
-    const [email, setEmail] = React.useState(null);
-    const [name, setName] = React.useState(null);
-    const [birthdate, setBirthdate] = React.useState(null);
-    const [gender, setGender] = React.useState(null);
+    const [email, setEmail] = React.useState("");
+    const [name, setName] = React.useState("");
     const [image, setImage] = React.useState(null);
+    const [birthdate, setBirthdate] = React.useState(maxBirthdate);
+    const [gender, setGender] = React.useState("");
+
 
     const choosePhoto = () => {
         // pick new photo
-        console.log("aaa")
+        alert("aaa")
     }
 
-    const updateUser = () => {
-        // update user info
+    const getData = async () => {
+        setEmail(await AsyncStorage.getItem("email"));
+        let ref = doc(collection(db, "users"), email);
+        let res = await getDoc(ref);
+        setImage(res.get("image"));
+        setName(res.get("name"));
+        setBirthdate(res.get("birthdate"));
+        alert(res.get("birthdate"));
+
+        setGender(res.get("gender"));
     }
+
+    async function setData() {
+        // update user data
+        let ref = doc(collection(db, "users"), email);
+        let res = await getDoc(ref);
+        alert(name)
+    }
+
+    useEffect(() => {
+        getData();
+        }, []);
+
 
     return (
         
         <View style={styles.container}>
             <StatusBar backgroundColor='#ffd086' barStyle="light-content" />
-            <View style={styles.header}>
-                <Text style={styles.text_header}>Profile</Text>
-            </View>
             <View style={styles.footer}>
                 <ScrollView>
                 <TouchableOpacity onPress={() => choosePhoto()}>
@@ -66,7 +88,8 @@ const Profile = ({ navigation }) => {
                     size={20}
                     defaultValue={email}
                     />
-                </View>
+                    <Text style={styles.textInput}>{email}</Text>
+                    </View>
                 <Text style={[styles.text_footer, {
                     marginTop: 35
                 }]}>Birth Date</Text>
@@ -93,7 +116,7 @@ const Profile = ({ navigation }) => {
                 <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={() => { updateUser() }}
+                    onPress={() => { setData() }}
                     >
                     <Text style={[styles.textSign, {
                         color: '#fff'
@@ -149,19 +172,6 @@ const styles = StyleSheet.create({
         color: '#000',
         fontWeight: 'bold',
         fontSize: 25,
-    },
-    action: {
-        flexDirection: 'row',
-        marginTop: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f2f2f2',
-        paddingBottom: 5
-    },
-    textInput: {
-        flex: 1,
-        marginTop: Platform.OS === 'android' ? 0 : -12,
-        paddingLeft: 10,
-        color: '#05375a',
     },
     text_footer: {
         color: '#05375a',

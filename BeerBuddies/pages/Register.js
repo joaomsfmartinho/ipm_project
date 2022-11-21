@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -19,33 +19,39 @@ import Feather from "react-native-vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Text as TextKitten } from "@ui-kitten/components";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { AuthContext } from "../components/AuthorizationContext";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
+
+const maxBirthdate = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 18)
+);
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = React.useState({
     name: "",
     email: "",
     password: "",
-    date: new Date(),
+    birthdate: maxBirthdate,
     check_textInputChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
   });
 
   const { signIn } = React.useContext(AuthContext);
-  const [show, setShow] = useState(false);
-  const [selectedValue, setSelectedValue] = React.useState("Male");
-  const [image, setImage] = useState(null);
+  const [show, setShow] = React.useState(false);
+  const [gender, setGender] = React.useState("Male");
+  const [image, setImage] = React.useState(null);
 
   const handleRegistration = () => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((response) => {
-        storeData(response.user.stsTokenManager.accessToken, data.email);
-        signIn(response.user.stsTokenManager.accessToken, data.email);
+      .then(() => {
+        storeData(data);
+        signIn(data.email);
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -61,9 +67,16 @@ const SignInScreen = ({ navigation }) => {
       });
   };
 
-  const storeData = async (token, email) => {
-    await AsyncStorage.setItem("email", email);
-    await AsyncStorage.setItem("token", token);
+  const storeData = async (data) => {
+    await AsyncStorage.setItem("email", data.email);
+    let ref = doc(collection(db, "users"), data.email);
+    await setDoc(ref, {
+      name: data.name,
+      birthdate: data.birthdate,
+      image: image,
+      gender: gender,
+      notifications: [],
+    });
   };
 
   const textInputChange = (val) => {
@@ -101,7 +114,7 @@ const SignInScreen = ({ navigation }) => {
     setShow(false);
     setData({
       ...data,
-      date: currentDate,
+      birthdate: currentDate,
     });
   };
 
@@ -114,7 +127,12 @@ const SignInScreen = ({ navigation }) => {
       quality: 1,
     });
     if (!result.cancelled) {
-      setImage(result.uri);
+      let splitted = result.uri.split(".");
+      let imageType = splitted[splitted.length - 1];
+      let imageString = await FileSystem.readAsStringAsync(result.uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      setImage(`data:image/${imageType};base64,${imageString}`);
     }
   };
 
@@ -214,12 +232,13 @@ const SignInScreen = ({ navigation }) => {
             <TouchableHighlight onPress={setShow}>
               <View>
                 <TextKitten style={styles.picker} category="label">
-                  {data.date.toLocaleDateString()}
+                  {data.birthdate.toLocaleDateString()}
                 </TextKitten>
                 {show && (
                   <DateTimePicker
+                    maximumDate={maxBirthdate}
                     testID="dateTimePicker"
-                    value={data.date}
+                    value={data.birthdate}
                     mode={"date"}
                     onChange={handleDateChange}
                   />
@@ -239,11 +258,9 @@ const SignInScreen = ({ navigation }) => {
           </Text>
           <View style={styles.dropdown}>
             <Picker
-              selectedValue={selectedValue}
+              selectedValue={gender}
               style={styles.picker}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }
+              onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
             >
               <Picker.Item label="Male" value="Male" />
               <Picker.Item label="Female" value="Female" />

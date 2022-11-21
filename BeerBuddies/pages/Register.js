@@ -73,6 +73,7 @@ const SignInScreen = ({ navigation }) => {
 
     await setDoc(ref, {
       name: data.name,
+      birthdate: data.birthdate,
       age: calculateAge(data.birthdate),
       image: image,
       gender: gender,

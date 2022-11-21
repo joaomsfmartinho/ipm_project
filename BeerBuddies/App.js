@@ -25,6 +25,8 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { db } from "./firebase";
+import { collection, doc, getDoc } from "firebase/firestore/lite";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +35,25 @@ export default function App(props) {
   //   setToken(AsyncStorage.getItem("tokenID"))
   // }, 10000);
 
+  const [numberNotifications, setNumberNotifications] = React.useState(0);
+
+  const updateData = async () => {
+    let email = await AsyncStorage.getItem("email");
+    getNotificationsNumber(email);
+  };
+
+  const getNotificationsNumber = async (email) => {
+    if (email) {
+      let ref = doc(collection(db, "users"), email);
+      let res = await getDoc(ref);
+      setNumberNotifications(res.get("notifications").length);
+    }
+  };
+
   useEffect(() => {
-    LogBox.ignoreLogs(["ViewPropTypes will be removed from React Native."]);
+    setInterval(() => {
+      updateData();
+    }, 5000);
   }, []);
 
   initialLoginState = {
@@ -131,10 +150,9 @@ export default function App(props) {
               <Tab.Screen
                 name="Notifications"
                 component={Notifications}
-                // TODO: Add Correct number according to db
                 options={{
                   tabBarShowLabel: false,
-                  tabBarBadge: 0,
+                  tabBarBadge: numberNotifications,
                   tabBarBadgeStyle: styles.badge,
                 }}
               />

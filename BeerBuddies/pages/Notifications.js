@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import { useTheme } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import ParcellsToDisplay from "./ParcellsToDisplay";
+import { db } from "../firebase";
+import { collection, doc, getDoc } from "firebase/firestore/lite";
 
 const THUMB_SIZE = 80;
 
@@ -24,37 +24,33 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function UserPage() {
+export default function Notifications() {
   const { colors } = useTheme();
-  const [name, setName] = React.useState();
-  const [email, setEmail] = React.useState(null);
-  const [isDone, setIsDone] = React.useState(false);
+  const [notifications, setNotifications] = React.useState([]);
 
-  const carouselRef = useRef();
-  const flatListRef = useRef();
-  const [parcells, setParcells] = useState([]);
-
-  const [indexSelected, setIndexSelected] = useState(0);
-
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onSelect = (indexSelected) => {
-    setIndexSelected(indexSelected);
-    flatListRef?.current?.scrollToOffset({
-      offset: indexSelected * THUMB_SIZE,
-      animated: true,
-    });
+  const updateData = async () => {
+    let email = await AsyncStorage.getItem("email");
+    getNotifications(email);
   };
 
-  const onTouchThumbnail = (touched) => {
-    if (touched === indexSelected) return;
-
-    carouselRef?.current?.snapToItem(touched);
+  const getNotifications = async (email) => {
+    if (email) {
+      let ref = doc(collection(db, "users"), email);
+      let res = await getDoc(ref);
+      setNotifications(res.get("notifications"));
+    }
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      updateData();
+    }, 5000);
+  }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
+      <Text>{notifications}</Text>
     </View>
   );
 }

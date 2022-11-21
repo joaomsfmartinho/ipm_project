@@ -38,8 +38,8 @@ const Login = ({ navigation }) => {
   const loginUser = () => {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((response) => {
-        storeData(response.user.stsTokenManager.accessToken, data.email);
-        signIn(response.user.stsTokenManager.accessToken, data.email);
+        storeData(data.email);
+        signIn(data.email);
       })
       .catch((error) => {
         if (error.code === "auth/invalid-email") {
@@ -54,9 +54,8 @@ const Login = ({ navigation }) => {
 
   const { colors } = useTheme();
 
-  const storeData = async (token, email) => {
+  const storeData = async (email) => {
     await AsyncStorage.setItem("email", email);
-    await AsyncStorage.setItem("token", token);
   };
 
   const handlePasswordChange = (val) => {

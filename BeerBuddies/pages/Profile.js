@@ -37,8 +37,6 @@ const Profile = ({ navigation }) => {
         setImage(res.get("image"));
         setName(res.get("name"));
         setBirthdate(res.get("birthdate"));
-        alert(res.get("birthdate"));
-
         setGender(res.get("gender"));
     }
 
@@ -99,7 +97,7 @@ const Profile = ({ navigation }) => {
                     // change from text input to choose date
                     style={styles.textInput}
                     autoCapitalize="none"
-                    defaultValue={birthdate}
+                    defaultValue={birthdate.toString()}
                     />
                 </View>
                 <Text style={[styles.text_footer, {

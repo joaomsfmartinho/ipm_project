@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile"
 import Notifications from "./pages/Notifications";
 import About from "./pages/About";
 import Map from "./pages/Map";
@@ -168,7 +169,7 @@ export default function App(props) {
               />
               <Tab.Screen
                 name="Profile"
-                component={UserProfile}
+                component={Profile}
                 options={{ tabBarShowLabel: false }}
               />
             </Tab.Navigator>

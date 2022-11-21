@@ -9,30 +9,21 @@ const BeerAboutUsButton = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.mainContainer}>
-            <Pressable onPress={() => navigateAboutUs()}>
-                <ImageBackground style={styles.image}
-                    source={require("../assets/images/beers.png")}>
-                </ImageBackground>
-            </Pressable>
-        </View>
+        <Pressable onPress={() => navigateAboutUs()}>
+            <ImageBackground style={styles.image}
+                source={require("../assets/images/beers.png")}>
+            </ImageBackground>
+        </Pressable>
+
     );
 };
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'white'
-    },
     image: {
-        width: '62%',
-        height: '46%',
-        marginLeft: '-3%',
-        marginTop: '7%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+        width: '60%',
+        height: '50%'
+
+    },
 });
 
 export default BeerAboutUsButton;

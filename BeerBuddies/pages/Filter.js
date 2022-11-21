@@ -4,6 +4,7 @@ import { TextInput } from "react-native-paper";
 import BeerAboutUsButton from "../components/BeerAboutUsButton"
 import { useState } from "react";
 
+
 const Filter = ({ navigation }) => {
     const [price, newPrice] = useState('')
     const [rating, newRating] = useState('')
@@ -29,11 +30,10 @@ const Filter = ({ navigation }) => {
             <TextInput value={price} keyboardType='numeric' onChangeText={newPrice} placeholder="Type beer price..." style={styles.textInput}></TextInput>
             <TextInput value={rating} keyboardType='numeric' onChangeText={newRating} placeholder="Type min rating..." style={styles.textInput}></TextInput>
             <TextInput value={distance} keyboardType='numeric' onChangeText={newDistance} placeholder="Type max distance..." style={styles.textInput}></TextInput>
-
         </View>
     );
 };
-// <Dropdown label='Pick a beer brand' data={availableBeers}></Dropdown>
+// 
 const styles = StyleSheet.create({
     mainContainer: {
         width: '100%',
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         marginTop: 3
     },
     filters: {
-        to
     }
 });
 

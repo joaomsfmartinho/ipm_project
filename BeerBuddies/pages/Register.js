@@ -70,13 +70,20 @@ const SignInScreen = ({ navigation }) => {
   const storeData = async (data) => {
     await AsyncStorage.setItem("email", data.email);
     let ref = doc(collection(db, "users"), data.email);
+
     await setDoc(ref, {
       name: data.name,
-      birthdate: data.birthdate,
+      age: calculateAge(data.birthdate),
       image: image,
       gender: gender,
       notifications: [],
     });
+  };
+
+  const calculateAge = (birthday) => {
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
 
   const textInputChange = (val) => {

@@ -9,11 +9,8 @@ const { width } = Dimensions.get('window');
 const THUMB_SIZE = 80;
 
 const IMAGES = {
-  image1: require('../assets/images/JR.jpg'),
-  image2: require('../assets/images/FG.jpg'),
-  image3: require('../assets/images/JM.jpg'),
-  image4: require('../assets/images/AS.jpg'),
-  image5: require('../assets/images/GP.jpg'),
+  image1: require('../assets/images/JM.jpg'),
+  image2: require('../assets/images/BS.jpg')
 };
 
 
@@ -25,9 +22,6 @@ export default function UserPage() {
   const [images, setImages] = useState([
     { id: '1', image: IMAGES.image1 },
     { id: '2', image: IMAGES.image2 },
-    { id: '3', image: IMAGES.image3 },
-    { id: '4', image: IMAGES.image4 },
-    { id: '5', image: IMAGES.image5 },
   ]);
 
   const [indexSelected, setIndexSelected] = useState(0);

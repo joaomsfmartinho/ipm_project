@@ -14,7 +14,6 @@ import About from "./pages/About";
 import Map from "./pages/Map";
 import PostsStack from "./routes/PostsStack";
 import MyParcells from "./pages/MyParcells";
-import Filter from "./pages/Filter";
 import {
   ApplicationProvider,
   Layout,

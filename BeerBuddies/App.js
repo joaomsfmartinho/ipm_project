@@ -134,7 +134,7 @@ export default function App(props) {
       return <FontAwesome name={iconName} size={size} color={color} />;
     }
   };
-  return (<Filter></Filter>)
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthContext.Provider value={authContext}>

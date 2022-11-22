@@ -65,8 +65,9 @@ const Map = ({ navigation }) => {
         if (status !== 'granted') {
             Alert.alert("Error!", "Location permissions not granted by the user.")
         }
-
+        console.warn("entered here");
         let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 10000});
+        console.warn(location);
         setLocation(location);
         // changePosition(tempLat, temLon);
     });

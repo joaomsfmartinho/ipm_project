@@ -23,7 +23,6 @@ function MyParcells() {
         const getData = async () => {
             let email = await AsyncStorage.getItem("email");
             let token = await AsyncStorage.getItem("token");
-            getUserParcells(email);
             setEmail(email);
         }
         getData();

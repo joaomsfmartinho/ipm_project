@@ -55,7 +55,9 @@ const Login = ({ navigation }) => {
   const { colors } = useTheme();
 
   const storeData = async (email) => {
-    await AsyncStorage.setItem("email", email);
+    if (email != null) {
+      await AsyncStorage.setItem("email", email);
+    }
   };
 
   const handlePasswordChange = (val) => {

@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
+
 import { Avatar, Title, Drawer } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPoup from '../components/ModalPopup'
@@ -31,34 +31,12 @@ const UserProfile = ({ navigation }) => {
   const database = ""
 
   const getUser = (email1) => {
-    axios.post(database, { email: email1 })
-      .then(response => {
-        setName(response.data.name)
-        setBirthdate(response.data.birthdate)
-        setGender(response.data.gender)
-      })
-      .catch(error => {
-      })
+   
   }
 
   const updateUser = async () => {
     let email1 = await AsyncStorage.getItem('email');
-    let token = await AsyncStorage.getItem('token');
-    axios.put(database, {
-      email: email1,
-      tokenID: token,
-      name: name,
-      birthdate: birthdate,
-      gender: gender,
-    })
-      .then(response => {
-        getUser(email1)
-      })
-      .catch(error => {
-        Alert.alert('Erro!', error.response.data, [
-          { text: 'Okay' }
-        ]);
-      })
+   
 
   }
 

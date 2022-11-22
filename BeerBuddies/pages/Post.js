@@ -6,7 +6,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
-import axios from 'axios';
 import ModalPoup from '../components/ModalPopup';
 
 const wait = (timeout) => {
@@ -33,14 +32,6 @@ export default function Post({ navigation }) {
   const onRefresh = () => {
     setRefreshing(true);
     const string = 'https:/saving-fields.appspot.com/rest/user/getMessage/?title='
-    const endpoint = string + title
-    axios.get(endpoint)
-      .then(response => {
-        setList(response.data.comments)
-      })
-      .catch(error => {
-      })
-    wait(2000).then(() => setRefreshing(false));
   };
 
 
@@ -101,13 +92,7 @@ export default function Post({ navigation }) {
   const success = () => {
     const string = 'https:/saving-fields.appspot.com/rest/user/getMessage/?title='
     const endpoint = string + title
-    axios.get(endpoint)
-      .then(response => {
-        setList(response.data.comments)
-        setVisible2(true)
-      })
-      .catch(error => {
-      })
+
   };
 
   const addComment = (email, tokenID, topicTitle, content) => {
@@ -122,20 +107,9 @@ export default function Post({ navigation }) {
         topicTitle: topicTitle,
         content: content
       }
-      axios
-        .post('https:/saving-fields.appspot.com/rest/user/postMessage', cm)
-        .then(response => {
-          success()
-        })
-        .catch(error => {
-          if (error.response.data != "") {
-            Alert.alert('Erro!', error.response.data, [
-              { text: 'Okay' }
-            ]);
-          }
-        })
-    }
-  };
+
+    };
+  }
 
   const handleAddComment = async (commentContent) => {
     let email = await AsyncStorage.getItem("email");
@@ -149,12 +123,12 @@ export default function Post({ navigation }) {
 
   return (
     <ScrollView style={styles.container}
-    refreshControl={
-      <RefreshControl
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-      />
-    }>
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }>
       <StatusBar backgroundColor='#14555d' barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>{title}</Text>

@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Dimensions, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import ScrollableModalPopup from '../components/ScrollableModalPopup';
@@ -92,18 +91,6 @@ class UserInactiveParcellsToDisplay extends React.Component {
             giveAccessEmail: this.state.giveAccessEmail,
             parcellID: parcell.parish + "-"+parcell.section+"-"+parcell.article
         };
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/giveAccess', giveAccessInfo)
-        .then(response => {
-            this.setState({giveAccessActive: false});
-            Alert.alert('Sucesso!', "Utilizador adicionado à lista de acesso à parcela.", [
-                { text: 'Okay' }
-            ]);
-        })
-        .catch(err => {
-            Alert.alert('Erro!', err.response.data, [
-                { text: 'Okay' }
-            ]);
-        })
     }
 
     handleRemoveAccessEmail(email) {
@@ -117,47 +104,10 @@ class UserInactiveParcellsToDisplay extends React.Component {
             giveAccessEmail: this.state.removeAccessEmail,
             parcellID: parcell.parish + "-"+parcell.section+"-"+parcell.article
         };
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/removeAccess', removeAccessInfo)
-        .then(response => {
-            this.setState({removeAccessActive: false});
-            Alert.alert('Sucesso!', "Utilizador removido da lista de acesso à parcela.", [
-                { text: 'Okay' }
-            ]);
-        })
-        .catch(err => {
-            Alert.alert('Erro!', err.response.data, [
-                { text: 'Okay' }
-            ]);
-        })
+
     }
 
     handleUpdateParcell(email) {
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/updateAccessParcell', {
-            email: email,
-            tokenID: this.token,
-            parcellID: this.state.parcellID,
-            atualUse: this.state.atualUse,
-            soil: this.state.soil,
-            anteriorUse: this.state.anteriorUse
-        })
-            .then(response => {
-                this.setState({ parcellVisible: false });
-                this.setState({ continueChange: false });
-                Alert.alert('Sucesso!', "A parcela foi atualizada.", [
-                    { text: 'Okay' }
-                ]);
-                this.anteriorUseDisplay = this.state.anteriorUse;
-                this.atualUseDisplay = this.state.atualUse;
-                this.soilDisplay = this.state.soil;
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-                this.setState({ anteriorUse: this.anteriorUseDisplay });
-                this.setState({ atualUse: this.atualUseDisplay });
-                this.setState({ soil: this.soilDisplay });
-            })
     }
 
     handleAddOwnerFullName(val)  {
@@ -186,18 +136,7 @@ class UserInactiveParcellsToDisplay extends React.Component {
             citizenCardValidity: this.state.addOwnerCCValidity,
             citizenCard: this.state.addOwnerCC
         };
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/addOwner', addInfo)
-            .then(response => {
-                this.setState({addOwnerActive: false});
-                Alert.alert('Sucesso!', "O proprietário foi adicionado à parcela. Por favor, aguarde que seja verificado pelos técnicos.", [
-                    { text: 'Okay' }
-                ]);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            })
+       
     }
 
     async takePicture() {
@@ -261,22 +200,7 @@ class UserInactiveParcellsToDisplay extends React.Component {
     }
 
     uploadImage(imageToUpload, type) {
-        axios.post('https:/saving-fields.appspot.com/rest/user/uploadImage', {
-            parcellID: this.state.parcellID,
-            data: imageToUpload,
-            type: type,
-            filename: IMAGE_NAME
-        })
-            .then(response => {
-                Alert.alert('Sucesso!', "A imagem foi atualizada.", [
-                    { text: 'Okay' }
-                ]);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            })
+
     }
 
     async pickDocument() {
@@ -312,22 +236,7 @@ class UserInactiveParcellsToDisplay extends React.Component {
     }
 
     uploadFile(filename, fileToUpload) {
-        axios.post('https:/saving-fields.appspot.com/rest/user/uploadFile', {
-            parcellID: this.state.parcellID,
-            data: fileToUpload,
-            filename: filename,
-            type: FILE_TYPE
-        })
-            .then(response => {
-                Alert.alert('Sucesso!', "O ficheiro foi adicionado à lista de ficheiros da sua parcela.", [
-                    { text: 'Okay' }
-                ]);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            });
+       
     }
 
     render() {

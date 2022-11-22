@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 import { useTheme } from 'react-native-paper';
 import React, { useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, StatusBar, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
@@ -32,62 +31,8 @@ function MyParcells() {
 
     const onRefreshMyParcells = () => {
         setRefreshingMyParcells(true);
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/getOwnActiveParcells', {
-            email: email,
-        })
-            .then(response => {
-                setMyActiveParcells([]);
-                setMyActiveParcells(response.data);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            });
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/getOwnInactiveParcells', {
-            email: email,
-        })
-            .then(response => {
-                setMyInactiveParcells([]);
-            
-                setMyInactiveParcells(response.data);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            });
-
-        wait(2000).then(() => setRefreshingMyParcells(false));
     };
-
-    const getUserParcells = (email) => {
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/getOwnActiveParcells', {
-            email: email,
-        })
-            .then(response => {
-                setMyActiveParcells(response.data);
-                setIsDoneActive(true);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            });
-        axios.post('https:/saving-fields.appspot.com/rest/parcell/getOwnInactiveParcells', {
-            email: email,
-        })
-            .then(response => {
-                setMyInactiveParcells(response.data);
-                setIsDoneInactive(true);
-            })
-            .catch(err => {
-                Alert.alert('Erro!', err.response.data, [
-                    { text: 'Okay' }
-                ]);
-            });
-    }
-
+    
     return (
         <ScrollView style={styles.container}
             refreshControl={

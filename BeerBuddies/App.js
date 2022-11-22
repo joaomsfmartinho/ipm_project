@@ -94,8 +94,10 @@ export default function App(props) {
     () => ({
       signIn: async (token, email) => {
         try {
-          await AsyncStorage.setItem("token", token);
-          await AsyncStorage.setItem("email", email);
+          if (email != null) {
+            await AsyncStorage.setItem("token", token);
+            await AsyncStorage.setItem("email", email);
+          }
         } catch (e) {
           console.warn(e);
         }

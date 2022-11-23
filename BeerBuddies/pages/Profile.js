@@ -24,7 +24,13 @@ import { Avatar, Title, Drawer } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ModalPoup from "../components/ModalPopup";
 import { db } from "../firebase";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore/lite";
+import {
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore/lite";
 
 const maxBirthdate = new Date(
   new Date().setFullYear(new Date().getFullYear() - 18)
@@ -36,6 +42,8 @@ const Profile = ({ navigation }) => {
   const [image, setImage] = React.useState(null);
   const [birthdate, setBirthdate] = React.useState(maxBirthdate);
   const [gender, setGender] = React.useState("Male");
+  // TODO
+  const [age, setAge] = React.useState(0);
 
   const [show, setShow] = React.useState(false);
 
@@ -52,11 +60,30 @@ const Profile = ({ navigation }) => {
     setName(res.get("name"));
     setBirthdate(res.get("birthdate"));
     setGender(res.get("gender"));
+    setAge(res.get("age"));
+    alert(age);
   };
 
-  const setData = async () => {
+  const updateData = async () => {
     let ref = doc(collection(db, "users"), email);
-    let res = await getDoc(ref);
+    await updateDoc(ref, {
+      name: name,
+      birthdate: birthdate,
+      age: calculateAge(birthdate),
+      image: image,
+      gender: gender,
+      age: age,
+    });
+  };
+
+  const calculateAge = (birthday) => {
+    try {
+      var ageDifMs = Date.now() - birthday.getTime();
+      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
+    } catch (e) {
+      alert(e);
+    }
   };
 
   const handleDateChange = (event, selectedDate) => {
@@ -147,7 +174,7 @@ const Profile = ({ navigation }) => {
           <TouchableOpacity
             style={styles.signIn}
             onPress={() => {
-              setData();
+              updateData();
             }}
           >
             <Text

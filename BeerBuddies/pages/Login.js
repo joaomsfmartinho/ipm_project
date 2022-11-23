@@ -99,16 +99,7 @@ const Login = ({ navigation }) => {
           },
         ]}
       >
-        <Text
-          style={[
-            styles.text_footer,
-            {
-              color: colors.text,
-            },
-          ]}
-        >
-          Email
-        </Text>
+        <TextKitten style={styles.text_footer}>Email</TextKitten>
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
@@ -128,17 +119,7 @@ const Login = ({ navigation }) => {
           ) : null}
         </View>
 
-        <Text
-          style={[
-            styles.text_footer,
-            {
-              color: colors.text,
-              marginTop: 35,
-            },
-          ]}
-        >
-          Password
-        </Text>
+        <TextKitten style={styles.text_footer}>Password</TextKitten>
         <View style={styles.action}>
           <Feather name="lock" color={colors.text} size={20} />
           <TextInput
@@ -216,6 +197,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    fontWeight: "700",
   },
   action: {
     flexDirection: "row",

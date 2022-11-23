@@ -4,17 +4,19 @@ import { Button, TextInput } from "react-native-paper";
 import BeerAboutUsButton from "../components/BeerAboutUsButton"
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import { useNavigation } from "@react-navigation/native";
 
 
-const Filter = ({ navigation }) => {
+const Filter = () => {
     const [price, setPrice] = useState('')
     const [rating, setRating] = useState('')
     const [distance, setDistance] = useState('')
     const [beer, setBeer] = useState('')
 
+    const navigation = useNavigation()
+
     const navigateAboutUs = () => {
-        {/** TODO Navigate to about us */ }
-        {/** navigation.push('About') ? */ }
+        navigation.navigate("About")
     }
 
     const navigateBackwards = () => {
@@ -41,7 +43,7 @@ const Filter = ({ navigation }) => {
                 <View style={{ width: '50%', height: '100%' }}>
                     <Pressable onPress={() => navigateBackwards()}>
                         <ImageBackground style={styles.image_arrow}
-                            source={require("../assets/images/arrow.png")}>
+                            source={require("../assets/images/back_arrow.png")}>
                         </ImageBackground>
                     </Pressable>
                 </View>
@@ -131,10 +133,11 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     image_arrow: {
-        width: '55%',
-        height: '90%',
+        width: '48%',
+        height: '78%',
         marginLeft: '60%',
-        marginTop: 5
+        marginTop: 17,
+        opacity: 0.8
     },
     button: {
         height: '25%',
@@ -148,4 +151,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Filter
+export default Filter;

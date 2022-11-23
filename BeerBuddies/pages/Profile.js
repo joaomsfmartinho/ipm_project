@@ -79,7 +79,7 @@ const Profile = ({ navigation }) => {
   const calculateAge = (birthday) => {
     try {
       var ageDifMs = Date.now() - birthday.getTime();
-      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      var ageDate = new Date(ageDifMs); // milliseconds from epoch
       return Math.abs(ageDate.getUTCFullYear() - 1970);
     } catch (e) {
       alert(e);
@@ -112,7 +112,7 @@ const Profile = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 35,
+                marginTop: 0,
               },
             ]}
           >

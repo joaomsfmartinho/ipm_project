@@ -78,6 +78,8 @@ const SignInScreen = ({ navigation }) => {
       image: image,
       gender: gender,
     });
+    ref = doc(collection(db, "notifications"), data.email);
+    await setDoc(ref, { notifications: [] });
   };
 
   const calculateAge = (birthday) => {

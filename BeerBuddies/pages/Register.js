@@ -68,9 +68,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const storeData = async (data) => {
-    if (email != null) {
-      await AsyncStorage.setItem("email", data.email);
-    }
+    await AsyncStorage.setItem("email", data.email);
     let ref = doc(collection(db, "users"), data.email);
 
     await setDoc(ref, {

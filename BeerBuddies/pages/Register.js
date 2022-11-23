@@ -315,16 +315,9 @@ const SignInScreen = ({ navigation }) => {
                 handleRegistration();
               }}
             >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: "#fff",
-                  },
-                ]}
-              >
+              <TextKitten style={styles.textSign} category="label">
                 Register
-              </Text>
+              </TextKitten>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -410,7 +403,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffd086",
   },
   textSign: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

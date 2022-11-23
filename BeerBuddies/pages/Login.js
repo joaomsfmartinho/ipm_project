@@ -148,7 +148,7 @@ const Login = ({ navigation }) => {
               loginUser();
             }}
           >
-            <TextKitten style={styles.textButton} category="label">
+            <TextKitten style={styles.textSign} category="label">
               LOG IN
             </TextKitten>
           </TouchableOpacity>
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     marginTop: "20%",
   },
   textSign: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

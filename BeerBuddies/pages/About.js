@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, StatusBar, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, StatusBar, Dimensions, Pressable, ImageBackground } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -51,15 +51,32 @@ export default function UserPage() {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor='#fce571' barStyle="light-content" />
+      <Text style={styles.title_text}>About us?</Text>
 
-      <View style={styles.text}>
-        <Text style={styles.text_header}>Beer Buddies is a platform which allows you to find your personal best beer places alongside new people!</Text>
+      <View style={{ width: '100%', height: '9.9%', flexDirection: 'row', marginTop: '0.5%' }}>
+        <View style={{ width: '50%', height: '100%' }}>
+          <ImageBackground style={styles.image_beer}
+            source={require("../assets/images/beers.png")}>
+          </ImageBackground>
+        </View>
+        <View style={{ width: '50%', height: '100%' }}>
+          <Pressable onPress={() => navigateBackwards()}>
+            <ImageBackground style={styles.image_arrow}
+              source={require("../assets/images/back_arrow.png")}>
+            </ImageBackground>
+          </Pressable>
+        </View>
       </View>
-
+      <View style={styles.text}>
+        <Text style={styles.text_header}>
+          Beer Buddies is a platform which allows you to find your personal best beer places alongside new people!
+          This project is being developed as an assignment for our IPM course at university FCT-Nova.
+        </Text>
+      </View>
       <View style={styles.header}>
         <Text style={styles.text_header}>Team</Text>
       </View>
-      <View style={{ flex: 1.5, marginTop: 20 }}>
+      <View style={{ flex: 2, marginTop: 10 }}>
         <Carousel
           ref={carouselRef}
           layout="default"
@@ -104,39 +121,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#fce571'
   },
   text: {
-    flex: 1.2,
+    flex: 1.3,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     backgroundColor: '#fce571',
     alignItems: 'center'
   },
   header: {
-    flex: 1,
+    flex: 0.6,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    paddingBottom: 20,
     backgroundColor: '#fce571',
     alignItems: 'center'
   },
   text_header: {
     color: '#fff',
     fontWeight: 'bold',
-    textShadowRadius: 10,
-    textShadowColor: '#000000',
-    textShadowOffset: { width: 0, height: 3 },
-    fontSize: 28
+    textShadowRadius: 2,
+    textShadowColor: '#4b4b4b',
+    textShadowOffset: { width: 2, height: 2 },
+    fontSize: 25
   },
-  footer: {
-    flex: 7,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    alignItems: 'center'
+  image_arrow: {
+    width: '48%',
+    height: '78%',
+    marginLeft: '60%',
+    marginTop: 17,
+    opacity: 0.8
   },
-  text_footer: {
-    color: '#fce571',
-    fontSize: 25,
+  title_text: {
+    position: 'absolute',
+    height: '10%',
+    width: '50%',
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 34,
+    fontWeight: 'bold',
+    color: 'white',
+    marginTop: 20,
+    textShadowRadius: 2,
+    textShadowColor: '#4b4b4b',
+    textShadowOffset: { width: 2, height: 2 },
   },
+  image_beer: {
+    width: '70%',
+    height: '100%'
+  }
 });

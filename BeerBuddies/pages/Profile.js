@@ -12,17 +12,19 @@ import {
   Image,
   ImageBackground,
   Pressable,
+  TouchableHighlight,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Text as TextKitten } from "@ui-kitten/components";
 import Feather from "react-native-vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
-import axios from "axios";
 import { Avatar, Title, Drawer } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ModalPoup from "../components/ModalPopup";
 import { db } from "../firebase";
-import { collection, doc, getDoc } from "firebase/firestore/lite";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore/lite";
 
 const maxBirthdate = new Date(
   new Date().setFullYear(new Date().getFullYear() - 18)
@@ -52,12 +54,10 @@ const Profile = ({ navigation }) => {
     setGender(res.get("gender"));
   };
 
-  async function setData() {
-    // update user data
+  const setData = async () => {
     let ref = doc(collection(db, "users"), email);
     let res = await getDoc(ref);
-    alert(name);
-  }
+  };
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -121,24 +121,6 @@ const Profile = ({ navigation }) => {
             Birth Date
           </Text>
 
-          <View>
-            <TouchableHighlight onPress={setShow}>
-              <View>
-                <TextKitten style={styles.picker} category="label">
-                  {birthdate.toLocaleDateString()}
-                </TextKitten>
-                {show && (
-                  <DateTimePicker
-                    maximumDate={maxBirthdate}
-                    testID="dateTimePicker"
-                    value={birthdate}
-                    mode={"date"}
-                    onChange={handleDateChange}
-                  />
-                )}
-              </View>
-            </TouchableHighlight>
-          </View>
           <Text
             style={[
               styles.text_footer,
@@ -186,17 +168,24 @@ const Profile = ({ navigation }) => {
 };
 
 /*
-birthdate old view....
-
-<View style={styles.action}>
-                    <TextInput
-                    // change from text input to choose date
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    defaultValue={birthdate.toString()}
-                    />
-                </View>
-
+<View>
+  <TouchableHighlight onPress={setShow}>
+    <View>
+      <TextKitten style={styles.picker} category="label">
+        {birthdate.toLocaleDateString()}
+      </TextKitten>
+      {show && (
+        <DateTimePicker
+          maximumDate={maxBirthdate}
+          testID="dateTimePicker"
+          value={birthdate}
+          mode={"date"}
+          onChange={handleDateChange}
+        />
+      )}
+    </View>
+  </TouchableHighlight>
+</View>
 */
 
 export default Profile;

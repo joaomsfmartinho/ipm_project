@@ -8,7 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./pages/UserProfile";
-import Profile from "./pages/Profile"
+import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import About from "./pages/About";
 import Map from "./pages/Map";
@@ -45,7 +45,7 @@ export default function App(props) {
 
   const getNotificationsNumber = async (email) => {
     if (email) {
-      let ref = doc(collection(db, "users"), email);
+      let ref = doc(collection(db, "notifications"), email);
       let res = await getDoc(ref);
       setNumberNotifications(res.get("notifications").length);
     }

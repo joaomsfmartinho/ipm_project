@@ -61,7 +61,6 @@ const Profile = ({ navigation }) => {
     setBirthdate(res.get("birthdate"));
     setGender(res.get("gender"));
     setAge(res.get("age"));
-    alert(age);
   };
 
   const updateData = async () => {

@@ -17,6 +17,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as ImagePicker from "expo-image-picker";
 import { Text as TextKitten } from "@ui-kitten/components";
 import Feather from "react-native-vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
@@ -95,17 +96,41 @@ const Profile = ({ navigation }) => {
     getData();
   }, []);
 
+  const handleChooseImage = async () => {
+    await ImagePicker.requestMediaLibraryPermissionsAsync();
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      let splitted = result.uri.split(".");
+      let imageType = splitted[splitted.length - 1];
+      let imageString = await FileSystem.readAsStringAsync(result.uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      setImage(`data:image/${imageType};base64,${imageString}`);
+    }
+  };
+
+  function gImage() {
+    if (image) return { uri: image };
+    else return require("../assets/images/NoImage.png");
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
       <View style={styles.footer}>
         <ScrollView>
-          <TouchableOpacity styles={styles.image} onPress={() => choosePhoto()}>
-            <Image
-              style={styles.image}
-              source={{ uri: image }}
-              defaultSource={require("../assets/images/NoImage.png")}
-            />
+          <TouchableOpacity
+            styles={styles.image}
+            onPress={() => {
+              handleChooseImage();
+            }}
+          >
+            <Image style={styles.image} source={gImage()} />
           </TouchableOpacity>
           <Text
             style={[

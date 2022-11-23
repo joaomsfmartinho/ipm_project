@@ -79,7 +79,6 @@ const SignInScreen = ({ navigation }) => {
       age: calculateAge(data.birthdate),
       image: image,
       gender: gender,
-      notifications: [],
     });
   };
 

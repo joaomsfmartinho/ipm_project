@@ -14,6 +14,8 @@ import About from "./pages/About";
 import Map from "./pages/Map";
 import PostsStack from "./routes/PostsStack";
 import MyParcells from "./pages/MyParcells";
+
+import Filter from "./pages/Filter";
 import {
   ApplicationProvider,
   Layout,
@@ -170,6 +172,16 @@ export default function App(props) {
               <Tab.Screen
                 name="Profile"
                 component={Profile}
+                options={{ tabBarShowLabel: false }}
+              />
+              <Tab.Screen
+                name="Filter"
+                component={Filter}
+                options={{ tabBarShowLabel: false }}
+              />
+              <Tab.Screen
+                name="About"
+                component={About}
                 options={{ tabBarShowLabel: false }}
               />
             </Tab.Navigator>

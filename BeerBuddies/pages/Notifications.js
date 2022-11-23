@@ -33,6 +33,7 @@ export default function Notifications() {
   };
 
   useEffect(() => {
+    updateData();
     setInterval(() => {
       updateData();
     }, 5000);
@@ -42,10 +43,16 @@ export default function Notifications() {
     // TODO: Redirect to bar page
   };
 
-  const removeNotification = async (index) => {
-    let updated_notifications = notifications;
-    updated_notifications.splice(index, 1);
+  const removeNotification = (index) => {
+    let updated_notifications = [];
+    for (let i = 0; i < notifications.length; i++) {
+      if (i != index) updated_notifications.push(notifications[i]);
+    }
     setNotifications(updated_notifications);
+    updateNotificationInDB(updated_notifications);
+  };
+
+  const updateNotificationInDB = async (updated_notifications) => {
     let email = await AsyncStorage.getItem("email");
     let ref = doc(collection(db, "notifications"), email);
     setDoc(ref, { notifications: updated_notifications });
@@ -276,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   acceptButton: {
-    width: "38%",
+    width: "36%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -285,7 +292,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   declineButton: {
-    width: "38%",
+    width: "36%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",

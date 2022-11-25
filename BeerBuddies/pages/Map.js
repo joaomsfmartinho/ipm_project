@@ -21,23 +21,33 @@ import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from "buffer";
 import { Permissions } from 'expo';
-
-let markersArray = [];
-let firstIteration = true;
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 
 const FILE_TYPE = "application/pdf";
 
+let regionToUpdate = {
+    latitude: 38.662741,
+    longitude: -9.205523,
+    latitudeDelta: 0.0004,
+    longitudeDelta: 0.005
+};
 
 const Map = ({ navigation }) => {
     const [markers, setMarkers] = React.useState([]);
     const [markersLatLng, setMarkersLatLng] = React.useState([]);
-    const [location, setLocation] = React.useState(null);
+    const [location, setLocation] = React.useState({
+        latitude: 38.662741,
+        longitude: -9.205523,
+        latitudeDelta: 0.0004,
+        longitudeDelta: 0.005
+    });
     const [destin, setDestin] = React.useState(null);
     const [state, setState] = React.useState({ open: false });
     const [visible, setVisible] = React.useState(false);
     const [isRouteEnabled, setIsRouteEnabled] = React.useState(false);
     const [continueRegistration, setContinueRegistration] = React.useState(false);
     const [tutorialVisible, setTutorialVisible] = React.useState(false);
+    const mapRef = React.createRef();
 
     const onStateChange = ({ open }) => setState({ open });
 
@@ -49,27 +59,32 @@ const Map = ({ navigation }) => {
         LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
         LogBox.ignoreLogs(["Failed prop type: The prop 'region.latitudeDelta' is marked as required in 'MapView', but its value is 'undefined'."]);
         LogBox.ignoreLogs(['If you are using React Native v0.60.0+ you must follow these instructions to enable currentLocation: https://git.io/Jf4AR']);
-    }, []);
+    }, [location]);
 
     const clearState = () => {
         setMarkers([]);
         markersArray = [];
         setMarkersLatLng([]);
         firstIteration = true;
-        getLocationAsync();
     }
 
     const getLocationAsync = (async () => {
-
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             Alert.alert("Error!", "Location permissions not granted by the user.")
         }
-        console.warn("entered here");
-        let location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.High, maximumAge: 10000, timeInterval: 2000});
-        console.warn(location);
-        setLocation(location);
-        // changePosition(tempLat, temLon);
+        let locations = await Location.watchPositionAsync({
+            accuracy: Location.Accuracy.High, distanceInterval: 3,
+            timeInterval: 5000
+        }, (loc) => {
+            if (loc.coords.latitude != location.latitude || loc.coords.longitude != location.longitude) {
+                setLocation({
+                    ...location,
+                    latitude: loc.coords.latitude,
+                    longitude: loc.coords.longitude
+                });
+            }
+        });
     });
 
     const handleParishChange = (val) => {
@@ -229,21 +244,14 @@ const Map = ({ navigation }) => {
                     listView: { height: 100 }
                 }}
             />
+
             <MapView
                 style={styles.map}
                 showsUserLocation={true}
                 loadingEnabled={true}
                 initialRegion={location}
-                onRegionChange={region => {
-                    console.warn(region);
-                    setLocation(region);
-                }}
-                onRegionChangeComplete={region => {
-                    console.warn(region);
-                    setLocation(region);
-                }}
-                showsTraffic={isRouteEnabled}
-                followsUserLocation={true}
+                region={location}
+                showsTraffic={true}
                 mapType="terrain"
             >
                 {markers.length != 0 ?

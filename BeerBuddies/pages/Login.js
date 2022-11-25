@@ -119,7 +119,7 @@ const Login = ({ navigation }) => {
           ) : null}
         </View>
 
-        <TextKitten style={styles.text_footer}>Password</TextKitten>
+        <TextKitten style={[styles.text_footer,{ marginTop: "5%"}]}>Password</TextKitten>
         <View style={styles.action}>
           <Feather name="lock" color={colors.text} size={20} />
           <TextInput
@@ -130,6 +130,7 @@ const Login = ({ navigation }) => {
                 color: colors.text,
               },
             ]}
+            
             autoCapitalize="none"
             onChangeText={(password) => handlePasswordChange(password)}
           />

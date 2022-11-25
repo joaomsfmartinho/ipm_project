@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, StatusBar, Dimensions, Pressable, ImageBackground } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-
 
 const { width } = Dimensions.get('window');
 const THUMB_SIZE = 80;
@@ -49,17 +47,6 @@ export default function UserPage() {
     }
     fu()
   }, []);
-
-  const getName = (email1) => {
-    const string = 'https://saving-fields.appspot.com/rest/user/getUserName/?email='
-    const endpoint = string + email1
-    axios.get(endpoint)
-      .then(response => {
-        setName(response.data)
-      })
-      .catch(error => {
-      })
-  }
 
   return (
     <View style={styles.container}>

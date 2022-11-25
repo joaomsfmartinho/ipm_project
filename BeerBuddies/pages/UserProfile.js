@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
+import { Text as TextKitten} from '@ui-kitten/components';
 import { Avatar, Title, Drawer } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPoup from '../components/ModalPopup'
@@ -31,34 +31,12 @@ const UserProfile = ({ navigation }) => {
   const database = ""
 
   const getUser = (email1) => {
-    axios.post(database, { email: email1 })
-      .then(response => {
-        setName(response.data.name)
-        setBirthdate(response.data.birthdate)
-        setGender(response.data.gender)
-      })
-      .catch(error => {
-      })
+   
   }
 
   const updateUser = async () => {
     let email1 = await AsyncStorage.getItem('email');
-    let token = await AsyncStorage.getItem('token');
-    axios.put(database, {
-      email: email1,
-      tokenID: token,
-      name: name,
-      birthdate: birthdate,
-      gender: gender,
-    })
-      .then(response => {
-        getUser(email1)
-      })
-      .catch(error => {
-        Alert.alert('Erro!', error.response.data, [
-          { text: 'Okay' }
-        ]);
-      })
+   
 
   }
 
@@ -86,15 +64,8 @@ const UserProfile = ({ navigation }) => {
         
         <ScrollView>
           
-          <Text style={[styles.text_footer, {
-          }]}>Email</Text>
+          <TextKitten style={styles.text_footer}>Email</TextKitten>
           <View style={styles.action}>
-            <FontAwesome
-              name="envelope"
-              color="#05375a"
-              size={20}
-              defaultValue={email}
-            />
             <TextInput
               style={styles.textInput}
               autoCapitalize="none"
@@ -103,15 +74,10 @@ const UserProfile = ({ navigation }) => {
             />
           </View>
 
-          <Text style={[styles.text_footer, {
+          <TextKitten style={[styles.text_footer, {
             marginTop: 35
-          }]}>Name</Text>
+          }]}>Name</TextKitten>
           <View style={styles.action}>
-            <FontAwesome
-              name="user"
-              color="#05375a"
-              size={20}
-            />
             <TextInput
               style={styles.textInput}
               autoCapitalize="none"
@@ -119,9 +85,9 @@ const UserProfile = ({ navigation }) => {
               onChangeText={(val) => setName(val)}
             />
           </View>
-          <Text style={[styles.text_footer, {
+          <TextKitten style={[styles.text_footer, {
             marginTop: 35
-          }]}>Birth Date</Text>
+          }]}>Birth Date</TextKitten>
           <View style={styles.action}>
             <TextInput
               style={styles.textInput}
@@ -129,9 +95,9 @@ const UserProfile = ({ navigation }) => {
               defaultValue={birthdate}
             />
           </View>
-          <Text style={[styles.text_footer, {
+          <TextKitten style={[styles.text_footer, {
             marginTop: 35
-          }]}>Gender</Text>
+          }]}>Gender</TextKitten>
           <View style={styles.action}>
             <TextInput
               style={styles.textInput}

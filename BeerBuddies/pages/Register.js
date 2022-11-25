@@ -77,8 +77,9 @@ const SignInScreen = ({ navigation }) => {
       age: calculateAge(data.birthdate),
       image: image,
       gender: gender,
-      notifications: [],
     });
+    ref = doc(collection(db, "notifications"), data.email);
+    await setDoc(ref, { notifications: [] });
   };
 
   const calculateAge = (birthday) => {
@@ -162,7 +163,7 @@ const SignInScreen = ({ navigation }) => {
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <ScrollView>
-          <Text style={styles.text_footer}>Name</Text>
+          <TextKitten style={styles.text_footer}>Name</TextKitten>
           <View style={styles.action}>
             <FontAwesome name="user" color="#05375a" size={20} />
             <TextInput
@@ -171,7 +172,7 @@ const SignInScreen = ({ navigation }) => {
               onChangeText={(val) => handleNameChange(val)}
             />
           </View>
-          <Text
+          <TextKitten
             style={[
               styles.text_footer,
               {
@@ -180,7 +181,7 @@ const SignInScreen = ({ navigation }) => {
             ]}
           >
             Email
-          </Text>
+          </TextKitten>
           <View style={styles.action}>
             <FontAwesome name="envelope" color="#05375a" size={20} />
             <TextInput
@@ -190,7 +191,7 @@ const SignInScreen = ({ navigation }) => {
             />
           </View>
 
-          <Text
+          <TextKitten
             style={[
               styles.text_footer,
               {
@@ -199,7 +200,7 @@ const SignInScreen = ({ navigation }) => {
             ]}
           >
             Password
-          </Text>
+          </TextKitten>
           <View style={styles.action}>
             <Feather name="lock" color="#05375a" size={20} />
             <TextInput
@@ -226,7 +227,7 @@ const SignInScreen = ({ navigation }) => {
               )}
             </TouchableOpacity>
           </View>
-          <Text
+          <TextKitten
             style={[
               styles.text_footer,
               {
@@ -235,7 +236,7 @@ const SignInScreen = ({ navigation }) => {
             ]}
           >
             Birth Date
-          </Text>
+          </TextKitten>
           <View>
             <TouchableHighlight onPress={setShow}>
               <View>
@@ -254,7 +255,7 @@ const SignInScreen = ({ navigation }) => {
               </View>
             </TouchableHighlight>
           </View>
-          <Text
+          <TextKitten
             style={[
               styles.text_footer,
               {
@@ -263,7 +264,7 @@ const SignInScreen = ({ navigation }) => {
             ]}
           >
             Gender
-          </Text>
+          </TextKitten>
           <View style={styles.dropdown}>
             <Picker
               selectedValue={gender}
@@ -274,7 +275,7 @@ const SignInScreen = ({ navigation }) => {
               <Picker.Item label="Female" value="Female" />
             </Picker>
           </View>
-          <Text
+          <TextKitten
             style={[
               styles.text_footer,
               {
@@ -283,7 +284,7 @@ const SignInScreen = ({ navigation }) => {
             ]}
           >
             Photo
-          </Text>
+          </TextKitten>
           {image && (
             <Image
               source={{ uri: image }}
@@ -314,16 +315,9 @@ const SignInScreen = ({ navigation }) => {
                 handleRegistration();
               }}
             >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: "#fff",
-                  },
-                ]}
-              >
+              <TextKitten style={styles.textSign} category="label">
                 Register
-              </Text>
+              </TextKitten>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -376,6 +370,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    fontWeight: "700",
   },
   action: {
     flexDirection: "row",
@@ -408,7 +403,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffd086",
   },
   textSign: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

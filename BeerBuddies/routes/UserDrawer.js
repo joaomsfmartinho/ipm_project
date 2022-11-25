@@ -6,7 +6,7 @@ import { AuthContext } from '../components/AuthorizationContext';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPoup from '../components/ModalPopup'
-import axios from 'axios';
+
 
 function UserDrawer(props) {
 
@@ -22,20 +22,14 @@ function UserDrawer(props) {
         const fu = async () => {
             let email1;
             email1 = await AsyncStorage.getItem('email');
-            getName(email1)
+            getName(email1);
         }
         fu()
     }, []);
 
     const getName = (email1) => {
-        const string = 'https://saving-fields.appspot.com/rest/user/getUserName/?email='
-        const endpoint = string + email1
-        axios.get(endpoint)
-            .then(response => {
-                setName(response.data)
-            })
-            .catch(error => {
-            })
+        const string = 'https://saving-fields.appspot.com/rest/user/getUserName/?email=';
+        const endpoint = string + email1;
     }
 
     useEffect(() => {
@@ -53,45 +47,12 @@ function UserDrawer(props) {
         logout(email, token);
     }
 
-    const logout = (email, token) => {
-        axios
-            .post('https://saving-fields.appspot.com/rest/user/logout', {
-                email: email,
-                tokenID: token
-            })
-            .then(response => {
-                signOut();
-            })
-            .catch(error => {
-            });
-    }
-
     const handleDeleteAccount = async () => {
         let email;
         let token;
         email = await AsyncStorage.getItem('email');
         token = await AsyncStorage.getItem('token');
         deleteAccount(email, token);
-    }
-
-    const deleteAccount = (email, token) => {
-        axios
-            .post('https://saving-fields.appspot.com/rest/user/deleteOwnAcc', {
-                email: email,
-                tokenID: token
-            })
-            .then(response => {
-                setVisible(false)
-                setTimeout(() => { setVisible2(true) }, 1000);
-                setTimeout(() => { signOut() }, 3000);
-            })
-            .catch(error => {
-                if (error.response.data != "") {
-                    Alert.alert('Erro!', error.response.data, [
-                        { text: 'Okay' }
-                    ]);
-                }
-            });
     }
 
     return (

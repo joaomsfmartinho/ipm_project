@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, Alert, ScrollView, Image, ActivityIndicator, LogBox, RefreshControl } from 'react-native';
-import axios from 'axios';
 import {
     Card,
     useTheme,
@@ -45,17 +44,6 @@ const Forum = ({ navigation }) => {
         });
     };
 
-    const getTopics = () => {
-        axios
-            .get('https:/saving-fields.appspot.com/rest/user/getTopic')
-            .then(response => {
-                setPosts(response.data);
-                setPostsFiltered(response.data);
-            })
-            .catch(error => {
-            })
-    };
-
     const onRefresh = () => {
         setRefreshing(true);
         getTopics();
@@ -65,15 +53,6 @@ const Forum = ({ navigation }) => {
 
     useEffect(() => {
         LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
-        axios
-            .get('https:/saving-fields.appspot.com/rest/user/getTopic')
-            .then(response => {
-                setPosts(response.data);
-                setPostsFiltered(response.data);
-                setIsDone(true);
-            })
-            .catch(error => {
-            })
     }, []);
 
     const handleCreateTopic = async () => {
@@ -95,43 +74,11 @@ const Forum = ({ navigation }) => {
         }
     };
 
-    const createTopic = (email, token) => {
-        let createTopicInfo = {
-            email: email,
-            tokenID: token,
-            title: createPost.title,
-            numberOfComments: createPost.numberOfComments,
-            content: createPost.content
-        }
-        axios
-            .post('https:/saving-fields.appspot.com/rest/user/createTopic', createTopicInfo)
-            .then(response => {
-                getTopics();
-                setVisible(false);
-            })
-            .catch(error => {
-                if (error.response.data != "") {
-                    Alert.alert('Erro!', error.response.data, [
-                        { text: 'Okay' }
-                    ]);
-                }
-            })
-    };
 
     const getTopic = (postTitle) => {
         const string = 'https:/saving-fields.appspot.com/rest/user/getMessage/?title='
         const endpoint = string + postTitle
-        axios.get(endpoint)
-            .then(response => {
-                const res = response.data
-                navigation.push('PostStack', {
-                    title: res.topicTitle,
-                    content: res.topic,
-                    commentsList: res.comments
-                })
-            })
-            .catch(error => {
-            })
+    
     };
 
     const topicsList = () => {

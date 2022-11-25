@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, ScrollView, StatusBar, Alert, Image, ImageBackground, Pressable} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, ScrollView, StatusBar, Alert, Image, ImageBackground, Pressable } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -10,11 +10,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalPoup from '../components/ModalPopup'
 import { db } from "../firebase";
 import { collection, doc, getDoc } from "firebase/firestore/lite";
-
+import { Text as TextKitten } from '@ui-kitten/components';
 
 const maxBirthdate = new Date(
     new Date().setFullYear(new Date().getFullYear() - 18)
-  );
+);
 
 const Profile = ({ navigation }) => {
 
@@ -49,82 +49,70 @@ const Profile = ({ navigation }) => {
 
     useEffect(() => {
         getData();
-        }, []);
-
+    }, []);
 
     return (
-        
+
         <View style={styles.container}>
             <StatusBar backgroundColor='#ffd086' barStyle="light-content" />
             <View style={styles.footer}>
                 <ScrollView>
-                <TouchableOpacity onPress={() => choosePhoto()}>
-                    <Image style={styles.image} source={require("../assets/images/NoImage.png")} />
-                </TouchableOpacity>
-                <Text style={[styles.text_footer, {
-                    marginTop: 35
-                }]}>Name</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                    name="user"
-                    color="#05375a"
-                    size={20}
-                    />
-                    <TextInput
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    defaultValue={name}
-                    onChangeText={(val) => setName(val)}
-                    />
-                </View>
-                <Text style={[styles.text_footer, {
-                }]}>Email</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                    name="envelope"
-                    color="#05375a"
-                    size={20}
-                    defaultValue={email}
-                    />
-                    <Text style={styles.textInput}>{email}</Text>
+                    <TouchableOpacity onPress={() => choosePhoto()}>
+                        <Image style={styles.image} source={require("../assets/images/NoImage.png")} />
+                    </TouchableOpacity>
+                    <TextKitten style={[styles.text_footer, {
+                        marginTop: 35
+                    }]}>Name</TextKitten>
+                    <View style={styles.action}>
+                        <TextInput
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            defaultValue={name}
+                            onChangeText={(val) => setName(val)}
+                        />
                     </View>
-                <Text style={[styles.text_footer, {
-                    marginTop: 35
-                }]}>Birth Date</Text>
-                
-                <View style={styles.action}>
-                    <TextInput
-                    // change from text input to choose date
-                    style={styles.textInput}
-                    autoCapitalize="none"
-                    defaultValue={birthdate.toString()}
-                    />
-                </View>
-                <Text style={[styles.text_footer, {
-                    marginTop: 0
-                    }]}>Gender</Text>
-                <View style={styles.action}>
-                <TextInput
-                style={styles.textInput}
-                autoCapitalize="none"
-                defaultValue={gender}
-                />
-                </View>
+                    <TextKitten style={[styles.text_footer, {
+                        marginTop: 20
+                    }]}>Email</TextKitten>
+                    <View style={styles.action}>
+                        <Text style={styles.textInput}>{email}</Text>
+                    </View>
+                    <TextKitten style={[styles.text_footer, {
+                        marginTop: 20
+                    }]}>Birth Date</TextKitten>
+                    <View style={styles.action}>
+                        <TextInput
+                            // change from text input to choose date
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            defaultValue={birthdate.toString()}
+                        />
+                    </View>
+                    <TextKitten style={[styles.text_footer, {
+                        marginTop: 20
+                    }]}>Gender</TextKitten>
+                    <View style={styles.action}>
+                        <TextInput
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            defaultValue={gender}
+                        />
+                    </View>
                 </ScrollView>
                 <View style={styles.button}>
-                <TouchableOpacity
-                    style={styles.signIn}
-                    onPress={() => { setData() }}
+                    <TouchableOpacity
+                        style={styles.signIn}
+                        onPress={() => { setData() }}
                     >
-                    <Text style={[styles.textSign, {
-                        color: '#fff'
-                    }]}>Edit Profile</Text>
-                </TouchableOpacity>
+                        <Text style={[styles.textSign, {
+                            color: '#fff'
+                        }]}>Edit Profile</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
 
-        
+
     );
 
 
@@ -144,7 +132,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         borderColor: '#ffd086',
         borderWidth: 1,
-        borderRadius: imageSize/2,
+        borderRadius: imageSize / 2,
     },
     textInput: {
         flex: 1,
@@ -173,7 +161,8 @@ const styles = StyleSheet.create({
     },
     text_footer: {
         color: '#05375a',
-        fontSize: 18
+        fontSize: 18,
+        fontWeight: "700"
     },
     footer: {
         flex: Platform.OS === 'android' ? 3 : 5,
@@ -181,7 +170,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 30,
+        paddingVertical: 30
     },
     button: {
         alignItems: 'center',

@@ -55,7 +55,9 @@ const Login = ({ navigation }) => {
   const { colors } = useTheme();
 
   const storeData = async (email) => {
-    await AsyncStorage.setItem("email", email);
+    if (email != null) {
+      await AsyncStorage.setItem("email", email);
+    }
   };
 
   const handlePasswordChange = (val) => {
@@ -97,16 +99,7 @@ const Login = ({ navigation }) => {
           },
         ]}
       >
-        <Text
-          style={[
-            styles.text_footer,
-            {
-              color: colors.text,
-            },
-          ]}
-        >
-          Email
-        </Text>
+        <TextKitten style={styles.text_footer}>Email</TextKitten>
         <View style={styles.action}>
           <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
@@ -126,17 +119,7 @@ const Login = ({ navigation }) => {
           ) : null}
         </View>
 
-        <Text
-          style={[
-            styles.text_footer,
-            {
-              color: colors.text,
-              marginTop: 35,
-            },
-          ]}
-        >
-          Password
-        </Text>
+        <TextKitten style={[styles.text_footer,{ marginTop: "5%"}]}>Password</TextKitten>
         <View style={styles.action}>
           <Feather name="lock" color={colors.text} size={20} />
           <TextInput
@@ -147,6 +130,7 @@ const Login = ({ navigation }) => {
                 color: colors.text,
               },
             ]}
+            
             autoCapitalize="none"
             onChangeText={(password) => handlePasswordChange(password)}
           />
@@ -165,7 +149,7 @@ const Login = ({ navigation }) => {
               loginUser();
             }}
           >
-            <TextKitten style={styles.textButton} category="label">
+            <TextKitten style={styles.textSign} category="label">
               LOG IN
             </TextKitten>
           </TouchableOpacity>
@@ -214,6 +198,7 @@ const styles = StyleSheet.create({
   text_footer: {
     color: "#05375a",
     fontSize: 18,
+    fontWeight: "700",
   },
   action: {
     flexDirection: "row",
@@ -253,7 +238,7 @@ const styles = StyleSheet.create({
     marginTop: "20%",
   },
   textSign: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
   },
 });

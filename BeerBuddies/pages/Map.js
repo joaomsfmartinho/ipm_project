@@ -31,96 +31,74 @@ import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { Buffer } from "buffer";
-import { Permissions } from 'expo';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
 
 const FILE_TYPE = "application/pdf";
 
-let regionToUpdate = {
+const Map = ({ navigation }) => {
+  const [markers, setMarkers] = React.useState([]);
+  const [markersLatLng, setMarkersLatLng] = React.useState([]);
+  const [location, setLocation] = React.useState({
     latitude: 38.662741,
     longitude: -9.205523,
     latitudeDelta: 0.0004,
-    longitudeDelta: 0.005
-};
-
-const Map = ({ navigation }) => {
-    const [markers, setMarkers] = React.useState([]);
-    const [markersLatLng, setMarkersLatLng] = React.useState([]);
-    const [location, setLocation] = React.useState({
-        latitude: 38.662741,
-        longitude: -9.205523,
-        latitudeDelta: 0.0004,
-        longitudeDelta: 0.005
-    });
-    const [destin, setDestin] = React.useState(null);
-    const [state, setState] = React.useState({ open: false });
-    const [visible, setVisible] = React.useState(false);
-    const [isRouteEnabled, setIsRouteEnabled] = React.useState(false);
-    const [continueRegistration, setContinueRegistration] = React.useState(false);
-    const [tutorialVisible, setTutorialVisible] = React.useState(false);
-    const mapRef = React.createRef();
+    longitudeDelta: 0.005,
+  });
+  const [destin, setDestin] = React.useState(null);
+  const [state, setState] = React.useState({ open: false });
+  const [visible, setVisible] = React.useState(false);
+  const [isRouteEnabled, setIsRouteEnabled] = React.useState(false);
+  const [continueRegistration, setContinueRegistration] = React.useState(false);
+  const [tutorialVisible, setTutorialVisible] = React.useState(false);
 
   const onStateChange = ({ open }) => setState({ open });
 
   const { open } = state;
 
-    useEffect(() => {
-        getLocationAsync();
-        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-        LogBox.ignoreLogs(['Each child in a list should have a unique "key" prop.']);
-        LogBox.ignoreLogs(["Failed prop type: The prop 'region.latitudeDelta' is marked as required in 'MapView', but its value is 'undefined'."]);
-        LogBox.ignoreLogs(['If you are using React Native v0.60.0+ you must follow these instructions to enable currentLocation: https://git.io/Jf4AR']);
-    }, [location]);
+  useEffect(() => {
+    getLocationAsync();
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    LogBox.ignoreLogs([
+      'Each child in a list should have a unique "key" prop.',
+    ]);
+    LogBox.ignoreLogs([
+      "Failed prop type: The prop 'region.latitudeDelta' is marked as required in 'MapView', but its value is 'undefined'.",
+    ]);
+    LogBox.ignoreLogs([
+      "If you are using React Native v0.60.0+ you must follow these instructions to enable currentLocation: https://git.io/Jf4AR",
+    ]);
+  }, [location]);
 
-    const clearState = () => {
-        setMarkers([]);
-        markersArray = [];
-        setMarkersLatLng([]);
-        firstIteration = true;
+  const clearState = () => {
+    setMarkers([]);
+    markersArray = [];
+    setMarkersLatLng([]);
+    firstIteration = true;
+  };
+
+  const getLocationAsync = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Error!", "Location permissions not granted by the user.");
     }
-
-    const getLocationAsync = (async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            Alert.alert("Error!", "Location permissions not granted by the user.")
+    let locations = await Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.High,
+        distanceInterval: 3,
+        timeInterval: 5000,
+      },
+      (loc) => {
+        if (
+          loc.coords.latitude != location.latitude ||
+          loc.coords.longitude != location.longitude
+        ) {
+          setLocation({
+            ...location,
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude,
+          });
         }
-        let locations = await Location.watchPositionAsync({
-            accuracy: Location.Accuracy.High, distanceInterval: 3,
-            timeInterval: 5000
-        }, (loc) => {
-            if (loc.coords.latitude != location.latitude || loc.coords.longitude != location.longitude) {
-                setLocation({
-                    ...location,
-                    latitude: loc.coords.latitude,
-                    longitude: loc.coords.longitude
-                });
-            }
-        });
-    });
-    console.warn(location);
-    setLocation(location);
-    // changePosition(tempLat, temLon);
-  };
-
-  const handleParishChange = (val) => {
-    setSearchParcell({
-      ...searchParcell,
-      parish: val,
-    });
-  };
-
-  const handleArticleChange = (val) => {
-    setSearchParcell({
-      ...searchParcell,
-      article: val,
-    });
-  };
-
-  const handleSectionChange = (val) => {
-    setSearchParcell({
-      ...searchParcell,
-      section: val,
-    });
+      }
+    );
   };
 
   const pickImage = async () => {
@@ -271,21 +249,14 @@ const Map = ({ navigation }) => {
           listView: { height: 100 },
         }}
       />
+
       <MapView
         style={styles.map}
         showsUserLocation={true}
         loadingEnabled={true}
         initialRegion={location}
-        onRegionChange={(region) => {
-          console.warn(region);
-          setLocation(region);
-        }}
-        onRegionChangeComplete={(region) => {
-          console.warn(region);
-          setLocation(region);
-        }}
-        showsTraffic={isRouteEnabled}
-        followsUserLocation={true}
+        region={location}
+        showsTraffic={true}
         mapType="terrain"
       >
         {markers.length != 0 ? (
@@ -459,16 +430,41 @@ const Map = ({ navigation }) => {
                 onPress={() => {
                   pickDocument();
                 }}
-            />
-
-            <MapView
-                style={styles.map}
-                showsUserLocation={true}
-                loadingEnabled={true}
-                initialRegion={location}
-                region={location}
-                showsTraffic={true}
-                mapType="terrain"
+              />
+            </View>
+            <Text
+              style={[
+                styles.text_footer,
+                {
+                  marginTop: 35,
+                },
+              ]}
+            >
+              Upload de imagem da parcela
+            </Text>
+            <View>
+              <Button
+                style={styles.buttonUpload}
+                icon="file-image-plus"
+                mode="contained"
+                onPress={() => {
+                  pickImage();
+                }}
+              />
+              <Button
+                style={styles.buttonUpload}
+                icon="camera-plus"
+                mode="contained"
+                onPress={() => {
+                  takePicture();
+                }}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.createTopicButton}
+              onPress={() => {
+                handleRegisterParcell();
+              }}
             >
               <Text
                 style={[

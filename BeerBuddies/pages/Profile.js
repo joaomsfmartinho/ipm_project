@@ -171,7 +171,7 @@ const Profile = ({ navigation }) => {
           >
             Birth Date
           </Text>
-
+          <Text>BirthDate view goes here!!!!!</Text>
           <Text
             style={[
               styles.text_footer,

@@ -16,7 +16,7 @@ const Filter = () => {
     const navigation = useNavigation()
 
     const navigateAboutUs = () => {
-        navigation.navigate("About")
+        navigation.navigate("Search", { "price": price, "rating": rating, "distance": distance, "beer": beer })
     }
 
     const navigateBackwards = () => {

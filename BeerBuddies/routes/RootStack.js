@@ -5,10 +5,12 @@ import Login from '../pages/Login'
 import Register from '../pages/Register';
 import Home from '../pages/Home';
 import Filter from '../pages/Filter';
+
 import About from '../pages/About';
 import MyDrawer from '../routes/HomeDrawer';
 import { HeaderBackButton } from 'react-navigation-stack';
 import { ImageBackground } from 'react-native';
+import Search from '../pages/Search';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +18,7 @@ function RootStack() {
   return (
 
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Search"
       screenOptions={{
         headerShown: false,
       }}>
@@ -44,6 +46,11 @@ function RootStack() {
       <Stack.Screen
         name="About"
         component={About}
+      />
+
+      <Stack.Screen
+        name="Search"
+        component={Search}
       />
     </Stack.Navigator>
 

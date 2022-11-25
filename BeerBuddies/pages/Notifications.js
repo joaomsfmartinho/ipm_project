@@ -28,7 +28,10 @@ export default function Notifications() {
     if (email) {
       let ref = doc(collection(db, "notifications"), email);
       let res = await getDoc(ref);
-      setNotifications(res.get("notifications"));
+      let nots = res.get("notifications");
+      if (nots !== undefined) { 
+        setNotifications(nots);
+      }
     }
   };
 

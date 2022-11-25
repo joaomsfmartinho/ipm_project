@@ -20,17 +20,9 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { Buffer } from "buffer";
-import { Permissions } from 'expo';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
 
 const FILE_TYPE = "application/pdf";
 
-let regionToUpdate = {
-    latitude: 38.662741,
-    longitude: -9.205523,
-    latitudeDelta: 0.0004,
-    longitudeDelta: 0.005
-};
 
 const Map = ({ navigation }) => {
     const [markers, setMarkers] = React.useState([]);
@@ -47,7 +39,6 @@ const Map = ({ navigation }) => {
     const [isRouteEnabled, setIsRouteEnabled] = React.useState(false);
     const [continueRegistration, setContinueRegistration] = React.useState(false);
     const [tutorialVisible, setTutorialVisible] = React.useState(false);
-    const mapRef = React.createRef();
 
     const onStateChange = ({ open }) => setState({ open });
 
@@ -86,27 +77,6 @@ const Map = ({ navigation }) => {
             }
         });
     });
-
-    const handleParishChange = (val) => {
-        setSearchParcell({
-            ...searchParcell,
-            parish: val
-        });
-    };
-
-    const handleArticleChange = (val) => {
-        setSearchParcell({
-            ...searchParcell,
-            article: val
-        });
-    };
-
-    const handleSectionChange = (val) => {
-        setSearchParcell({
-            ...searchParcell,
-            section: val
-        });
-    };
 
     const pickImage = async () => {
         try {

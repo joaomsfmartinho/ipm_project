@@ -49,9 +49,9 @@ export default function App(props) {
     if (email) {
       let ref = doc(collection(db, "notifications"), email);
       let res = await getDoc(ref);
-      let numberOfNots = res.get("notifications").length;
-      if (numberOfNots !== undefined) {
-        setNumberNotifications(numberOfNots)
+      let nots = res.get("notifications");
+      if (nots !== undefined) {
+        setNumberNotifications(nots.length);
       }
     }
   };

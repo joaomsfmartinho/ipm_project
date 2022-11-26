@@ -52,7 +52,11 @@ const Search = ({ route }) => {
 
                 {/** Check Beers */ }
                 for (let j = 0; j < curBar.beers.length; j++) {
-                    if (route.params.beer == "" || route.params.beer == curBar.beers[j]) {
+                    if (route.params.beer == "") {
+                        verifications++;
+                        break;
+                    }
+                    if (route.params.beer == curBar.beers[j]) {
                         console.log("beer")
                         verifications++;
                     }

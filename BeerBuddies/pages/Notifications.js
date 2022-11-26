@@ -111,19 +111,14 @@ export default function Notifications() {
     <View>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
       {notifications.length == 0 && (
-        <View>
-          <Text
-            style={{
-              alignSelf: "center",
-              marginTop: 50,
-              fontSize: 20,
-              fontWeight: "500",
-              color: "#737373",
-            }}
-          >
-            No notifications, check back later!
-          </Text>
+        <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 20 }}> Why anti-social ser? </Text>
+          <Image
+            style={{ width: '70%', height: '70%' }}
+            source={require("../assets/images/antisocial.png")}
+          />
         </View>
+
       )}
       <FlatList
         data={notifications}

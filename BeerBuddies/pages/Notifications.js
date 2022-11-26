@@ -29,7 +29,7 @@ export default function Notifications() {
       let ref = doc(collection(db, "notifications"), email);
       let res = await getDoc(ref);
       let nots = res.get("notifications");
-      if (nots !== undefined) { 
+      if (nots !== undefined) {
         setNotifications(nots);
       }
     }
@@ -37,9 +37,6 @@ export default function Notifications() {
 
   useEffect(() => {
     updateData();
-    setInterval(() => {
-      updateData();
-    }, 5000);
   }, []);
 
   const openPlacePage = () => {

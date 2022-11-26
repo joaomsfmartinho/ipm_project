@@ -36,7 +36,7 @@ const Search = ({ route }) => {
     }
 
     const filterBars = () => {
-        if (runOnce) {
+        if (typeof route.params !== 'undefined' && runOnce) {
             console.log("Filtering Bars...")
             let counter = 0;
             let shownBars = [];

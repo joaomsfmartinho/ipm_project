@@ -6,6 +6,7 @@ import Register from '../pages/Register';
 import Home from '../pages/Home';
 import Filter from '../pages/Filter';
 import BarView from '../pages/BarView';
+import Map from '../pages/Map';
 
 import About from '../pages/About';
 import MyDrawer from '../routes/HomeDrawer';
@@ -41,6 +42,11 @@ function RootStack() {
       <Stack.Screen
         name="Filter"
         component={Filter}
+      />
+
+      <Stack.Screen
+        name="Map"
+        component={Map}
       />
 
       <Stack.Screen

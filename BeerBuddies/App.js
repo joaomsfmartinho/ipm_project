@@ -30,8 +30,6 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { db } from "./firebase";
-import { collection, doc, getDoc } from "firebase/firestore/lite";
 import Search from "./pages/Search";
 
 const Tab = createBottomTabNavigator();
@@ -46,25 +44,14 @@ export default function App(props) {
   const [numberNotifications, setNumberNotifications] = React.useState(0);
 
   const updateData = async () => {
-    let email = await AsyncStorage.getItem("email");
-    getNotificationsNumber(email);
-  };
-
-  const getNotificationsNumber = async (email) => {
-    if (email) {
-      let ref = doc(collection(db, "notifications"), email);
-      let res = await getDoc(ref);
-      let nots = res.get("notifications");
-      if (nots !== undefined) {
-        setNumberNotifications(nots.length);
-      }
-    }
+    let nNots = await AsyncStorage.getItem("nNotifications");
+    if (nNots != undefined) setNumberNotifications(nNots);
   };
 
   useEffect(() => {
     setInterval(() => {
-      //updateData();
-    }, 5000);
+      updateData();
+    }, 2000);
   }, []);
 
   initialLoginState = {
@@ -180,7 +167,7 @@ export default function App(props) {
         <Tab.Screen
           name="Profile"
           component={Profile}
-          options={{ tabBarShowLabel: false }}
+          options={{ tabBarShowLabel: false, headerShown: false }}
         />
       </Tab.Navigator>
     );

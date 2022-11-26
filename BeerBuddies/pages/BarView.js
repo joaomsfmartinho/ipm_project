@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
   View,
@@ -12,11 +13,28 @@ import {
   Image,
 } from "react-native";
 
+
 const BarView = ({ route }) => {
 
+  const navigate = useNavigation()
+
+  const navigateGoingToBar = () => {
+    navigate.push("GoingToBar", route.params)
+  }
+  console.log(route.params.img)
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
+      <View style={{ width: '100%', height: '10%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2 }}>
+        <View style={{ width: '15%', height: '100%', marginLeft: 5 }}>
+          <TouchableOpacity onPress={() => navigateAboutUs()} activeOpacity={0.5}>
+            <Image style={styles.image_beer}
+              source={require("../assets/images/beers.png")}>
+            </Image>
+          </TouchableOpacity>
+
+        </View>
+      </View>
       <View style={styles.topContainer}>
         <View style={styles.leftTextContainer}>
           <Text style={styles.varTitle}>Bar name</Text>
@@ -37,13 +55,23 @@ const BarView = ({ route }) => {
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
-            source={require("../assets/images/NoImage.png")}
+            source={{ uri: route.params.img }}
           />
         </View>
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.varTitle}>Address</Text>
         <Text style={styles.varValue}>{route.params.street}</Text>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => { }} style={styles.button}>
+          <Text style={{ alignContent: 'center', textAlign: 'center', marginTop: '2.5%', fontSize: 23, fontWeight: 'bold', color: 'white' }}>
+            Who is visiting?
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => navigateGoingToBar()} style={styles.button}>
+          <Text style={{ alignContent: 'center', textAlign: 'center', marginTop: '2.5%', fontSize: 23, fontWeight: 'bold', color: 'white' }}>
+            I'm going to this bar.
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -104,6 +132,19 @@ const styles = StyleSheet.create({
     marginTop: 180,
     marginLeft: 25,
   },
+  button: {
+    height: '17%',
+    backgroundColor: 'black',
+    marginHorizontal: '10%',
+    borderWidth: 2,
+    borderColor: '#000000',
+    borderRadius: 10,
+    marginTop: 50
+  },
+  image_beer: {
+    width: '100%',
+    height: '95%'
+  }
 });
 
 export default BarView;

@@ -15,6 +15,7 @@ import About from "./pages/About";
 import Map from "./pages/Map";
 import BarView from "./pages/BarView";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GoingToBar from "./pages/GoingToBar";
 
 import Filter from "./pages/Filter";
 import {
@@ -199,14 +200,16 @@ export default function App(props) {
               <Stack.Screen name="Filter" component={Filter} />
               <Stack.Screen name="About" component={About} />
               <Stack.Screen name="BarView" component={BarView} />
+              <Stack.Screen name="GoingToBar" component={GoingToBar} />
               <Stack.Screen name="Bar Visitors" component={BarVisitors} />
             </Stack.Navigator>
           ) : (
             <RootStack />
-          )}
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </ApplicationProvider>
+          )
+          }
+        </NavigationContainer >
+      </AuthContext.Provider >
+    </ApplicationProvider >
   );
 }
 

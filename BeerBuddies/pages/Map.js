@@ -27,7 +27,8 @@ const FILE_TYPE = "application/pdf";
 
 const Map = () => {
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+    const barsList = require('../assets/data/bars.json');
     const [markers, setMarkers] = React.useState([]);
     const [markersLatLng, setMarkersLatLng] = React.useState([]);
     const [location, setLocation] = React.useState({
@@ -199,7 +200,21 @@ const Map = () => {
                 region={location}
                 showsTraffic={true}
                 mapType="terrain"
-            />
+                showsCompass={false}
+            >
+                {barsList && barsList.map(bar => (
+                    <Marker
+                        identifier={bar.name}
+                        title={bar.name}
+                        coordinate={{
+                            latitude: bar.latitude,
+                            longitude: bar.longitude
+                        }}
+                        image={require('../assets/images/beers_map.png')}
+                        description={"Beer price: " + bar.price.toString() + "€"}
+                    />
+                ))}
+            </MapView>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ModalPopup visible={visible}>
                     <View style={{ alignItems: 'center', flexDirection: "row" }}>

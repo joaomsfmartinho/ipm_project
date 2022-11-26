@@ -10,11 +10,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
+import BarVisitors from "./pages/BarVisitors";
 import About from "./pages/About";
 import Map from "./pages/Map";
 import BarView from "./pages/BarView";
-import PostsStack from "./routes/PostsStack";
-import MyParcells from "./pages/MyParcells";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Filter from "./pages/Filter";
 import {
@@ -34,6 +34,8 @@ import { collection, doc, getDoc } from "firebase/firestore/lite";
 import Search from "./pages/Search";
 
 const Tab = createBottomTabNavigator();
+
+const Stack = createNativeStackNavigator();
 
 export default function App(props) {
   // var intervalId = window.setInterval(function(){
@@ -143,60 +145,61 @@ export default function App(props) {
     }
   };
 
+  const Home = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) =>
+            getBarItem(route, focused, color, size),
+          tabBarActiveTintColor: "#ffd086",
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: styles.mainTab,
+        })}
+      >
+        <Tab.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{
+            tabBarShowLabel: false,
+            tabBarBadge: numberNotifications,
+            tabBarBadgeStyle: styles.badge,
+          }}
+        />
+        <Tab.Screen
+          name="Map"
+          component={Map}
+          options={{ tabBarShowLabel: false }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={Search}
+          options={{ tabBarShowLabel: false }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{ tabBarShowLabel: false }}
+        />
+      </Tab.Navigator>
+    );
+  };
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           {loginState.token != null ? (
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) =>
-                  getBarItem(route, focused, color, size),
-                tabBarActiveTintColor: "#ffd086",
-                tabBarInactiveTintColor: "gray",
-                tabBarStyle: styles.mainTab,
-              })}
-            >
-              <Tab.Screen
-                name="Notifications"
-                component={Notifications}
-                options={{
-                  tabBarShowLabel: false,
-                  tabBarBadge: numberNotifications,
-                  tabBarBadgeStyle: styles.badge,
-                }}
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
               />
-              <Tab.Screen
-                name="Map"
-                component={Map}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="Search"
-                component={Search}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="Profile"
-                component={Profile}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="Filter"
-                component={Filter}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="About"
-                component={About}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="BarView"
-                component={BarView}
-                options={{ tabBarShowLabel: false }}
-              />
-            </Tab.Navigator>
+              <Stack.Screen name="Filter" component={Filter} />
+              <Stack.Screen name="About" component={About} />
+              <Stack.Screen name="BarView" component={BarView} />
+              <Stack.Screen name="Bar Visitors" component={BarVisitors} />
+            </Stack.Navigator>
           ) : (
             <RootStack />
           )}

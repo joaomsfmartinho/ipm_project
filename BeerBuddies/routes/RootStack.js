@@ -6,6 +6,7 @@ import Register from '../pages/Register';
 import Home from '../pages/Home';
 import Filter from '../pages/Filter';
 import BarView from '../pages/BarView';
+import GoingToBar from '../pages/GoingToBar';
 
 import About from '../pages/About';
 import MyDrawer from '../routes/HomeDrawer';
@@ -52,9 +53,15 @@ function RootStack() {
         name="Search"
         component={Search}
       />
+
       <Stack.Screen
         name="BarView"
         component={BarView}
+      />
+
+      <Stack.Screen
+        name="GoingToBar"
+        component={GoingToBar}
       />
     </Stack.Navigator>
 

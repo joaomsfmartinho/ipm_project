@@ -13,6 +13,7 @@ import Notifications from "./pages/Notifications";
 import About from "./pages/About";
 import Map from "./pages/Map";
 import BarView from "./pages/BarView";
+import GoingToBar from "./pages/GoingToBar";
 import PostsStack from "./routes/PostsStack";
 import MyParcells from "./pages/MyParcells";
 
@@ -194,6 +195,11 @@ export default function App(props) {
               <Tab.Screen
                 name="BarView"
                 component={BarView}
+                options={{ tabBarShowLabel: false }}
+              />
+              <Tab.Screen
+                name="GoingToBar"
+                component={GoingToBar}
                 options={{ tabBarShowLabel: false }}
               />
             </Tab.Navigator>

@@ -142,7 +142,6 @@ export default function App(props) {
     }
   };
 
-  return (<Search />)
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthContext.Provider value={authContext}>

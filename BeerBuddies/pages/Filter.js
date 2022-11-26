@@ -1,5 +1,5 @@
 import React from "react"
-import { View, Text, ImageBackground, StyleSheet, StatusBar, Input, Pressable } from "react-native"
+import { View, Text, ImageBackground, StyleSheet, StatusBar, Input, Pressable, TouchableOpacity } from "react-native"
 import { Button, TextInput } from "react-native-paper";
 import BeerAboutUsButton from "../components/BeerAboutUsButton"
 import { useState } from "react";
@@ -16,7 +16,7 @@ const Filter = () => {
     const navigation = useNavigation()
 
     const navigateAboutUs = () => {
-        navigation.navigate("Search", { "price": price, "rating": rating, "distance": distance, "beer": beer })
+        navigation.navigate("About");
     }
 
     const navigateBackwards = () => {
@@ -24,7 +24,8 @@ const Filter = () => {
     }
 
     const startSearching = () => {
-        {/** TODO Search for bars... */ }
+        console.log('beer: %s, rating: %d, distance: %d, price: %d', beer, rating, distance, price)
+        navigation.navigate("Search", { price: price, "rating": rating, "distance": distance, "beer": beer });
     }
 
     return (
@@ -64,7 +65,6 @@ const Filter = () => {
                         <Picker.Item label="3" value="3" />
                         <Picker.Item label="4" value="4" />
                         <Picker.Item label="5" value="5" />
-                        <Picker.Item label="Any" value="Any" />
                     </Picker>
                 </View>
 
@@ -83,17 +83,14 @@ const Filter = () => {
                         <Picker.Item label="Estrela" value="Estrela" />
                         <Picker.Item label="Corona" value="Corona" />
                         <Picker.Item label="Guinness" value="Guinness" />
-                        <Picker.Item label="Any" value="Any" />
                     </Picker>
                 </View>
 
-                <Pressable onPress={() => { }}>
-                    <View style={styles.button}>
-                        <Text style={{ alignContent: 'center', textAlign: 'center', marginTop: '2.5%', fontSize: 25, fontWeight: 'bold', color: 'white' }} onPress={startSearching}>
-                            Search
-                        </Text>
-                    </View>
-                </Pressable>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => { startSearching }} style={styles.button}>
+                    <Text style={{ alignContent: 'center', textAlign: 'center', marginTop: '2.5%', fontSize: 25, fontWeight: 'bold', color: 'white' }} onPress={startSearching}>
+                        Search
+                    </Text>
+                </TouchableOpacity>
             </View >
         </View >
     );
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
         opacity: 0.8
     },
     button: {
-        height: '25%',
+        height: '8%',
         backgroundColor: 'black',
         marginHorizontal: '10%',
         borderWidth: 2,

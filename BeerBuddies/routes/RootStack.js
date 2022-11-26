@@ -18,7 +18,7 @@ function RootStack() {
   return (
 
     <Stack.Navigator
-      initialRouteName="Search"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
       }}>

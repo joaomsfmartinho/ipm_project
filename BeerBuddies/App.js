@@ -30,6 +30,7 @@ import {
 } from "@expo/vector-icons";
 import { db } from "./firebase";
 import { collection, doc, getDoc } from "firebase/firestore/lite";
+import Search from "./pages/Search";
 
 const Tab = createBottomTabNavigator();
 
@@ -171,7 +172,7 @@ export default function App(props) {
               />
               <Tab.Screen
                 name="Search"
-                component={MyParcells}
+                component={Search}
                 options={{ tabBarShowLabel: false }}
               />
               <Tab.Screen

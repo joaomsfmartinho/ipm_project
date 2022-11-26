@@ -1,0 +1,109 @@
+[
+    {
+        "name": "Buddies Bar",
+        "rating": 4.3,
+        "price": 0.6,
+        "latitude": 38.67684891715095,
+        "longitude": -9.165348801081386,
+        "beers": [
+            "Sagres",
+            "Heineken",
+            "Cergal"
+        ],
+        "street": "R. Dom João de Castro nº54c, 2800-682 Almada"
+    },
+    {
+        "name": "Manecas Bar",
+        "rating": 4.4,
+        "price": 1.0,
+        "latitude": 38.6833170941906,
+        "longitude": -9.158373750296503,
+        "beers": [
+            "Super Bock",
+            "Estrela",
+            "Heineken"
+        ],
+        "street": "R. Latino Coelho 21, 2800-202 Almada"
+    },
+    {
+        "name": "Nordic Tavern",
+        "rating": 5,
+        "price": 2.0,
+        "latitude": 38.683099342231834,
+        "longitude": -9.157794393169164,
+        "beers": [
+            "Super Bock",
+            "Guinness",
+            "Corona",
+            "Sagres"
+        ],
+        "street": "R. Cap. Leitão 6 A, 2800-132 Almada"
+    },
+    {
+        "name": "Bar das Artes",
+        "rating": 3.8,
+        "price": 0.8,
+        "latitude": 38.68613105989237,
+        "longitude": -9.149125493930466,
+        "beers": [
+            "Cergal",
+            "Super Bock"
+        ],
+        "street": "R. Cândido dos Reis 87, 2800-269 Almada"
+    },
+    {
+        "name": "Empire Lounge Bar",
+        "rating": 5,
+        "price": 0.5,
+        "latitude": 38.66404338494652,
+        "longitude": -9.158262403246502,
+        "beers": [
+            "Sagres",
+            "Super Bock",
+            "Estrela",
+            "Corona"
+        ],
+        "street": "R. Maria Lamas n9a, 2805-196 Almada"
+    },
+    {
+        "name": "Bar da Loira",
+        "rating": 4.3,
+        "price": 1,
+        "latitude": 38.666892423613305,
+        "longitude": -9.183191606527028,
+        "beers": [
+            "Guinness",
+            "Heineken",
+            "Cergal"
+        ],
+        "street": "R. da Bela Vista n6a, 2825-172 Almada"
+    },
+    {
+        "name": "Rosana Bar Académico",
+        "rating": 5,
+        "price": 1,
+        "latitude": 38.65925503290146,
+        "longitude": -9.19890620363453,
+        "beers": [
+            "Super Bock",
+            "Estrela"
+        ],
+        "street": "R. Catarina Eufémia 1, 2825-063 Caparica"
+    },
+    {
+        "name": "Pepita Bar Trafaria",
+        "rating": 2.7,
+        "price": 1.4,
+        "latitude": 38.662207575538936,
+        "longitude": -9.243791677128291,
+        "beers": [
+            "Super Bock",
+            "Estrela",
+            "Guinness",
+            "Heineken",
+            "Cergal",
+            "Corona"
+        ],
+        "street": "2825-450 Cova do Vapor"
+    }
+]

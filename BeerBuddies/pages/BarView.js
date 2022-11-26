@@ -11,18 +11,8 @@ import {
   Alert,
   Image,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
-import { Picker } from "@react-native-picker/picker";
-import { Avatar, Title, Drawer } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ModalPoup from "../components/ModalPopup";
-import bars from "../assets/data/bars.json";
-import { ImageBackground } from "react-native-web";
 
-const BarView = ({ bar }) => {
-  bar = bars[0];
+const BarView = ({ route }) => {
 
   return (
     <View style={styles.mainContainer}>
@@ -30,17 +20,19 @@ const BarView = ({ bar }) => {
       <View style={styles.topContainer}>
         <View style={styles.leftTextContainer}>
           <Text style={styles.varTitle}>Bar name</Text>
-          <Text style={styles.varValue}>{bar.name}</Text>
+          <Text style={styles.varValue}>{route.params.name}</Text>
           <Text style={[styles.varTitle, { marginTop: 35 }]}>
             Beer price (20cl)
           </Text>
-          <Text style={styles.varValue}>{bar.price}€</Text>
+          <Text style={styles.varValue}>{route.params.price}€</Text>
           <Text style={[styles.varTitle, { marginTop: 35 }]}>Rating</Text>
-          <Text style={styles.varValue}>{bar.rating}</Text>
-          <Image
-            style={styles.starIcon}
-            source={require("../assets/images/rating_star.png")}
-          />
+          <View style={{ flexDirection: 'row', height: '20%' }}>
+            <Text style={styles.varValue}>{route.params.rating}</Text>
+            <Image
+              style={{ width: '14%', height: '35%', marginLeft: 6 }}
+              source={require("../assets/images/rating_star.png")}
+            />
+          </View>
         </View>
         <View style={styles.imageContainer}>
           <Image
@@ -51,7 +43,7 @@ const BarView = ({ bar }) => {
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.varTitle}>Address</Text>
-        <Text style={styles.varValue}>{bar.street}</Text>
+        <Text style={styles.varValue}>{route.params.street}</Text>
       </View>
     </View>
   );

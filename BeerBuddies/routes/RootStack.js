@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Register from '../pages/Register';
 import Home from '../pages/Home';
 import Filter from '../pages/Filter';
+import BarView from '../pages/BarView';
 
 import About from '../pages/About';
 import MyDrawer from '../routes/HomeDrawer';
@@ -16,7 +17,6 @@ const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
-
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{
@@ -52,8 +52,11 @@ function RootStack() {
         name="Search"
         component={Search}
       />
+      <Stack.Screen
+        name="BarView"
+        component={BarView}
+      />
     </Stack.Navigator>
-
 
   );
 }

@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { getDistance } from "geolib";
+import { useNavigation } from "@react-navigation/native";
 
 const BarItem = (props) => {
 
+    const navigate = useNavigation()
+
+    const navigateToBarView = () => {
+        navigate.push("BarView", props.bar)
+    }
+
     return (
-        <View style={styles.barContainer}>
+        <TouchableOpacity style={styles.barContainer} onPress={() => navigateToBarView()}>
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.bar_text}>{props.bar.name} </Text>
@@ -16,7 +23,7 @@ const BarItem = (props) => {
             <Text style={styles.text}>     {props.bar.street}</Text>
             {/**<Text style={styles.text}> Price: {props.bar.price}</Text>
             <Text style={styles.text}> Distance: {distance / 1000} k.m.</Text>*/}
-        </View>
+        </TouchableOpacity>
     )
 }
 

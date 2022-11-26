@@ -191,6 +191,11 @@ export default function App(props) {
                 component={About}
                 options={{ tabBarShowLabel: false }}
               />
+              <Tab.Screen
+                name="BarView"
+                component={BarView}
+                options={{ tabBarShowLabel: false }}
+              />
             </Tab.Navigator>
           ) : (
             <RootStack />

@@ -162,12 +162,12 @@ export default function App(props) {
         <Tab.Screen
           name="Search"
           component={Search}
-          options={{ tabBarShowLabel: false }}
+          options={{ tabBarShowLabel: false, headerShown: false }}
         />
         <Tab.Screen
           name="Profile"
           component={Profile}
-          options={{ tabBarShowLabel: false, headerShown: false }}
+          options={{ tabBarShowLabel: false }}
         />
       </Tab.Navigator>
     );

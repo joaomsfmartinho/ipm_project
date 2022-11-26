@@ -205,14 +205,16 @@ const Map = () => {
                 {barsList && barsList.map(bar => (
                     <Marker
                         identifier={bar.name}
-                        title={bar.name}
+                        title={"Beer price: " + bar.price.toString() + "€"}
                         coordinate={{
                             latitude: bar.latitude,
                             longitude: bar.longitude
                         }}
                         image={require('../assets/images/beers_map.png')}
-                        description={"Beer price: " + bar.price.toString() + "€"}
-                    />
+                        description={"Available beers: " + bar.beers + ""}
+                    >
+                        <Text style={{fontWeight: "bold"}}>{bar.name}</Text>
+                    </Marker>
                 ))}
             </MapView>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

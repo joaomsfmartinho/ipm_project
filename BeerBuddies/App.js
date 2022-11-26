@@ -157,7 +157,7 @@ export default function App(props) {
         <Tab.Screen
           name="Map"
           component={Map}
-          options={{ tabBarShowLabel: false }}
+          options={{ tabBarShowLabel: false, headerShown: false }}
         />
         <Tab.Screen
           name="Search"
@@ -167,7 +167,7 @@ export default function App(props) {
         <Tab.Screen
           name="Profile"
           component={Profile}
-          options={{ tabBarShowLabel: false }}
+          options={{ tabBarShowLabel: false, headerShown: false }}
         />
       </Tab.Navigator>
     );
@@ -184,10 +184,26 @@ export default function App(props) {
                 component={Home}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="Filter" component={Filter} />
-              <Stack.Screen name="About" component={About} />
-              <Stack.Screen name="BarView" component={BarView} />
-              <Stack.Screen name="GoingToBar" component={GoingToBar} />
+              <Stack.Screen
+                name="Filter"
+                component={Filter}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="About"
+                component={About}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="BarView"
+                component={BarView}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="GoingToBar"
+                component={GoingToBar}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen name="Bar Visitors" component={BarVisitors} />
             </Stack.Navigator>
           ) : (

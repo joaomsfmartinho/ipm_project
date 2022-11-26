@@ -110,6 +110,21 @@ export default function Notifications() {
   return (
     <View>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
+      {notifications.length == 0 && (
+        <View>
+          <Text
+            style={{
+              alignSelf: "center",
+              marginTop: 50,
+              fontSize: 20,
+              fontWeight: "500",
+              color: "#737373",
+            }}
+          >
+            No notifications, check back later!
+          </Text>
+        </View>
+      )}
       <FlatList
         data={notifications}
         ItemSeparatorComponent={NotificationDivider}

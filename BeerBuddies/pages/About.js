@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, StatusBar, Dimensions, Pressable, ImageBackground } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get('window');
 const THUMB_SIZE = 80;
@@ -13,6 +14,8 @@ const IMAGES = {
 
 
 export default function UserPage() {
+
+  const navigation = useNavigation();
 
   const [name, setName] = React.useState();
   const carouselRef = useRef();
@@ -38,12 +41,14 @@ export default function UserPage() {
     carouselRef?.current?.snapToItem(touched);
   };
 
+  const navigateBackwards = () => {
+    navigation.goBack();
+  }
 
   useEffect(() => {
     const fu = async () => {
       let email1;
       email1 = await AsyncStorage.getItem('email');
-      getName(email1)
     }
     fu()
   }, []);

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, Alert, Dimensions, LogBox, Image } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet, Alert, Dimensions, LogBox, Image, ImageBackground } from 'react-native';
 import {
     FAB,
     Portal,
@@ -15,6 +15,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import config from '../config/index.json';
 import MapViewDirections from 'react-native-maps-directions';
 import ModalPopup from '../components/ModalPopup';
+import { useNavigation } from "@react-navigation/native";
 import ScrollableModalPopup from '../components/ScrollableModalPopup';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,7 +25,9 @@ import { Buffer } from "buffer";
 const FILE_TYPE = "application/pdf";
 
 
-const Map = ({ navigation }) => {
+const Map = () => {
+
+    const navigation = useNavigation()
     const [markers, setMarkers] = React.useState([]);
     const [markersLatLng, setMarkersLatLng] = React.useState([]);
     const [location, setLocation] = React.useState({
@@ -40,10 +43,6 @@ const Map = ({ navigation }) => {
     const [continueRegistration, setContinueRegistration] = React.useState(false);
     const [tutorialVisible, setTutorialVisible] = React.useState(false);
 
-    const onStateChange = ({ open }) => setState({ open });
-
-    const { open } = state;
-
     useEffect(() => {
         getLocationAsync();
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -57,6 +56,10 @@ const Map = ({ navigation }) => {
         markersArray = [];
         setMarkersLatLng([]);
         firstIteration = true;
+    }
+
+    const navigateAboutUs = () => {
+        navigation.navigate("About");
     }
 
     const getLocationAsync = (async () => {
@@ -188,33 +191,6 @@ const Map = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <GooglePlacesAutocomplete
-                placeholder='Pesquisa'
-                GooglePlacesSearchQuery={{
-                    rankby: "distance"
-                }}
-                onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
-                    setDestin({
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng,
-                        latitudeDelta: 0.000922,
-                        longitudeDelta: 0.000421
-                    });
-                }}
-                query={{
-                    key: config.directionsApiKey,
-                    language: '	pt-pt',
-                    components: 'country:pt',
-                }}
-                enablePoweredByContainer={false}
-                fetchDetails={true}
-                styles={{
-                    container: { flex: 0, position: "absolute", width: "100%", zIndex: 1, top: "-0.5%" },
-                    listView: { height: 100 }
-                }}
-            />
-
             <MapView
                 style={styles.map}
                 showsUserLocation={true}
@@ -223,27 +199,7 @@ const Map = ({ navigation }) => {
                 region={location}
                 showsTraffic={true}
                 mapType="terrain"
-            >
-                {markers.length != 0 ?
-                    <Polygon
-                        coordinates={markers}
-                        fillColor="rgba(0, 200, 0, 0.5)"
-                        strokeColor="rgba(0,0,0,0.5)"
-                        strokeWidth={2}
-                    >
-                    </Polygon> : null}
-                {destin &&
-                    <MapViewDirections
-                        origin={location}
-                        destination={destin}
-                        apikey={config.directionsApiKey}
-                        strokeWidth={3}
-                        onReady={result => {
-
-                        }}
-                    />
-                }
-            </MapView>
+            />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ModalPopup visible={visible}>
                     <View style={{ alignItems: 'center', flexDirection: "row" }}>
@@ -386,56 +342,11 @@ const Map = ({ navigation }) => {
                     </View>
                 </ModalPopup>
             </View>
-            <Provider>
-                <Portal>
-                    <FAB.Group
-                        open={open}
-                        icon={open ? 'close' : 'plus'}
-                        style={{ bottom: 0, right: 0, top: "0%" }}
-                        actions={[
-                            {
-                                icon: 'map-search',
-                                label: "Pesquisar rota",
-                                onPress: (e) => {
-                                    setVisible(true);
-                                }
-                            },
-                            {
-                                icon: 'help',
-                                label: 'Precisa de ajuda?',
-                                onPress: (e) => {
-                                    setTutorialVisible(true);
-                                }
-                            },
-                            {
-                                icon: 'car-off',
-                                label: "Cancelar rota",
-                                onPress: (e) => {
-                                    setDestin(null);
-                                    setIsRouteEnabled(false);
-                                }
-                            },
-                            {
-                                icon: 'delete',
-                                label: 'Limpar desenho',
-                                onPress: () => clearState(),
-                            },
-                            {
-                                icon: 'calendar-check',
-                                label: 'Confirmar',
-                                onPress: (e) => confirmParcellDraw(e),
-                            },
-                        ]}
-                        onStateChange={onStateChange}
-                        fabStyle={{ backgroundColor: "#14555d" }}
-                        onPress={() => {
-                            if (!open) {
-                                // do something if the speed dial is open
-                            }
-                        }}
-                    />
-                </Portal>
-            </Provider>
+            <View style={styles.beerButton}>
+            <TouchableOpacity style={styles.beerButton} onPress={()=>{ navigateAboutUs()}}>
+                <ImageBackground style={styles.image_beer} source={require("../assets/images/beers.png")}/>
+        </TouchableOpacity>
+            </View>
         </View >
     );
 };
@@ -446,6 +357,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width: "100%",
         alignItems: 'center'
+    },
+    image_beer: {
+        width: '110%',
+        height: '95%'
     },
     container: {
         flex: 1,
@@ -486,10 +401,13 @@ const styles = StyleSheet.create({
     map: {
         width: Dimensions.get("window").width,
         height: "100%",
-        top: "5%",
     },
-    button: {
-        alignItems: 'center',
+    beerButton: {
+        marginLeft: "3%",
+        width: "30%",
+        height: "30%",
+        alignSelf: 'flex-start',
+        position: "absolute"
     },
     action: {
         flexDirection: 'row',

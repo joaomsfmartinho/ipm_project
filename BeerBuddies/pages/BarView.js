@@ -21,7 +21,7 @@ const BarView = ({ route }) => {
   const navigateGoingToBar = () => {
     navigate.push("GoingToBar", route.params)
   }
-  console.log(route.params.img)
+
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />

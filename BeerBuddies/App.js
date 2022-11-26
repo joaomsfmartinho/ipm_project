@@ -63,7 +63,7 @@ export default function App(props) {
 
   useEffect(() => {
     setInterval(() => {
-      updateData();
+      //updateData();
     }, 5000);
   }, []);
 
@@ -205,11 +205,10 @@ export default function App(props) {
             </Stack.Navigator>
           ) : (
             <RootStack />
-          )
-          }
-        </NavigationContainer >
-      </AuthContext.Provider >
-    </ApplicationProvider >
+          )}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </ApplicationProvider>
   );
 }
 

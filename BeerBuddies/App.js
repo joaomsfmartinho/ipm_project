@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import About from "./pages/About";
 import Map from "./pages/Map";
+import BarView from "./pages/BarView";
 import PostsStack from "./routes/PostsStack";
 import MyParcells from "./pages/MyParcells";
 

@@ -27,24 +27,31 @@ const BarView = ({ bar }) => {
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
-      <View style={styles.textContainer}>
-        <Text style={styles.varTitle}>Bar name</Text>
-        <Text style={styles.varValue}>{bar.name}</Text>
-        <Text style={[styles.varTitle, { marginTop: 35 }]}>
-          Beer price (20cl)
-        </Text>
-        <Text style={styles.varValue}>{bar.price}€</Text>
-        <Text style={[styles.varTitle, { marginTop: 35 }]}>Rating</Text>
-        <Text style={styles.varValue}>{bar.rating}</Text>
-
-        <Text style={[styles.varTitle, { marginTop: 35 }]}>Address</Text>
-        <Text style={styles.varValue}>{bar.street}</Text>
+      <View style={styles.topContainer}>
+        <View style={styles.leftTextContainer}>
+          <Text style={styles.varTitle}>Bar name</Text>
+          <Text style={styles.varValue}>{bar.name}</Text>
+          <Text style={[styles.varTitle, { marginTop: 35 }]}>
+            Beer price (20cl)
+          </Text>
+          <Text style={styles.varValue}>{bar.price}€</Text>
+          <Text style={[styles.varTitle, { marginTop: 35 }]}>Rating</Text>
+          <Text style={styles.varValue}>{bar.rating}</Text>
+          <Image
+            style={styles.starIcon}
+            source={require("../assets/images/rating_star.png")}
+          />
+        </View>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={require("../assets/images/NoImage.png")}
+          />
+        </View>
       </View>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={require("../assets/images/NoImage.png")}
-        />
+      <View style={styles.bottomContainer}>
+        <Text style={styles.varTitle}>Address</Text>
+        <Text style={styles.varValue}>{bar.street}</Text>
       </View>
     </View>
   );
@@ -54,43 +61,57 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: "#FFF",
-    flexDirection: "row",
-  },
-  textContainer: {
     flexDirection: "column",
-    flex: 0.6,
-    height: "50%",
-    backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    marginTop: 30,
-    backgroundColor: "blue",
   },
-  addressTextContainer: {
-    flex: 0.6,
+  topContainer: {
+    flexDirection: "row",
+    flex: 0.4,
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    //backgroundColor: "blue",
+  },
+  bottomContainer: {
+    flexDirection: "column",
+    flex: 0.5,
     height: "50%",
     backgroundColor: "#fff",
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    marginTop: 30,
-    backgroundColor: "blue",
+    paddingBottom: 30,
+    marginBottom: 10,
+    //backgroundColor: "green",
+  },
+  leftTextContainer: {
+    flex: 0.5,
+    height: "100%",
+    backgroundColor: "#fff",
+    //backgroundColor: "red",
   },
   imageContainer: {
-    paddingRight: 50,
-    flex: 0.5,
-    backgroundColor: "red",
-    marginTop: 30,
-    height: "40%",
+    flex: 0.6,
+    //backgroundColor: "white",
+    height: "100%",
   },
   image: {
-    aspectRatio: 10 / 10,
+    aspectRatio: 15 / 21,
+    height: "100%",
+    width: "auto",
   },
   varTitle: {
-    color: "#05375a",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "700",
   },
-  varValue: {},
+  varValue: {
+    fontSize: 16,
+  },
+  starIcon: {
+    position: "absolute",
+    height: "7.5%",
+    width: "auto",
+    aspectRatio: 1 / 1,
+    marginTop: 180,
+    marginLeft: 25,
+  },
 });
 
 export default BarView;

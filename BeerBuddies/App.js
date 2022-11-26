@@ -155,6 +155,7 @@ export default function App(props) {
           tabBarInactiveTintColor: "gray",
           tabBarStyle: styles.mainTab,
         })}
+        initialRouteName="Map"
       >
         <Tab.Screen
           name="Notifications"

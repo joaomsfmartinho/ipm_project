@@ -49,7 +49,7 @@ export default function BarVisitors() {
     let updated_visitors = [];
     for (let i = 0; i < visitors.length; i++) {
       v = visitors[i];
-      if (i == index) {
+      if (i == selectedIndex) {
         v.requested.push(email);
       }
       updated_visitors.push(v);
@@ -188,7 +188,7 @@ export default function BarVisitors() {
         </View>
       </ModalPopup>
       <FlatList
-        data={data}
+        data={visitors}
         ItemSeparatorComponent={NotificationDivider}
         keyExtractor={(item, index) => {
           return index.toString();
@@ -197,7 +197,10 @@ export default function BarVisitors() {
           return (
             <View style={styles.container}>
               <View style={styles.headerLefTimageView}>
-                <Image style={styles.headerLeftImage} source={item.image} />
+                <Image
+                  style={styles.headerLeftImage}
+                  source={{ uri: item.image }}
+                />
                 <View style={{ marginLeft: 10, alignSelf: "center" }}>
                   <Text
                     style={{

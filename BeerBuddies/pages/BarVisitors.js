@@ -16,7 +16,7 @@ import { db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore/lite";
 import ModalPopup from "../components/ModalPopup";
 
-export default function BarVisitors() {
+const BarVisitors = ({ route }) => {
   const { colors } = useTheme();
   const [visitors, setVisitors] = React.useState([]);
   const [email, setEmail] = React.useState("");
@@ -25,19 +25,26 @@ export default function BarVisitors() {
   const [selectedTime, selectTime] = React.useState("19:30");
   const [selectedIndex, selectIndex] = React.useState(0);
 
-  const getVisitors = async (bar) => {
+  const getVisitors = async () => {
     let mail = await AsyncStorage.getItem("email");
+    let bar = route.params.name;
     setEmail(mail);
     let userRef = doc(collection(db, "users"), mail);
     let userDoc = await getDoc(userRef);
-    let userAge = userDoc.age;
-    ref = doc(collection(db, "visitors"), bar);
-    res = await getDoc(ref);
+    let userAge = userDoc.get("age");
+    let userGender = userDoc.get("gender");
+    let ref = doc(collection(db, "visitors"), bar);
+    let res = await getDoc(ref);
     let vis = res.get("visitors");
     if (vis !== undefined) {
       let filteredV = [];
-      for (v in vis) {
-        if (userAge <= v.maxAge && userAge >= v.minAge) {
+      for (let i = 0; i < vis.length; i++) {
+        let v = vis[i];
+        if (
+          userAge <= v.maxAge &&
+          userAge >= v.minAge &&
+          v.prefGenders.includes(userGender)
+        ) {
           filteredV.push(v);
         }
       }
@@ -48,20 +55,39 @@ export default function BarVisitors() {
   const requestMeeting = () => {
     let updated_visitors = [];
     for (let i = 0; i < visitors.length; i++) {
-      v = visitors[i];
+      let v = visitors[i];
       if (i == selectedIndex) {
+        updateNotifications(v);
         v.requested.push(email);
       }
       updated_visitors.push(v);
     }
     setVisitors(updated_visitors);
     updateVisitorsInDB(updated_visitors);
+    setVisible(false);
   };
 
   const updateVisitorsInDB = async (updated_visitors) => {
     let email = await AsyncStorage.getItem("email");
     let ref = doc(collection(db, "visitors"), email);
     setDoc(ref, { visitors: updated_visitors });
+  };
+
+  const updateNotifications = async (visitor) => {
+    let ref = doc(collection(db, "notifications"), visitor.email);
+    let res = await getDoc(ref);
+    let nots = res.get("notifications");
+    let updatedNotifications = nots;
+    updatedNotifications.push({
+      age: visitor.age,
+      email: visitor.email,
+      gender: visitor.gender,
+      image: visitor.image,
+      name: visitor.name,
+      place: route.params.name,
+      time: visitor.time,
+    });
+    setDoc(ref, { notifications: updatedNotifications });
   };
 
   useEffect(() => {
@@ -299,7 +325,7 @@ export default function BarVisitors() {
       />
     </View>
   );
-}
+};
 
 const NotificationDivider = () => {
   return (
@@ -374,3 +400,5 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
+export default BarVisitors;

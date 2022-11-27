@@ -45,13 +45,13 @@ export default function App(props) {
 
   const updateData = async () => {
     let nNots = await AsyncStorage.getItem("nNotifications");
-    if (nNots != undefined) setNumberNotifications(nNots);
+    if (nNots != undefined) setNumberNotifications(parseInt(nNots));
   };
 
   useEffect(() => {
     setInterval(() => {
       updateData();
-    }, 2000);
+    }, 1000);
   }, []);
 
   initialLoginState = {
@@ -204,7 +204,7 @@ export default function App(props) {
                 component={GoingToBar}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="Bar Visitors" component={BarVisitors} />
+              <Stack.Screen name="BarVisitors" component={BarVisitors} />
             </Stack.Navigator>
           ) : (
             <RootStack />

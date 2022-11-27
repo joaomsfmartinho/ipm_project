@@ -65,7 +65,7 @@ const Login = ({ navigation }) => {
     let res = await getDoc(ref);
     let nots = res.get("notifications");
     if (nots == undefined) nots = [];
-    await AsyncStorage.setItem("nNotifications", nots.length);
+    await AsyncStorage.setItem("nNotifications", nots.length.toString());
   };
 
   const handlePasswordChange = (val) => {

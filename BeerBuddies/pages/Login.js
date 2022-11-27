@@ -49,6 +49,9 @@ const Login = ({ navigation }) => {
         if (error.code === "auth/wrong-password") {
           alert("Wrong Password!");
         }
+        if (error.code === "auth/user-not-found") {
+          alert("User not Found!");
+        }
         //console.log(error);
       });
   };

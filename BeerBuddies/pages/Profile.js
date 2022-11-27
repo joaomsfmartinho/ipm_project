@@ -155,7 +155,7 @@ const Profile = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 35,
+                marginTop: 10,
               },
             ]}
           >
@@ -166,7 +166,7 @@ const Profile = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 0,
+                marginTop: 10,
               },
             ]}
           >
@@ -176,7 +176,7 @@ const Profile = ({ navigation }) => {
             <Picker
               selectedValue={gender}
               defaultValue={gender}
-              style={styles.picker}
+              style={[styles.picker, { marginTop: -20, marginLeft: -5 }]}
               onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
             >
               <Picker.Item label="Male" value="Male" />

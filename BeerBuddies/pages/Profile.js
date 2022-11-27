@@ -48,18 +48,14 @@ const Profile = ({ navigation }) => {
 
   const [show, setShow] = React.useState(false);
 
-  const choosePhoto = () => {
-    // pick new photo
-    alert("aaa");
-  };
-
   const getData = async () => {
-    setEmail(await AsyncStorage.getItem("email"));
-    let ref = doc(collection(db, "users"), email);
+    let mail = await AsyncStorage.getItem("email");
+    setEmail(mail);
+    let ref = doc(collection(db, "users"), mail);
     let res = await getDoc(ref);
     setImage(res.get("image"));
     setName(res.get("name"));
-    setBirthdate(res.get("birthdate"));
+    setBirthdate(new Date(res.get("birthdate")));
     setGender(res.get("gender"));
     setAge(res.get("age"));
   };
@@ -171,7 +167,7 @@ const Profile = ({ navigation }) => {
           >
             Birth Date
           </Text>
-          <Text>BirthDate view goes here!!!!!</Text>
+          <Text>{birthdate.toLocaleDateString()}</Text>
           <Text
             style={[
               styles.text_footer,

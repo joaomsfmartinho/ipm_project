@@ -7,20 +7,20 @@ import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 
 
-const Filter = () => {
+const Filter = ({ navigation }) => {
     const [price, setPrice] = useState('')
     const [rating, setRating] = useState('')
     const [distance, setDistance] = useState('')
     const [beer, setBeer] = useState('')
 
-    const navigation = useNavigation()
+    //const navigation = useNavigation()
 
     const navigateAboutUs = () => {
         navigation.navigate("About");
     }
 
     const navigateBackwards = () => {
-        {/** TODO Navigate backwords page */ }
+        navigation.goBack()
     }
 
     const startSearching = () => {
@@ -32,21 +32,21 @@ const Filter = () => {
         <View style={styles.mainContainer}>
 
             {/** Header */}
-            <StatusBar backgroundColor='#fce571' barStyle="light-content" />
-            <View style={{ width: '100%', height: '9.9%', flexDirection: 'row', marginTop: '0.5%' }}>
+            <StatusBar backgroundColor='#ffd086' barStyle="light-content" />
+            <View style={{ width: '100%', height: '11%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2, paddingBottom: 10 }}>
                 <View style={{ width: '50%', height: '100%' }}>
-                    <Pressable onPress={() => navigateAboutUs()}>
+                    <TouchableOpacity onPress={() => navigateAboutUs()}>
                         <ImageBackground style={styles.image_beer}
                             source={require("../assets/images/beers.png")}>
                         </ImageBackground>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ width: '50%', height: '100%' }}>
-                    <Pressable onPress={() => navigateBackwards()}>
+                    <TouchableOpacity onPress={() => navigateBackwards()}>
                         <ImageBackground style={styles.image_arrow}
                             source={require("../assets/images/back_arrow.png")}>
                         </ImageBackground>
-                    </Pressable>
+                    </TouchableOpacity>
                 </View>
             </View>
 

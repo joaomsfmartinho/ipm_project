@@ -75,7 +75,6 @@ function RootStack() {
         component={BarVisitors}
       />
     </Stack.Navigator>
-
   );
 }
 

@@ -22,9 +22,9 @@ const BarView = ({ route }) => {
     let beers = route.params.beers;
     for (let i = 0; i < beers.length; i++) {
       if (i != beers.length - 1) {
-        availableBeers+= beers[i] + ", ";
+        availableBeers += beers[i] + ", ";
       } else {
-        availableBeers+=beers[i];
+        availableBeers += beers[i];
       }
     }
     return availableBeers;
@@ -100,7 +100,7 @@ const BarView = ({ route }) => {
       <View style={styles.bottomContainer}>
         <Text style={styles.varTitle}>Address</Text>
         <Text style={styles.varValue}>{route.params.street}</Text>
-        <Text style={[styles.varTitle, {marginTop: 20}]}>Available beers</Text>
+        <Text style={[styles.varTitle, { marginTop: 20 }]}>Available beers</Text>
         <Text style={styles.varValue}>{availableBeers}</Text>
         <TouchableOpacity
           activeOpacity={0.7}

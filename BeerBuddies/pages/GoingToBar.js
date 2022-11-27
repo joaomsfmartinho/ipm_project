@@ -90,7 +90,7 @@ const GoingToBar = ({ route }) => {
         setDoc(visitorsRef, { visitors: [visitor] });
       }
       navigateBackwards();
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function getPreferredGenders() {

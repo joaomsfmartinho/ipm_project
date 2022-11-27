@@ -107,7 +107,7 @@ const Profile = ({ navigation }) => {
     else return require("../assets/images/NoImage.png");
   }
 
-  const logOut = async () => {};
+  const logOut = async () => { };
 
   return (
     <View style={styles.container}>
@@ -141,7 +141,7 @@ const Profile = ({ navigation }) => {
               onChangeText={(val) => setName(val)}
             />
           </View>
-          <Text style={[styles.text_footer, {marginTop: 20}]}>Email</Text>
+          <Text style={[styles.text_footer, { marginTop: 20 }]}>Email</Text>
           <View style={styles.action}>
             <FontAwesome
               name="envelope"

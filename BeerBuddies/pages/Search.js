@@ -93,7 +93,7 @@ const Search = ({ route }) => {
       updateBars(shownBars)
     }
   }
-  
+
   function barSearchUpdates(text) {
     let shownBars = [];
     let counter = 0;

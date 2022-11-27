@@ -7,8 +7,6 @@ const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
   return (
-
-
     <Drawer.Navigator>
 
       <Drawer.Screen
@@ -22,8 +20,6 @@ function MyDrawer() {
       />
 
     </Drawer.Navigator>
-
-
   );
 }
 

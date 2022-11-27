@@ -8,7 +8,6 @@ const Stack = createNativeStackNavigator();
 
 function PostsStack() {
   return (
-
     <Stack.Navigator
       screenOptions={{
         headerShown: false
@@ -25,8 +24,6 @@ function PostsStack() {
       />
 
     </Stack.Navigator>
-
-
   );
 }
 

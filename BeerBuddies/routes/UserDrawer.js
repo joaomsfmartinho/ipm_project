@@ -168,13 +168,13 @@ function UserDrawer(props) {
                                         }]}>Sim</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={[styles.button, {marginLeft: '5%'}]}>
+                                <View style={[styles.button, { marginLeft: '5%' }]}>
                                     <TouchableOpacity
                                         style={styles.signIn}
                                         onPress={() => { setVisible(false) }}
                                     >
                                         <Text style={[styles.textSign, {
-                                            color: '#fff'                                          
+                                            color: '#fff'
                                         }]}>Não</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     buttonView: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         marginTop: 50,
 
     }

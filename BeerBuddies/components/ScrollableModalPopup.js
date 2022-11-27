@@ -38,7 +38,7 @@ const ScrollableModalPoup = ({ visible, children }) => {
 
     return (
         <Modal transparent visible={showModal}>
-            <ScrollView style={styles.modalBackGround} contentContainerStyle={{alignItems: "center", justifyContent: 'center',}}>
+            <ScrollView style={styles.modalBackGround} contentContainerStyle={{ alignItems: "center", justifyContent: 'center', }}>
                 <Animated.View
                     style={[styles.modalContainer, { transform: [{ scale: scaleValue }] }]}>
                     {children}

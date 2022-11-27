@@ -304,7 +304,7 @@ const BarVisitors = ({ route }) => {
                   {item.requested.includes(email) && (
                     <TouchableOpacity
                       style={styles.requestedButton}
-                      onPress={() => {}}
+                      onPress={() => { }}
                     >
                       <Text
                         style={[

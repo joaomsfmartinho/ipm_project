@@ -68,11 +68,11 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const storeData = async (data) => {
-    await AsyncStorage.setItem("email", data.email);
+    AsyncStorage.setItem("email", data.email);
     AsyncStorage.setItem("nNotifications", "0");
     let ref = doc(collection(db, "users"), data.email);
 
-    await setDoc(ref, {
+    setDoc(ref, {
       name: data.name,
       birthdate: data.birthdate.toDateString(),
       age: calculateAge(data.birthdate),
@@ -80,7 +80,7 @@ const SignInScreen = ({ navigation }) => {
       gender: gender,
     });
     ref = doc(collection(db, "notifications"), data.email);
-    await setDoc(ref, { notifications: [] });
+    setDoc(ref, { notifications: [] });
   };
 
   const calculateAge = (birthday) => {

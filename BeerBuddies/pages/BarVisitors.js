@@ -7,7 +7,6 @@ import {
   StatusBar,
   Image,
   FlatList,
-  Pressable,
 } from "react-native";
 import { Divider } from "@ui-kitten/components";
 import { useTheme } from "react-native-paper";

@@ -7,11 +7,6 @@ import {
   Text,
   TouchableHighlight,
 } from "react-native";
-import StyledButton from "../components/StyledButton";
-import { stopLocationUpdatesAsync } from "expo-location";
-import { Button } from "react-native-paper";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { Text as TextKitten, Divider } from "@ui-kitten/components";
 
 export default function Home({ navigation }) {

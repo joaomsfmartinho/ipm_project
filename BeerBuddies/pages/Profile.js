@@ -8,23 +8,13 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar,
-  Alert,
   Image,
-  ImageBackground,
-  Pressable,
-  TouchableHighlight,
 } from "react-native";
-import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { AuthContext } from "../components/AuthorizationContext";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
-import { Text as TextKitten } from "@ui-kitten/components";
-import Feather from "react-native-vector-icons/Feather";
 import { Picker } from "@react-native-picker/picker";
-import { Avatar, Title, Drawer } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ModalPoup from "../components/ModalPopup";
 import { db } from "../firebase";
 import {
   collection,

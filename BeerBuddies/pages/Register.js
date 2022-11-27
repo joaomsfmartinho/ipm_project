@@ -8,7 +8,6 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar,
-  Alert,
   Image,
   ImageBackground,
   TouchableHighlight,

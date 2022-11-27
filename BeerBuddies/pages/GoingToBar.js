@@ -4,11 +4,8 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
-  Platform,
   StyleSheet,
-  ScrollView,
   StatusBar,
-  Alert,
   Image,
 } from "react-native";
 
@@ -27,8 +24,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 const GoingToBar = ({ route }) => {
-
-  const navigate = useNavigation()
+  const navigate = useNavigation();
 
   const [time, updateTime] = React.useState("21:00");
   const [checkedM, setCheckedM] = React.useState(false);
@@ -38,8 +34,8 @@ const GoingToBar = ({ route }) => {
   const [visible, setVisible] = React.useState(false);
 
   const navigateBackwards = () => {
-    navigate.goBack()
-  }
+    navigate.goBack();
+  };
 
   const confirmStuff = async () => {
     if (isNaN(minAge)) {
@@ -93,7 +89,7 @@ const GoingToBar = ({ route }) => {
         // new list
         setDoc(visitorsRef, { visitors: [visitor] });
       }
-    } catch (e) { }
+    } catch (e) {}
   }
 
   function getPreferredGenders() {
@@ -163,19 +159,31 @@ const GoingToBar = ({ route }) => {
           </View>
         </View>
       </ModalPopup>
-      <View style={{ width: '100%', height: '11%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2, paddingBottom: 10 }}>
-        <View style={{ width: '50%', height: '100%' }}>
+      <View
+        style={{
+          width: "100%",
+          height: "11%",
+          flexDirection: "row",
+          marginTop: "0.5%",
+          borderBottomColor: "#666666",
+          borderBottomWidth: 2,
+          paddingBottom: 10,
+        }}
+      >
+        <View style={{ width: "50%", height: "100%" }}>
           <TouchableOpacity onPress={() => navigateAboutUs()}>
-            <Image style={styles.image_beer}
-              source={require("../assets/images/beers.png")}>
-            </Image>
+            <Image
+              style={styles.image_beer}
+              source={require("../assets/images/beers.png")}
+            ></Image>
           </TouchableOpacity>
         </View>
-        <View style={{ width: '50%', height: '100%' }}>
+        <View style={{ width: "50%", height: "100%" }}>
           <TouchableOpacity onPress={() => navigateBackwards()}>
-            <Image style={styles.image_arrow}
-              source={require("../assets/images/back_arrow.png")}>
-            </Image>
+            <Image
+              style={styles.image_arrow}
+              source={require("../assets/images/back_arrow.png")}
+            ></Image>
           </TouchableOpacity>
         </View>
       </View>
@@ -292,15 +300,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   image_beer: {
-    width: '50%',
-    height: '100%'
+    width: "50%",
+    height: "100%",
   },
   image_arrow: {
-    width: '21%',
-    height: '65%',
-    marginLeft: '60%',
+    width: "21%",
+    height: "65%",
+    marginLeft: "60%",
     marginTop: 17,
-    opacity: 0.8
+    opacity: 0.8,
   },
   bar_title: {
     fontWeight: "bold",

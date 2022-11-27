@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
-import { View, ActivityIndicator, LogBox, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import RootStack from "./routes/RootStack";
-import UserDrawer from "./routes/UserDrawer";
 import { AuthContext } from "./components/AuthorizationContext";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import BarVisitors from "./pages/BarVisitors";
@@ -18,12 +15,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GoingToBar from "./pages/GoingToBar";
 
 import Filter from "./pages/Filter";
-import {
-  ApplicationProvider,
-  Layout,
-  styled,
-  Text,
-} from "@ui-kitten/components";
+import { ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import {
   FontAwesome,
@@ -204,7 +196,7 @@ export default function App(props) {
                 component={GoingToBar}
                 options={{ headerShown: false }}
               />
-              <Stack.Screen name="BarVisitors" component={BarVisitors} />
+              <Stack.Screen name="Bar Visitors" component={BarVisitors} />
             </Stack.Navigator>
           ) : (
             <RootStack />

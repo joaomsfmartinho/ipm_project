@@ -1,13 +1,11 @@
 import React from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   TextInput,
   Platform,
   StyleSheet,
   StatusBar,
-  Alert,
   ImageBackground,
 } from "react-native";
 import * as Animatable from "react-native-animatable";

@@ -1,15 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
-  Platform,
   StyleSheet,
-  ScrollView,
   StatusBar,
-  Alert,
   Image,
 } from "react-native";
 
@@ -20,33 +16,45 @@ const BarView = ({ route }) => {
     navigate.push("GoingToBar", route.params);
   };
   const navigateBarVisitors = () => {
-    navigate.push("BarVisitors", route.params);
+    navigate.push("Bar Visitors", route.params);
   };
 
   const navigateAboutUs = () => {
     navigate.navigate("About");
-  }
+  };
 
   const navigateBackwards = () => {
-    navigate.goBack()
-  }
+    navigate.goBack();
+  };
 
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
-      <View style={{ width: '100%', height: '11%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2, paddingBottom: 10 }}>
-        <View style={{ width: '50%', height: '100%' }}>
+      <View
+        style={{
+          width: "100%",
+          height: "11%",
+          flexDirection: "row",
+          marginTop: "0.5%",
+          borderBottomColor: "#666666",
+          borderBottomWidth: 2,
+          paddingBottom: 10,
+        }}
+      >
+        <View style={{ width: "50%", height: "100%" }}>
           <TouchableOpacity onPress={() => navigateAboutUs()}>
-            <Image style={styles.image_beer}
-              source={require("../assets/images/beers.png")}>
-            </Image>
+            <Image
+              style={styles.image_beer}
+              source={require("../assets/images/beers.png")}
+            ></Image>
           </TouchableOpacity>
         </View>
-        <View style={{ width: '50%', height: '100%' }}>
+        <View style={{ width: "50%", height: "100%" }}>
           <TouchableOpacity onPress={() => navigateBackwards()}>
-            <Image style={styles.image_arrow}
-              source={require("../assets/images/back_arrow.png")}>
-            </Image>
+            <Image
+              style={styles.image_arrow}
+              source={require("../assets/images/back_arrow.png")}
+            ></Image>
           </TouchableOpacity>
         </View>
       </View>
@@ -180,15 +188,15 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   image_beer: {
-    width: '50%',
-    height: '100%'
+    width: "50%",
+    height: "100%",
   },
   image_arrow: {
-    width: '21%',
-    height: '65%',
-    marginLeft: '60%',
+    width: "21%",
+    height: "65%",
+    marginLeft: "60%",
     marginTop: 17,
-    opacity: 0.8
+    opacity: 0.8,
   },
 });
 

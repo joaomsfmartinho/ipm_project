@@ -14,10 +14,17 @@ import { useTheme } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "../firebase";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore/lite";
+import { useNavigation } from "@react-navigation/native";
+import bars from "../assets/data/bars.json";
 
 export default function Notifications() {
   const { colors } = useTheme();
   const [notifications, setNotifications] = React.useState([]);
+  const navigate = useNavigation();
+
+  const navigateToBarView = (bar) => {
+    navigate.push("BarView", bar);
+  };
 
   const updateData = async () => {
     let email = await AsyncStorage.getItem("email");
@@ -39,8 +46,13 @@ export default function Notifications() {
     updateData();
   }, []);
 
-  const openPlacePage = () => {
-    // TODO: Redirect to bar page
+  const openPlacePage = (name) => {
+    for (let i = 0; i < bars.length; i++) {
+      if (bars[i].name == name) {
+        navigateToBarView(bars[i]);
+        break;
+      }
+    }
   };
 
   const removeNotification = (index) => {
@@ -111,14 +123,21 @@ export default function Notifications() {
     <View>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
       {notifications.length == 0 && (
-        <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "white",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Text style={{ fontSize: 20 }}> Why anti-social ser? </Text>
           <Image
-            style={{ width: '70%', height: '70%' }}
+            style={{ width: "70%", height: "70%" }}
             source={require("../assets/images/antisocial.png")}
           />
         </View>
-
       )}
       <FlatList
         data={notifications}
@@ -190,7 +209,7 @@ export default function Notifications() {
                 </Text>
                 <Pressable
                   onPress={() => {
-                    openPlacePage;
+                    openPlacePage(item.place);
                   }}
                 >
                   <Text

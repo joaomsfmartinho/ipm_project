@@ -61,7 +61,10 @@ export default function Notifications() {
       if (i != index) updated_notifications.push(notifications[i]);
     }
     setNotifications(updated_notifications);
-    AsyncStorage.setItem("nNotifications", updated_notifications.length);
+    AsyncStorage.setItem(
+      "nNotifications",
+      updated_notifications.length.toString()
+    );
     updateNotificationInDB(updated_notifications);
   };
 

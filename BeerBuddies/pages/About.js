@@ -32,6 +32,8 @@ export default function UserPage() {
   const [images, setImages] = useState([
     { id: "1", image: IMAGES.image1 },
     { id: "2", image: IMAGES.image2 },
+    { id: "3", image: IMAGES.image3 },
+    { id: "4", image: IMAGES.image4 },
   ]);
 
   const [indexSelected, setIndexSelected] = useState(0);

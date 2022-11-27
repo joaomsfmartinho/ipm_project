@@ -141,7 +141,7 @@ const Profile = ({ navigation }) => {
               onChangeText={(val) => setName(val)}
             />
           </View>
-          <Text style={[styles.text_footer, {}]}>Email</Text>
+          <Text style={[styles.text_footer, {marginTop: 20}]}>Email</Text>
           <View style={styles.action}>
             <FontAwesome
               name="envelope"
@@ -155,7 +155,7 @@ const Profile = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 10,
+                marginTop: 20,
               },
             ]}
           >
@@ -166,7 +166,7 @@ const Profile = ({ navigation }) => {
             style={[
               styles.text_footer,
               {
-                marginTop: 10,
+                marginTop: 20,
               },
             ]}
           >

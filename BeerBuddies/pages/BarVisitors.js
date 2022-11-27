@@ -31,6 +31,7 @@ const BarVisitors = ({ route }) => {
     let userRef = doc(collection(db, "users"), mail);
     let userDoc = await getDoc(userRef);
     let userAge = userDoc.get("age");
+    let userName = userDoc.get("name");
     let userGender = userDoc.get("gender");
     let ref = doc(collection(db, "visitors"), bar);
     let res = await getDoc(ref);
@@ -42,7 +43,8 @@ const BarVisitors = ({ route }) => {
         if (
           userAge <= v.maxAge &&
           userAge >= v.minAge &&
-          v.prefGenders.includes(userGender)
+          v.prefGenders.includes(userGender) &&
+          v.name != userName
         ) {
           filteredV.push(v);
         }

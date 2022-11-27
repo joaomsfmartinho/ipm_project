@@ -29,7 +29,7 @@ export default function Notifications() {
       let ref = doc(collection(db, "notifications"), email);
       let res = await getDoc(ref);
       let nots = res.get("notifications");
-      if (nots !== undefined) {
+      if (nots !== undefined) { 
         setNotifications(nots);
       }
     }
@@ -37,6 +37,9 @@ export default function Notifications() {
 
   useEffect(() => {
     updateData();
+    setInterval(() => {
+      updateData();
+    }, 5000);
   }, []);
 
   const openPlacePage = () => {
@@ -49,7 +52,6 @@ export default function Notifications() {
       if (i != index) updated_notifications.push(notifications[i]);
     }
     setNotifications(updated_notifications);
-    AsyncStorage.setItem("nNotifications", updated_notifications.length);
     updateNotificationInDB(updated_notifications);
   };
 
@@ -110,16 +112,6 @@ export default function Notifications() {
   return (
     <View>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
-      {notifications.length == 0 && (
-        <View style={{ width: '100%', height: '100%', backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 20 }}> Why anti-social ser? </Text>
-          <Image
-            style={{ width: '70%', height: '70%' }}
-            source={require("../assets/images/antisocial.png")}
-          />
-        </View>
-
-      )}
       <FlatList
         data={notifications}
         ItemSeparatorComponent={NotificationDivider}

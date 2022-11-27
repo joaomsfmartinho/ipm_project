@@ -16,8 +16,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { useTheme } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../components/AuthorizationContext";
-import { auth, db } from "../firebase";
-import { collection, doc, getDoc } from "firebase/firestore/lite";
+import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Text as TextKitten } from "@ui-kitten/components";
 
@@ -56,16 +55,9 @@ const Login = ({ navigation }) => {
   const { colors } = useTheme();
 
   const storeData = async (email) => {
-    await AsyncStorage.setItem("email", email);
-    await getNotificationsNumber(email);
-  };
-
-  const getNotificationsNumber = async (email) => {
-    let ref = doc(collection(db, "notifications"), email);
-    let res = await getDoc(ref);
-    let nots = res.get("notifications");
-    if (nots == undefined) nots = [];
-    await AsyncStorage.setItem("nNotifications", nots.length);
+    if (email != null) {
+      await AsyncStorage.setItem("email", email);
+    }
   };
 
   const handlePasswordChange = (val) => {
@@ -127,9 +119,7 @@ const Login = ({ navigation }) => {
           ) : null}
         </View>
 
-        <TextKitten style={[styles.text_footer, { marginTop: "5%" }]}>
-          Password
-        </TextKitten>
+        <TextKitten style={[styles.text_footer,{ marginTop: "5%"}]}>Password</TextKitten>
         <View style={styles.action}>
           <Feather name="lock" color={colors.text} size={20} />
           <TextInput
@@ -140,6 +130,7 @@ const Login = ({ navigation }) => {
                 color: colors.text,
               },
             ]}
+            
             autoCapitalize="none"
             onChangeText={(password) => handlePasswordChange(password)}
           />

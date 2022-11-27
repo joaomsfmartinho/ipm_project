@@ -118,6 +118,17 @@ function UserDrawer(props) {
                     <DrawerItem
                         icon={({ color, size }) => (
                             <Icon
+                                name="earth-plus"
+                                color={color}
+                                size={size}
+                            />
+                        )}
+                        label="Registar Parcelas"
+                        onPress={() => { props.navigation.navigate('Map') }}
+                    />
+                    <DrawerItem
+                        icon={({ color, size }) => (
+                            <Icon
                                 name="book"
                                 color={color}
                                 size={size}

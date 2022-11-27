@@ -23,7 +23,6 @@
       "bundleIdentifier": "ipm.beerbuddies"
     },
     "android": {
-      "softwareKeyboardLayoutMode": "pan",
       "package": "ipm.beerbuddies",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",

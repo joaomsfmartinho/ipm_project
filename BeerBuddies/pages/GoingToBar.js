@@ -16,6 +16,7 @@ import { Picker } from "@react-native-picker/picker";
 import { db } from "../firebase";
 import { CheckBox } from "@ui-kitten/components";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ModalPopup from "../components/ModalPopup";
 import {
   collection,
   doc,
@@ -30,6 +31,7 @@ const GoingToBar = ({ route }) => {
   const [checkedF, setCheckedF] = React.useState(false);
   const [minAge, setMinAge] = React.useState("18");
   const [maxAge, setMaxAge] = React.useState("60");
+  const [visible, setVisible] = React.useState(false);
 
   const confirmStuff = async () => {
     if (isNaN(minAge)) {
@@ -83,11 +85,7 @@ const GoingToBar = ({ route }) => {
         // new list
         setDoc(visitorsRef, { visitors: [visitor] });
       }
-
-      alert("Confirmed!");
-    } catch (e) {
-      alert(e);
-    }
+    } catch (e) {}
   }
 
   function getPreferredGenders() {
@@ -104,6 +102,59 @@ const GoingToBar = ({ route }) => {
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
+      <ModalPopup visible={visible} style={styles.popup}>
+        <View>
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 10,
+              fontSize: 25,
+              fontWeight: "700",
+            }}
+          >
+            Confirm visit to {route.params.name} at {time}?
+          </Text>
+          <View
+            style={{ flexDirection: "row", alignSelf: "center", marginTop: 20 }}
+          >
+            <TouchableOpacity
+              style={styles.declineButton}
+              onPress={() => {
+                setVisible(false);
+              }}
+            >
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: "#fff",
+                  },
+                ]}
+              >
+                No
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.acceptButton}
+              onPress={() => {
+                confirmStuff();
+                setVisible(false);
+              }}
+            >
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: "#fff",
+                  },
+                ]}
+              >
+                Yes
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ModalPopup>
       <View
         style={{
           width: "100%",
@@ -202,7 +253,7 @@ const GoingToBar = ({ route }) => {
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => confirmStuff()}
+          onPress={() => setVisible(true)}
           style={styles.button}
         >
           <Text
@@ -248,6 +299,24 @@ const styles = StyleSheet.create({
   },
   text_subtitles: {
     fontWeight: "bold",
+  },
+  acceptButton: {
+    width: "40%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "green",
+    marginLeft: 20,
+  },
+  declineButton: {
+    width: "40%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "red",
+    marginRight: 20,
   },
 });
 

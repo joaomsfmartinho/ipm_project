@@ -83,7 +83,7 @@ const Search = ({ route }) => {
         {
           /** Check Ratings */
         }
-        if (route.params.rating == "" || route.params.rating <= curBar.rating) {
+        if (route.params.rating == "" || parseFloat(route.params.rating) <= curBar.rating) {
           console.log("rating");
           verifications++;
         }

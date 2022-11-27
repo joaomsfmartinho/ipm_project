@@ -53,7 +53,7 @@ const Search = ({ route }) => {
         {
           /** Check Price */
         }
-        if (route.params.price >= curBar.price || route.params.price == "") {
+        if (parseFloat(route.params.price) >= curBar.price || route.params.price == "") {
           console.log("price");
           verifications++;
         }

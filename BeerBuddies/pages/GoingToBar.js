@@ -89,6 +89,7 @@ const GoingToBar = ({ route }) => {
         // new list
         setDoc(visitorsRef, { visitors: [visitor] });
       }
+      navigateBackwards();
     } catch (e) {}
   }
 

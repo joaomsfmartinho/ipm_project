@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,24 @@ import {
 
 const BarView = ({ route }) => {
   const navigate = useNavigation();
+  const [availableBeers, setAvailableBeers] = React.useState("");
+
+  useEffect(() => {
+    setAvailableBeers(getAvailableBeers());
+  }, [route]);
+
+  const getAvailableBeers = () => {
+    let availableBeers = "";
+    let beers = route.params.beers;
+    for (let i = 0; i < beers.length; i++) {
+      if (i != beers.length - 1) {
+        availableBeers+= beers[i] + ", ";
+      } else {
+        availableBeers+=beers[i];
+      }
+    }
+    return availableBeers;
+  }
 
   const navigateGoingToBar = () => {
     navigate.push("GoingToBar", route.params);
@@ -62,11 +80,11 @@ const BarView = ({ route }) => {
         <View style={styles.leftTextContainer}>
           <Text style={styles.varTitle}>Bar name</Text>
           <Text style={styles.varValue}>{route.params.name}</Text>
-          <Text style={[styles.varTitle, { marginTop: 35 }]}>
+          <Text style={[styles.varTitle, { marginTop: 20 }]}>
             Beer price (20cl)
           </Text>
           <Text style={styles.varValue}>{route.params.price}€</Text>
-          <Text style={[styles.varTitle, { marginTop: 35 }]}>Rating</Text>
+          <Text style={[styles.varTitle, { marginTop: 20 }]}>Rating</Text>
           <View style={{ flexDirection: "row", height: "20%" }}>
             <Text style={styles.varValue}>{route.params.rating}</Text>
             <Image
@@ -82,6 +100,8 @@ const BarView = ({ route }) => {
       <View style={styles.bottomContainer}>
         <Text style={styles.varTitle}>Address</Text>
         <Text style={styles.varValue}>{route.params.street}</Text>
+        <Text style={[styles.varTitle, {marginTop: 20}]}>Available beers</Text>
+        <Text style={styles.varValue}>{availableBeers}</Text>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => navigateBarVisitors()}
@@ -144,6 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 30,
+    marginTop: -20,
     marginBottom: 10,
     //backgroundColor: "green",
   },

@@ -28,7 +28,7 @@ const Filter = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const startSearching = async() => {
+  const startSearching = () => {
     console.log(
       "beer: %s, rating: %d, distance: %d, price: %d",
       beer,

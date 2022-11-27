@@ -10,10 +10,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
+import BarVisitors from "./pages/BarVisitors";
 import About from "./pages/About";
 import Map from "./pages/Map";
-import PostsStack from "./routes/PostsStack";
-import MyParcells from "./pages/MyParcells";
+import BarView from "./pages/BarView";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GoingToBar from "./pages/GoingToBar";
 
 import Filter from "./pages/Filter";
 import {
@@ -28,10 +30,11 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { db } from "./firebase";
-import { collection, doc, getDoc } from "firebase/firestore/lite";
+import Search from "./pages/Search";
 
 const Tab = createBottomTabNavigator();
+
+const Stack = createNativeStackNavigator();
 
 export default function App(props) {
   // var intervalId = window.setInterval(function(){
@@ -41,25 +44,14 @@ export default function App(props) {
   const [numberNotifications, setNumberNotifications] = React.useState(0);
 
   const updateData = async () => {
-    let email = await AsyncStorage.getItem("email");
-    getNotificationsNumber(email);
-  };
-
-  const getNotificationsNumber = async (email) => {
-    if (email) {
-      let ref = doc(collection(db, "notifications"), email);
-      let res = await getDoc(ref);
-      let nots = res.get("notifications");
-      if (nots !== undefined) {
-        setNumberNotifications(nots.length);
-      }
-    }
+    let nNots = await AsyncStorage.getItem("nNotifications");
+    if (nNots != undefined) setNumberNotifications(nNots);
   };
 
   useEffect(() => {
     setInterval(() => {
       updateData();
-    }, 5000);
+    }, 2000);
   }, []);
 
   initialLoginState = {
@@ -141,55 +133,79 @@ export default function App(props) {
     }
   };
 
+  const Home = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) =>
+            getBarItem(route, focused, color, size),
+          tabBarActiveTintColor: "#ffd086",
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: styles.mainTab,
+        })}
+        initialRouteName="Map"
+      >
+        <Tab.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{
+            tabBarShowLabel: false,
+            tabBarBadge: numberNotifications,
+            tabBarBadgeStyle: styles.badge,
+          }}
+        />
+        <Tab.Screen
+          name="Map"
+          component={Map}
+          options={{ tabBarShowLabel: false, headerShown: false }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={Search}
+          options={{ tabBarShowLabel: false, headerShown: false }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{ tabBarShowLabel: false, headerShown: false }}
+        />
+      </Tab.Navigator>
+    );
+  };
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           {loginState.token != null ? (
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) =>
-                  getBarItem(route, focused, color, size),
-                tabBarActiveTintColor: "#ffd086",
-                tabBarInactiveTintColor: "gray",
-                tabBarStyle: styles.mainTab,
-              })}
-            >
-              <Tab.Screen
-                name="Notifications"
-                component={Notifications}
-                options={{
-                  tabBarShowLabel: false,
-                  tabBarBadge: numberNotifications,
-                  tabBarBadgeStyle: styles.badge,
-                }}
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
               />
-              <Tab.Screen
-                name="Map"
-                component={Map}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="Search"
-                component={MyParcells}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
-                name="Profile"
-                component={Profile}
-                options={{ tabBarShowLabel: false }}
-              />
-              <Tab.Screen
+              <Stack.Screen
                 name="Filter"
                 component={Filter}
-                options={{ tabBarShowLabel: false }}
+                options={{ headerShown: false }}
               />
-              <Tab.Screen
+              <Stack.Screen
                 name="About"
                 component={About}
-                options={{ tabBarShowLabel: false }}
+                options={{ headerShown: false }}
               />
-            </Tab.Navigator>
+              <Stack.Screen
+                name="BarView"
+                component={BarView}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="GoingToBar"
+                component={GoingToBar}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="Bar Visitors" component={BarVisitors} />
+            </Stack.Navigator>
           ) : (
             <RootStack />
           )}

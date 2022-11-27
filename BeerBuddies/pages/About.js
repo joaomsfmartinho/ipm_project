@@ -55,7 +55,7 @@ export default function UserPage() {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor='#fce571' barStyle="light-content" />
+      <StatusBar backgroundColor='#ffd086' barStyle="light-content" />
       <Text style={styles.title_text}>About us?</Text>
 
       <View style={{ width: '100%', height: '9.9%', flexDirection: 'row', marginTop: '0.5%' }}>
@@ -123,20 +123,20 @@ export default function UserPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fce571'
+    backgroundColor: '#ffd086'
   },
   text: {
     flex: 1.3,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    backgroundColor: '#fce571',
+    backgroundColor: '#ffd086',
     alignItems: 'center'
   },
   header: {
     flex: 0.6,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    backgroundColor: '#fce571',
+    backgroundColor: '#ffd086',
     alignItems: 'center'
   },
   text_header: {

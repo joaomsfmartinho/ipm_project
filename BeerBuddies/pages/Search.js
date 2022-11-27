@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { View, Text, ImageBackground, StyleSheet, FlatList, TouchableOpacity } from "react-native"
+import { View, Text, ImageBackground, StyleSheet, FlatList, TouchableOpacity, StatusBar } from "react-native"
 import { Button, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import bars from "../assets/data/bars.json";
@@ -102,6 +102,7 @@ const Search = ({ route }) => {
 
     return (
         <View style={styles.mainContainer}>
+            <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
             <View style={{ width: '100%', height: '12%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2, paddingBottom: 10 }}>
                 <View style={{ width: '15%', height: '100%', marginLeft: 5 }}>
                     <TouchableOpacity onPress={() => navigateAboutUs()} activeOpacity={0.5}>
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     filter_button: {
         width: '30%',
         height: '30%',
-        backgroundColor: '#fce571',
+        backgroundColor: '#ffd086',
         marginHorizontal: 14,
         marginTop: 4,
         borderWidth: 2,

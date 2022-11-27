@@ -13,6 +13,7 @@ import MyDrawer from '../routes/HomeDrawer';
 import { HeaderBackButton } from 'react-navigation-stack';
 import { ImageBackground } from 'react-native';
 import Search from '../pages/Search';
+import BarVisitors from '../pages/BarVisitors'
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,11 @@ function RootStack() {
       <Stack.Screen
         name="GoingToBar"
         component={GoingToBar}
+      />
+
+      <Stack.Screen
+        name="BarVisitors"
+        component={BarVisitors}
       />
     </Stack.Navigator>
 

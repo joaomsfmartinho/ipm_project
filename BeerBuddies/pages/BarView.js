@@ -23,28 +23,30 @@ const BarView = ({ route }) => {
     navigate.push("BarVisitors", route.params);
   };
 
+  const navigateAboutUs = () => {
+    navigate.navigate("About");
+  }
+
+  const navigateBackwards = () => {
+    navigate.goBack()
+  }
+
   return (
     <View style={styles.mainContainer}>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
-      <View
-        style={{
-          width: "100%",
-          height: "10%",
-          flexDirection: "row",
-          marginTop: "0.5%",
-          borderBottomColor: "#666666",
-          borderBottomWidth: 2,
-        }}
-      >
-        <View style={{ width: "15%", height: "100%", marginLeft: 5 }}>
-          <TouchableOpacity
-            onPress={() => navigateAboutUs()}
-            activeOpacity={0.5}
-          >
-            <Image
-              style={styles.image_beer}
-              source={require("../assets/images/beers.png")}
-            ></Image>
+      <View style={{ width: '100%', height: '11%', flexDirection: 'row', marginTop: '0.5%', borderBottomColor: "#666666", borderBottomWidth: 2, paddingBottom: 10 }}>
+        <View style={{ width: '50%', height: '100%' }}>
+          <TouchableOpacity onPress={() => navigateAboutUs()}>
+            <Image style={styles.image_beer}
+              source={require("../assets/images/beers.png")}>
+            </Image>
+          </TouchableOpacity>
+        </View>
+        <View style={{ width: '50%', height: '100%' }}>
+          <TouchableOpacity onPress={() => navigateBackwards()}>
+            <Image style={styles.image_arrow}
+              source={require("../assets/images/back_arrow.png")}>
+            </Image>
           </TouchableOpacity>
         </View>
       </View>
@@ -178,8 +180,15 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   image_beer: {
-    width: "100%",
-    height: "95%",
+    width: '50%',
+    height: '100%'
+  },
+  image_arrow: {
+    width: '21%',
+    height: '65%',
+    marginLeft: '60%',
+    marginTop: 17,
+    opacity: 0.8
   },
 });
 

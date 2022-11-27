@@ -10,6 +10,7 @@ import {
 import { TextInput } from "react-native-paper";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Filter = ({ navigation }) => {
   const [price, setPrice] = useState("");
@@ -27,7 +28,7 @@ const Filter = ({ navigation }) => {
     navigation.goBack();
   };
 
-  const startSearching = () => {
+  const startSearching = async() => {
     console.log(
       "beer: %s, rating: %d, distance: %d, price: %d",
       beer,

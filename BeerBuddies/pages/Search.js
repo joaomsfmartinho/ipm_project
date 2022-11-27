@@ -13,12 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import bars from "../assets/data/bars.json";
 import BarItem from "../components/BarItem";
 import { getDistance } from "geolib";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const Search = ({ route }) => {
   const navigation = useNavigation();
   const [searchedBars, updateBars] = React.useState(bars);
-
-  const [runOnce, updateRun] = React.useState(true);
 
   const navigateAboutUs = () => {
     navigation.navigate("About");
@@ -41,69 +42,58 @@ const Search = ({ route }) => {
     return distance / 1000 <= route.params.distance;
   }
 
+  useEffect(() => filterBars(), [route]);
+
   const filterBars = () => {
-    if (typeof route.params !== "undefined" && runOnce) {
-      console.log("Filtering Bars...");
+    if (typeof route.params !== 'undefined') {
+      console.log("Filtering Bars...")
       let counter = 0;
       let shownBars = [];
       for (let i = 0; i < bars.length; i++) {
-        let curBar = bars[i];
+        let curBar = bars[i]
         let verifications = 0;
 
-        {
-          /** Check Price */
-        }
-        if (parseFloat(route.params.price) >= curBar.price || route.params.price == "") {
-          console.log("price");
+        {/** Check Price */ }
+        if (route.params.price >= curBar.price || route.params.price == "") {
+          console.log("price")
           verifications++;
         }
 
-        {
-          /** Check Beers */
-        }
+        {/** Check Beers */ }
         for (let j = 0; j < curBar.beers.length; j++) {
           if (route.params.beer == "") {
             verifications++;
             break;
           }
           if (route.params.beer == curBar.beers[j]) {
-            console.log("beer");
+            console.log("beer")
             verifications++;
           }
         }
 
-        {
-          /** Check Distance */
-        }
+        {/** Check Distance */ }
         if (route.params.distance == "" || inDistance(curBar)) {
-          console.log("distance");
+          console.log("distance")
           verifications++;
         }
 
-        {
-          /** Check Ratings */
-        }
-        if (route.params.rating == "" || parseFloat(route.params.rating) <= curBar.rating) {
-          console.log("rating");
+        {/** Check Ratings */ }
+        if (route.params.rating == "" || route.params.rating <= curBar.rating) {
+          console.log("rating")
           verifications++;
         }
 
-        console.log(verifications);
-        {
-          /** If everything is ok, add bar */
-        }
+        console.log(verifications)
+        {/** If everything is ok, add bar */ }
         if (verifications == 4) {
           shownBars[counter] = bars[i];
           counter++;
         }
       }
-      updateBars(shownBars);
-      updateRun(false);
+      updateBars(shownBars)
     }
-  };
-
-  filterBars();
-
+  }
+  
   function barSearchUpdates(text) {
     let shownBars = [];
     let counter = 0;

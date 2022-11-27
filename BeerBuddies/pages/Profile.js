@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { AuthContext } from "../components/AuthorizationContext";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { Text as TextKitten } from "@ui-kitten/components";
@@ -43,10 +44,11 @@ const Profile = ({ navigation }) => {
   const [image, setImage] = React.useState(null);
   const [birthdate, setBirthdate] = React.useState(maxBirthdate);
   const [gender, setGender] = React.useState("Male");
-  // TODO
   const [age, setAge] = React.useState(0);
 
   const [show, setShow] = React.useState(false);
+
+  const { signOut } = React.useContext(AuthContext);
 
   const getData = async () => {
     let mail = await AsyncStorage.getItem("email");
@@ -114,6 +116,8 @@ const Profile = ({ navigation }) => {
     if (image) return { uri: image };
     else return require("../assets/images/NoImage.png");
   }
+
+  const logOut = async () => {};
 
   return (
     <View style={styles.container}>
@@ -209,31 +213,29 @@ const Profile = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
+        <View style={[styles.button, { marginTop: 10 }]}>
+          <TouchableOpacity
+            style={[styles.signIn, { backgroundColor: "#f44" }]}
+            onPress={() => {
+              signOut();
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: "#fff",
+                },
+              ]}
+            >
+              Log Out
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 };
-
-/*
-<View>
-  <TouchableHighlight onPress={setShow}>
-    <View>
-      <TextKitten style={styles.picker} category="label">
-        {birthdate.toLocaleDateString()}
-      </TextKitten>
-      {show && (
-        <DateTimePicker
-          maximumDate={maxBirthdate}
-          testID="dateTimePicker"
-          value={birthdate}
-          mode={"date"}
-          onChange={handleDateChange}
-        />
-      )}
-    </View>
-  </TouchableHighlight>
-</View>
-*/
 
 export default Profile;
 const imageSize = 150;

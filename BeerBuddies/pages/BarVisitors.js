@@ -58,7 +58,7 @@ const BarVisitors = ({ route }) => {
     for (let i = 0; i < visitors.length; i++) {
       let v = visitors[i];
       if (i == selectedIndex) {
-        updateNotifications(v.email);
+        updateNotifications(v.email, v.time);
         v.requested.push(email);
       }
       updated_visitors.push(v);
@@ -74,7 +74,7 @@ const BarVisitors = ({ route }) => {
     setDoc(ref, { visitors: updated_visitors });
   };
 
-  const updateNotifications = async (visitor) => {
+  const updateNotifications = async (visitor, time) => {
     let email = await AsyncStorage.getItem("email");
     let userRef = doc(collection(db, "users"), email);
     let user = await getDoc(userRef);
@@ -89,7 +89,7 @@ const BarVisitors = ({ route }) => {
       image: user.get("image"),
       name: user.get("name"),
       place: route.params.name,
-      time: visitor.time,
+      time: time,
     });
     setDoc(ref, { notifications: updatedNotifications });
   };

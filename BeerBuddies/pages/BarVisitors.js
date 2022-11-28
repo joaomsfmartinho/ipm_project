@@ -20,7 +20,7 @@ const BarVisitors = ({ route }) => {
   const [visitors, setVisitors] = React.useState([]);
   const [email, setEmail] = React.useState("");
   const [visible, setVisible] = React.useState(false);
-  const [selectedPerson, selectPerson] = React.useState("Hillary");
+  const [selectedPerson, selectPerson] = React.useState("");
   const [selectedTime, selectTime] = React.useState("19:30");
   const [selectedIndex, selectIndex] = React.useState(0);
 
@@ -58,7 +58,7 @@ const BarVisitors = ({ route }) => {
     for (let i = 0; i < visitors.length; i++) {
       let v = visitors[i];
       if (i == selectedIndex) {
-        updateNotifications(v);
+        updateNotifications(v.email);
         v.requested.push(email);
       }
       updated_visitors.push(v);
@@ -75,16 +75,19 @@ const BarVisitors = ({ route }) => {
   };
 
   const updateNotifications = async (visitor) => {
-    let ref = doc(collection(db, "notifications"), visitor.email);
+    let email = await AsyncStorage.getItem("email");
+    let userRef = doc(collection(db, "users"), email);
+    let user = await getDoc(userRef);
+    let ref = doc(collection(db, "notifications"), visitor);
     let res = await getDoc(ref);
     let nots = res.get("notifications");
     let updatedNotifications = nots;
     updatedNotifications.push({
-      age: visitor.age,
-      email: visitor.email,
-      gender: visitor.gender,
-      image: visitor.image,
-      name: visitor.name,
+      age: user.get("age"),
+      email: email,
+      gender: user.get("gender"),
+      image: user.get("image"),
+      name: user.get("name"),
       place: route.params.name,
       time: visitor.time,
     });
@@ -304,7 +307,7 @@ const BarVisitors = ({ route }) => {
                   {item.requested.includes(email) && (
                     <TouchableOpacity
                       style={styles.requestedButton}
-                      onPress={() => { }}
+                      onPress={() => {}}
                     >
                       <Text
                         style={[

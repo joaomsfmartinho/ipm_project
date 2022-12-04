@@ -69,8 +69,7 @@ const BarVisitors = ({ route }) => {
   };
 
   const updateVisitorsInDB = async (updated_visitors) => {
-    let email = await AsyncStorage.getItem("email");
-    let ref = doc(collection(db, "visitors"), email);
+    let ref = doc(collection(db, "visitors"), route.params.name);
     setDoc(ref, { visitors: updated_visitors });
   };
 

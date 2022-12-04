@@ -83,14 +83,29 @@ const GoingToBar = ({ route }) => {
       if (typeof visitorsDoc.get("visitors") !== "undefined") {
         // update list
         let visitorsList = visitorsDoc.get("visitors");
-        visitorsList.push(visitor);
-        updateDoc(visitorsRef, { visitors: visitorsList });
+        if (isDuplicateVisit(visitor, visitorsList)) {
+          alert(
+            "You already informed that you are going to the bar at this time."
+          );
+        } else {
+          visitorsList.push(visitor);
+          updateDoc(visitorsRef, { visitors: visitorsList });
+          navigateBackwards();
+        }
       } else {
         // new list
         setDoc(visitorsRef, { visitors: [visitor] });
+        navigateBackwards();
       }
-      navigateBackwards();
-    } catch (e) { }
+    } catch (e) {}
+  }
+
+  function isDuplicateVisit(visitor, visitors) {
+    for (let i = 0; i < visitors.length; i++) {
+      let v = visitors[i];
+      if (v.email == visitor.email && v.time == visitor.time) return true;
+    }
+    return false;
   }
 
   function getPreferredGenders() {

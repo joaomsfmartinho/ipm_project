@@ -216,6 +216,21 @@ const BarVisitors = ({ route }) => {
           </View>
         </View>
       </ModalPopup>
+      {visitors.length == 0 && (
+        <View>
+          <Text
+            style={{
+              alignSelf: "center",
+              marginTop: 50,
+              fontSize: 20,
+              fontWeight: "500",
+              color: "#737373",
+            }}
+          >
+            No visitors today, check back later!
+          </Text>
+        </View>
+      )}
       <FlatList
         data={visitors}
         ItemSeparatorComponent={NotificationDivider}

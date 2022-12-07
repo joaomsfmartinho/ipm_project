@@ -47,15 +47,17 @@ const SignInScreen = ({ navigation }) => {
   const [gender, setGender] = React.useState("Male");
   const [image, setImage] = React.useState(null);
 
-  const getNetInfo = () => {
-    NetInfo.fetch().then((state) => {
-      console.warn(state.isConnected);
-    })
+  const getNetInfo = async() => {
+    let isConnectedToInternet = false;
+    await NetInfo.fetch().then((state) => {
+      isConnectedToInternet = state.isConnected;
+    });
+    return isConnectedToInternet;
   };
 
 
-  const handleRegistration = () => {
-    isConnectedToInternet = getNetInfo();
+  const handleRegistration = async() => {
+    let isConnectedToInternet = await getNetInfo();
     if (isConnectedToInternet != true) {
       alert("You must be connected to the internet to register your account!");
     } else {

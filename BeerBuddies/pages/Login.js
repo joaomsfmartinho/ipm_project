@@ -35,14 +35,16 @@ const Login = ({ navigation }) => {
     isValidPassword: true,
   });
 
-  const getNetInfo = () => {
-    NetInfo.fetch().then((state) => {
-      console.warn(state.isConnected);
-    })
+  const getNetInfo = async() => {
+    let isConnectedToInternet = false;
+    await NetInfo.fetch().then((state) => {
+      isConnectedToInternet = state.isConnected;
+    });
+    return isConnectedToInternet;
   };
 
-  const loginUser = () => {
-    isConnectedToInternet = getNetInfo();
+  const loginUser = async() => {
+    let isConnectedToInternet = await getNetInfo();
     if (isConnectedToInternet != true) {
       alert("You must be connected to the internet to log in!");
     } else {

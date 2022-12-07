@@ -23,6 +23,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore/lite";
+import NetInfo from "@react-native-community/netinfo";
 
 const maxBirthdate = new Date(
   new Date().setFullYear(new Date().getFullYear() - 18)
@@ -52,16 +53,29 @@ const Profile = ({ navigation }) => {
     setAge(res.get("age"));
   };
 
-  const updateData = async () => {
-    let ref = doc(collection(db, "users"), email);
-    await updateDoc(ref, {
-      name: name,
-      birthdate: birthdate,
-      age: calculateAge(birthdate),
-      image: image,
-      gender: gender,
-      age: age,
+  const getNetInfo = async() => {
+    let isConnectedToInternet = false;
+    await NetInfo.fetch().then((state) => {
+      isConnectedToInternet = state.isConnected;
     });
+    return isConnectedToInternet;
+  };
+
+  const updateData = async() => {
+    let isConnectedToInternet = await getNetInfo();
+    if (isConnectedToInternet != true) {
+      alert("You must be connected to the internet to update your profile!");
+    } else {
+      let ref = doc(collection(db, "users"), email);
+      await updateDoc(ref, {
+        name: name,
+        birthdate: birthdate,
+        age: calculateAge(birthdate),
+        image: image,
+        gender: gender,
+        age: age,
+      });
+    }
   };
 
   const calculateAge = (birthday) => {
@@ -72,12 +86,6 @@ const Profile = ({ navigation }) => {
     } catch (e) {
       alert(e);
     }
-  };
-
-  const handleDateChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setBirthdate(currentDate);
   };
 
   useEffect(() => {
@@ -107,7 +115,6 @@ const Profile = ({ navigation }) => {
     else return require("../assets/images/NoImage.png");
   }
 
-  const logOut = async () => { };
 
   return (
     <View style={styles.container}>

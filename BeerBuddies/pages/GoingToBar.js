@@ -22,6 +22,7 @@ import {
   updateDoc,
 } from "firebase/firestore/lite";
 import { useNavigation } from "@react-navigation/native";
+import NetInfo from "@react-native-community/netinfo";
 
 const GoingToBar = ({ route }) => {
   const navigate = useNavigation();
@@ -37,23 +38,36 @@ const GoingToBar = ({ route }) => {
     navigate.goBack();
   };
 
-  const confirmStuff = async () => {
-    if (isNaN(minAge)) {
-      alert("Min age must be a number");
-      return;
-    }
-    if (isNaN(maxAge)) {
-      alert("Max age must be a number");
-      return;
-    }
+  const getNetInfo = async() => {
+    let isConnectedToInternet = false;
+    await NetInfo.fetch().then((state) => {
+      isConnectedToInternet = state.isConnected;
+    });
+    return isConnectedToInternet;
+  };
 
-    let minAgeVal = parseInt(minAge);
-    let maxAgeVal = parseInt(maxAge);
-    if (maxAgeVal < minAgeVal) {
-      alert("Max age must be higher than the min age");
-      return;
+  const confirmStuff = async () => {
+    let isConnectedToInternet = await getNetInfo();
+    if (isConnectedToInternet != true) {
+      alert("You must be connected to the internet to confirm your visit!");
+    } else {
+      if (isNaN(minAge)) {
+        alert("Min age must be a number!");
+        return;
+      }
+      if (isNaN(maxAge)) {
+        alert("Max age must be a number!");
+        return;
+      }
+
+      let minAgeVal = parseInt(minAge);
+      let maxAgeVal = parseInt(maxAge);
+      if (maxAgeVal < minAgeVal) {
+        alert("Max age must be higher than the min age!");
+        return;
+      }
+      await storeData();
     }
-    await storeData();
   };
 
   async function storeData() {
@@ -97,7 +111,7 @@ const GoingToBar = ({ route }) => {
         setDoc(visitorsRef, { visitors: [visitor] });
         navigateBackwards();
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function isDuplicateVisit(visitor, visitors) {

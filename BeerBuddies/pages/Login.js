@@ -18,6 +18,7 @@ import { auth, db } from "../firebase";
 import { collection, doc, getDoc } from "firebase/firestore/lite";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Text as TextKitten } from "@ui-kitten/components";
+import NetInfo from "@react-native-community/netinfo";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
@@ -34,24 +35,35 @@ const Login = ({ navigation }) => {
     isValidPassword: true,
   });
 
+  const getNetInfo = () => {
+    NetInfo.fetch().then((state) => {
+      console.warn(state.isConnected);
+    })
+  };
+
   const loginUser = () => {
-    signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((response) => {
-        storeData(data.email);
-        signIn(data.email);
-      })
-      .catch((error) => {
-        if (error.code === "auth/invalid-email") {
-          alert("That email address is invalid!");
-        }
-        if (error.code === "auth/wrong-password") {
-          alert("Wrong Password!");
-        }
-        if (error.code === "auth/user-not-found") {
-          alert("User not Found!");
-        }
-        //console.log(error);
-      });
+    isConnectedToInternet = getNetInfo();
+    if (isConnectedToInternet != true) {
+      alert("You must be connected to the internet to log in!");
+    } else {
+      signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((response) => {
+          storeData(data.email);
+          signIn(data.email);
+        })
+        .catch((error) => {
+          if (error.code === "auth/invalid-email") {
+            alert("That email address is invalid!");
+          }
+          if (error.code === "auth/wrong-password") {
+            alert("Wrong Password!");
+          }
+          if (error.code === "auth/user-not-found") {
+            alert("User not Found!");
+          }
+          //console.log(error);
+        });
+    }
   };
 
   const { colors } = useTheme();

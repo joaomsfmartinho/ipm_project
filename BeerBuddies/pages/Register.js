@@ -25,6 +25,7 @@ import { AuthContext } from "../components/AuthorizationContext";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
+import NetInfo from "@react-native-community/netinfo";
 
 const maxBirthdate = new Date(
   new Date().setFullYear(new Date().getFullYear() - 18)
@@ -46,24 +47,36 @@ const SignInScreen = ({ navigation }) => {
   const [gender, setGender] = React.useState("Male");
   const [image, setImage] = React.useState(null);
 
+  const getNetInfo = () => {
+    NetInfo.fetch().then((state) => {
+      console.warn(state.isConnected);
+    })
+  };
+
+
   const handleRegistration = () => {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then(() => {
-        storeData(data);
-        signIn(data.email);
-      })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          alert("That email address is already in use!");
-        }
-        if (error.code === "auth/invalid-email") {
-          alert("Invalid email!");
-        }
-        if (error.code === "auth/weak-password") {
-          alert("Password needs at least 6 characters!");
-        }
-        //console.error(error);
-      });
+    isConnectedToInternet = getNetInfo();
+    if (isConnectedToInternet != true) {
+      alert("You must be connected to the internet to register your account!");
+    } else {
+      createUserWithEmailAndPassword(auth, data.email, data.password)
+        .then(() => {
+          storeData(data);
+          signIn(data.email);
+        })
+        .catch((error) => {
+          if (error.code === "auth/email-already-in-use") {
+            alert("That email address is already in use!");
+          }
+          if (error.code === "auth/invalid-email") {
+            alert("Invalid email!");
+          }
+          if (error.code === "auth/weak-password") {
+            alert("Password needs at least 6 characters!");
+          }
+          //console.error(error);
+        });
+    }
   };
 
   const storeData = async (data) => {

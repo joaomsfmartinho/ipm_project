@@ -53,7 +53,7 @@ const Profile = ({ navigation }) => {
     setAge(res.get("age"));
   };
 
-  const getNetInfo = async() => {
+  const getNetInfo = async () => {
     let isConnectedToInternet = false;
     await NetInfo.fetch().then((state) => {
       isConnectedToInternet = state.isConnected;
@@ -61,7 +61,7 @@ const Profile = ({ navigation }) => {
     return isConnectedToInternet;
   };
 
-  const updateData = async() => {
+  const updateData = async () => {
     let isConnectedToInternet = await getNetInfo();
     if (isConnectedToInternet != true) {
       alert("You must be connected to the internet to update your profile!");
@@ -93,20 +93,25 @@ const Profile = ({ navigation }) => {
   }, []);
 
   const handleChooseImage = async () => {
-    await ImagePicker.requestMediaLibraryPermissionsAsync();
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      let splitted = result.uri.split(".");
-      let imageType = splitted[splitted.length - 1];
-      let imageString = await FileSystem.readAsStringAsync(result.uri, {
-        encoding: FileSystem.EncodingType.Base64,
+    let isConnectedToInternet = await getNetInfo();
+    if (isConnectedToInternet != true) {
+      alert("You must be connected to the internet to update your profile!");
+    } else {
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
       });
-      setImage(`data:image/${imageType};base64,${imageString}`);
+      if (!result.cancelled) {
+        let splitted = result.uri.split(".");
+        let imageType = splitted[splitted.length - 1];
+        let imageString = await FileSystem.readAsStringAsync(result.uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        setImage(`data:image/${imageType};base64,${imageString}`);
+      }
     }
   };
 

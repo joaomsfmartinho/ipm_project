@@ -69,11 +69,11 @@ const Profile = ({ navigation }) => {
       let ref = doc(collection(db, "users"), email);
       await updateDoc(ref, {
         name: name,
-        birthdate: birthdate,
-        age: calculateAge(birthdate),
+        //birthdate: birthdate,
+        //age: calculateAge(birthdate),
         image: image,
         gender: gender,
-        age: age,
+        //age: age,
       });
     }
   };

@@ -136,7 +136,7 @@ const Search = ({ route }) => {
         >
           <View style={styles.search_bar}>
             <TextInput
-              style={{ height: "80%", width: "98%", marginTop: 3 }}
+              style={{ height: "80%", width: "98%" }}
               placeholder={"Search..."}
               onChangeText={(text) => barSearchUpdates(text)}
             />
@@ -146,7 +146,7 @@ const Search = ({ route }) => {
             activeOpacity={0.5}
             onPress={() => navigateFilters()}
           >
-            <Text style={{ textAlign: "center" }}>Filters</Text>
+            <Text>Filters</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -172,18 +172,20 @@ const styles = StyleSheet.create({
   search_bar: {
     height: "50%",
     width: "90%",
-    marginHorizontal: 10,
+    marginHorizontal: '2.5%',
     marginTop: 6,
     alignItems: "center",
   },
   filter_button: {
     width: "30%",
-    height: "30%",
+    height: "35%",
     backgroundColor: "#ffd086",
-    marginHorizontal: 14,
-    marginTop: 4,
+    marginHorizontal: '3%',
+    marginTop: '2%',
     borderWidth: 2,
     borderColor: "#666666",
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
 

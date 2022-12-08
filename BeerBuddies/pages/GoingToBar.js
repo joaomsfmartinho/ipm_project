@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  ImageBackground
 } from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
@@ -97,7 +98,7 @@ const GoingToBar = ({ route }) => {
         setDoc(visitorsRef, { visitors: [visitor] });
         navigateBackwards();
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function isDuplicateVisit(visitor, visitors) {
@@ -194,12 +195,12 @@ const GoingToBar = ({ route }) => {
             ></Image>
           </TouchableOpacity>
         </View>
-        <View style={{ width: "50%", height: "100%" }}>
+        <View style={{ width: "50%", height: "100%", justifyContent: 'flex-end', alignItems: 'flex-end' }}>
           <TouchableOpacity onPress={() => navigateBackwards()}>
-            <Image
-              style={styles.image_arrow}
+            <ImageBackground
+              style={{ width: '50%', aspectRatio: 1 / 0.5 }}
               source={require("../assets/images/back_arrow.png")}
-            ></Image>
+            ></ImageBackground>
           </TouchableOpacity>
         </View>
       </View>
@@ -284,9 +285,7 @@ const GoingToBar = ({ route }) => {
         >
           <Text
             style={{
-              alignContent: "center",
               textAlign: "center",
-              marginTop: "2.5%",
               fontSize: 23,
               fontWeight: "bold",
               color: "white",
@@ -307,13 +306,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   button: {
-    marginTop: 20,
     height: "25%",
     backgroundColor: "black",
     marginHorizontal: "10%",
     borderWidth: 2,
     borderColor: "#000000",
     borderRadius: 10,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image_beer: {
     width: "50%",

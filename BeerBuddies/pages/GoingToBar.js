@@ -46,6 +46,10 @@ const GoingToBar = ({ route }) => {
     return isConnectedToInternet;
   };
 
+  const navigateAboutUs = () => {
+    navigate.navigate("About");
+  };
+
   const confirmStuff = async () => {
     let isConnectedToInternet = await getNetInfo();
     if (isConnectedToInternet != true) {

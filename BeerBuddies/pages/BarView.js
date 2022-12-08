@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
+  ImageBackground,
 } from "react-native";
 
 const BarView = ({ route }) => {
@@ -67,12 +68,12 @@ const BarView = ({ route }) => {
             ></Image>
           </TouchableOpacity>
         </View>
-        <View style={{ width: "50%", height: "100%" }}>
+        <View style={{ width: "50%", height: "100%", justifyContent: 'flex-end', alignItems: 'flex-end' }}>
           <TouchableOpacity onPress={() => navigateBackwards()}>
-            <Image
-              style={styles.image_arrow}
+            <ImageBackground
+              style={{ width: '50%', aspectRatio: 1 / 0.5 }}
               source={require("../assets/images/back_arrow.png")}
-            ></Image>
+            ></ImageBackground>
           </TouchableOpacity>
         </View>
       </View>
@@ -88,7 +89,7 @@ const BarView = ({ route }) => {
           <View style={{ flexDirection: "row", height: "20%" }}>
             <Text style={styles.varValue}>{route.params.rating}</Text>
             <Image
-              style={{ width: "14%", height: "35%", marginLeft: 6 }}
+              style={{ width: "12%", aspectRatio: 1 / 1, marginLeft: 6 }}
               source={require("../assets/images/rating_star.png")}
             />
           </View>
@@ -109,9 +110,7 @@ const BarView = ({ route }) => {
         >
           <Text
             style={{
-              alignContent: "center",
               textAlign: "center",
-              marginTop: "2.5%",
               fontSize: 23,
               fontWeight: "bold",
               color: "white",
@@ -127,9 +126,7 @@ const BarView = ({ route }) => {
         >
           <Text
             style={{
-              alignContent: "center",
               textAlign: "center",
-              marginTop: "2.5%",
               fontSize: 23,
               fontWeight: "bold",
               color: "white",
@@ -200,20 +197,22 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   button: {
-    height: "17%",
+    height: "20%",
     backgroundColor: "black",
     marginHorizontal: "10%",
     borderWidth: 2,
     borderColor: "#000000",
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image_beer: {
     width: "50%",
     height: "100%",
   },
   image_arrow: {
-    width: "21%",
+    width: "18%",
     height: "65%",
     marginLeft: "60%",
     marginTop: 17,

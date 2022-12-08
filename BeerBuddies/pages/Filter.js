@@ -67,10 +67,10 @@ const Filter = ({ navigation }) => {
             ></ImageBackground>
           </TouchableOpacity>
         </View>
-        <View style={{ width: "50%", height: "100%" }}>
+        <View style={{ width: "50%", height: "100%", justifyContent: 'flex-end', alignItems: 'flex-end' }}>
           <TouchableOpacity onPress={() => navigateBackwards()}>
             <ImageBackground
-              style={styles.image_arrow}
+              style={{ width: '50%', aspectRatio: 1 / 0.5 }}
               source={require("../assets/images/back_arrow.png")}
             ></ImageBackground>
           </TouchableOpacity>
@@ -141,9 +141,7 @@ const Filter = ({ navigation }) => {
         >
           <Text
             style={{
-              alignContent: "center",
               textAlign: "center",
-              marginTop: "2.5%",
               fontSize: 25,
               fontWeight: "bold",
               color: "white",
@@ -192,20 +190,17 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   image_arrow: {
-    width: "48%",
-    height: "78%",
-    marginLeft: "60%",
-    marginTop: 17,
-    opacity: 0.8,
   },
   button: {
-    height: "8%",
+    height: "9%",
     backgroundColor: "black",
     marginHorizontal: "10%",
     borderWidth: 2,
     borderColor: "#000000",
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 25,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });
 

@@ -77,13 +77,13 @@ export default function UserPage() {
           marginTop: "0.5%",
         }}
       >
-        <View style={{ width: "50%", height: "100%" }}>
+        <View style={{ width: "50%", height: "100%", alignItems: 'center' }}>
           <ImageBackground
             style={styles.image_beer}
             source={require("../assets/images/beers.png")}
           ></ImageBackground>
         </View>
-        <View style={{ width: "50%", height: "100%" }}>
+        <View style={{ width: "50%", height: "100%", alignItems: 'center', justifyContent: 'flex-end' }}>
           <Pressable onPress={() => navigateBackwards()}>
             <ImageBackground
               style={styles.image_arrow}
@@ -164,14 +164,13 @@ const styles = StyleSheet.create({
     textShadowRadius: 2,
     textShadowColor: "#4b4b4b",
     textShadowOffset: { width: 2, height: 2 },
-    fontSize: 25,
+    fontSize: 20,
   },
   image_arrow: {
     width: "48%",
-    height: "78%",
-    marginLeft: "60%",
-    marginTop: 17,
+    height: "80%",
     opacity: 0.8,
+    marginTop: '10%'
   },
   title_text: {
     position: "absolute",

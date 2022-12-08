@@ -53,15 +53,26 @@ const GoingToBar = ({ route }) => {
     } else {
       if (isNaN(minAge)) {
         alert("Min age must be a number!");
+        setVisible(false);
         return;
       }
       if (isNaN(maxAge)) {
         alert("Max age must be a number!");
+        setVisible(false);
         return;
       }
-
       let minAgeVal = parseInt(minAge);
       let maxAgeVal = parseInt(maxAge);
+      if (minAgeVal < 18) {
+        alert("The minimum age has to be 18.");
+        setVisible(false);
+        return;
+      }
+      if (maxAgeVal > 100) {
+        alert("The maximum age cannot exceed 100.");
+        setVisible(false);
+        return;
+      }
       if (maxAgeVal < minAgeVal) {
         alert("Max age must be higher than the min age!");
         return;
@@ -171,7 +182,6 @@ const GoingToBar = ({ route }) => {
             <TouchableOpacity
               style={styles.acceptButton}
               onPress={() => {
-                confirmStuff();
                 setVisible(false);
               }}
             >
@@ -269,11 +279,14 @@ const GoingToBar = ({ route }) => {
             <View style={{ width: "70%", height: "100%" }}>
               <TextInput
                 style={{ borderBottomWidth: 3, borderBottomColor: "#ffd086" }}
-                onChangeText={(val) => setMinAge(val)}
+                onChangeText={
+                  (val) =>{
+                    setMinAge(val)}
+                }
                 defaultValue="18"
                 keyboardType="phone-pad"
               >
-                {" "}
+                {""}
               </TextInput>
             </View>
           </View>
@@ -286,14 +299,17 @@ const GoingToBar = ({ route }) => {
                 defaultValue="60"
                 keyboardType="phone-pad"
               >
-                {" "}
+                {""}
               </TextInput>
             </View>
           </View>
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => setVisible(true)}
+          onPress={() => {
+            confirmStuff();
+            setVisible(true)}
+          }
           style={styles.button}
         >
           <Text

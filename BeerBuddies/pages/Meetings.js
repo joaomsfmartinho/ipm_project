@@ -18,11 +18,11 @@ import { useNavigation } from "@react-navigation/native";
 import bars from "../assets/data/bars.json";
 import ModalPopup from "../components/ModalPopup";
 
-export default function Notifications() {
+export default function Meetings() {
   const { colors } = useTheme();
-  const [notifications, setNotifications] = React.useState([]);
-  const [selectedIndex, selectIndex] = React.useState(0);
+  const [meetings, setMeetings] = React.useState([]);
   const [visible, setVisible] = React.useState(false);
+  const [selectedIndex, selectIndex] = React.useState(0);
   const navigate = useNavigation();
 
   const navigateToBarView = (bar) => {
@@ -31,16 +31,16 @@ export default function Notifications() {
 
   const updateData = async () => {
     let email = await AsyncStorage.getItem("email");
-    getNotifications(email);
+    getMeetings(email);
   };
 
-  const getNotifications = async (email) => {
+  const getMeetings = async (email) => {
     if (email) {
-      let ref = doc(collection(db, "notifications"), email);
+      let ref = doc(collection(db, "meetings"), email);
       let res = await getDoc(ref);
-      let nots = res.get("notifications");
-      if (nots !== undefined) {
-        setNotifications(nots);
+      let meet = res.get("meetings");
+      if (meet !== undefined) {
+        setMeetings(meet);
       }
     }
   };
@@ -58,53 +58,43 @@ export default function Notifications() {
     }
   };
 
-  const acceptNotification = async (index) => {
-    let email = await AsyncStorage.getItem("email");
-    let otherEmail = notifications[index].email;
-    let newMeeting = notifications[index];
-    removeNotification(index);
-    // Update meeting for himself
-    await updateMeetings(email, newMeeting);
-    // Update meeting for the other person
-    newMeeting.email = email;
-    let ref = doc(collection(db, "users"), email);
-    let res = await getDoc(ref);
-    newMeeting.age = res.get("age");
-    newMeeting.image = res.get("image");
-    newMeeting.name = res.get("name");
-    newMeeting.gender = res.get("gender");
-    await updateMeetings(otherEmail, newMeeting);
-  };
-
-  const updateMeetings = async (email, newMeeting) => {
-    let ref = doc(collection(db, "meetings"), email);
-    let res = await getDoc(ref);
-    let updatedMeetings = res.get("meetings");
-    if (updatedMeetings == undefined) {
-      setDoc(ref, { meetings: [newMeeting] });
-    } else {
-      updatedMeetings.push(newMeeting);
-      setDoc(ref, { meetings: updatedMeetings });
+  const removeMeeting = (index) => {
+    let updatedMeetings = [];
+    for (let i = 0; i < meetings.length; i++) {
+      if (i != index) updatedMeetings.push(meetings[i]);
     }
-  };
-
-  const removeNotification = (index) => {
-    let updated_notifications = [];
-    for (let i = 0; i < notifications.length; i++) {
-      if (i != index) updated_notifications.push(notifications[i]);
-    }
-    setNotifications(updated_notifications);
-    AsyncStorage.setItem(
-      "nNotifications",
-      updated_notifications.length.toString()
+    setMeetings(updatedMeetings);
+    updateMeetingInDB(updatedMeetings);
+    // Update for other person
+    updateMeetingForOtherInDB(
+      meetings[i].email,
+      meetings[i].time,
+      meetings[i].place
     );
-    updateNotificationInDB(updated_notifications);
+    setVisible(false);
   };
 
-  const updateNotificationInDB = async (updated_notifications) => {
+  const updateMeetingInDB = async (updatedMeetings) => {
     let email = await AsyncStorage.getItem("email");
-    let ref = doc(collection(db, "notifications"), email);
-    setDoc(ref, { notifications: updated_notifications });
+    let ref = doc(collection(db, "meetings"), email);
+    setDoc(ref, { meetings: updatedMeetings });
+  };
+
+  const updateMeetingForOtherInDB = async (otherEmail, time, place) => {
+    let email = await AsyncStorage.getItem("email");
+    let ref = doc(collection(db, "meetings"), otherEmail);
+    let updatedMeetings = res.get("meetings");
+    let toRemove;
+    for (let i = 0; i < updatedMeetings.length; i++) {
+      if (
+        updatedMeetings[i].email == email &&
+        updatedMeetings[i].time == time &&
+        updatedMeetings[i].place == place
+      )
+        toRemove = i;
+    }
+    updatedMeetings.splice(toRemove, 1);
+    setDoc(ref, { meetings: updatedMeetings });
   };
 
   const data = [
@@ -158,7 +148,7 @@ export default function Notifications() {
   return (
     <View>
       <StatusBar backgroundColor="#ffd086" barStyle="light-content" />
-      {notifications.length == 0 && (
+      {meetings.length == 0 && (
         <View>
           <Text
             style={{
@@ -169,7 +159,7 @@ export default function Notifications() {
               color: "#737373",
             }}
           >
-            No notifications, check back later!
+            No meetings, check back later!
           </Text>
         </View>
       )}
@@ -183,7 +173,7 @@ export default function Notifications() {
               fontWeight: "700",
             }}
           >
-            Accept Meeting?
+            Cancel Meeting?
           </Text>
           <View
             style={{ flexDirection: "row", alignSelf: "center", marginTop: 20 }}
@@ -208,7 +198,7 @@ export default function Notifications() {
             <TouchableOpacity
               style={styles.acceptButton}
               onPress={() => {
-                acceptNotification(selectedIndex);
+                removeMeeting(selectedIndex);
               }}
             >
               <Text
@@ -226,7 +216,7 @@ export default function Notifications() {
         </View>
       </ModalPopup>
       <FlatList
-        data={notifications}
+        data={meetings}
         ItemSeparatorComponent={NotificationDivider}
         keyExtractor={(item, index) => {
           return index.toString();
@@ -272,7 +262,7 @@ export default function Notifications() {
                   </View>
                 </View>
               </View>
-              <View style={{ marginLeft: 50, alignSelf: "flex-start" }}>
+              <View style={{ marginLeft: 80, alignSelf: "flex-start" }}>
                 <Text
                   style={{
                     color: "black",
@@ -280,9 +270,7 @@ export default function Notifications() {
                     fontWeight: "800",
                     alignSelf: "center",
                   }}
-                >
-                  Wants to meet
-                </Text>
+                ></Text>
                 <Text
                   style={{
                     color: "black",
@@ -319,24 +307,7 @@ export default function Notifications() {
                   }}
                 >
                   <TouchableOpacity
-                    style={styles.declineButton}
-                    onPress={() => {
-                      removeNotification(index);
-                    }}
-                  >
-                    <Text
-                      style={[
-                        styles.textSign,
-                        {
-                          color: "#fff",
-                        },
-                      ]}
-                    >
-                      Decline
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.acceptButton}
+                    style={styles.cancelButton}
                     onPress={() => {
                       selectIndex(index);
                       setVisible(true);
@@ -350,7 +321,7 @@ export default function Notifications() {
                         },
                       ]}
                     >
-                      Accept
+                      Cancel Meeting
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -406,10 +377,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 20,
     backgroundColor: "green",
-    marginLeft: 2,
+    marginLeft: 5,
   },
   declineButton: {
     width: "36%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    backgroundColor: "red",
+  },
+  cancelButton: {
+    width: "70%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   StatusBar,
   Image,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 
 import { Picker } from "@react-native-picker/picker";
@@ -39,7 +39,7 @@ const GoingToBar = ({ route }) => {
     navigate.goBack();
   };
 
-  const getNetInfo = async() => {
+  const getNetInfo = async () => {
     let isConnectedToInternet = false;
     await NetInfo.fetch().then((state) => {
       isConnectedToInternet = state.isConnected;
@@ -82,8 +82,8 @@ const GoingToBar = ({ route }) => {
         alert("Max age must be higher than the min age!");
         return;
       }
-      await storeData();
     }
+    setVisible(true);
   };
 
   async function storeData() {
@@ -127,7 +127,7 @@ const GoingToBar = ({ route }) => {
         setDoc(visitorsRef, { visitors: [visitor] });
         navigateBackwards();
       }
-    } catch (e) { }
+    } catch (e) {}
   }
 
   function isDuplicateVisit(visitor, visitors) {
@@ -187,6 +187,7 @@ const GoingToBar = ({ route }) => {
             <TouchableOpacity
               style={styles.acceptButton}
               onPress={() => {
+                storeData();
                 setVisible(false);
               }}
             >
@@ -223,10 +224,17 @@ const GoingToBar = ({ route }) => {
             ></Image>
           </TouchableOpacity>
         </View>
-        <View style={{ width: "50%", height: "100%", justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+        <View
+          style={{
+            width: "50%",
+            height: "100%",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+          }}
+        >
           <TouchableOpacity onPress={() => navigateBackwards()}>
             <ImageBackground
-              style={{ width: '50%', aspectRatio: 1 / 0.5 }}
+              style={{ width: "50%", aspectRatio: 1 / 0.5 }}
               source={require("../assets/images/back_arrow.png")}
             ></ImageBackground>
           </TouchableOpacity>
@@ -284,10 +292,9 @@ const GoingToBar = ({ route }) => {
             <View style={{ width: "70%", height: "100%" }}>
               <TextInput
                 style={{ borderBottomWidth: 3, borderBottomColor: "#ffd086" }}
-                onChangeText={
-                  (val) =>{
-                    setMinAge(val)}
-                }
+                onChangeText={(val) => {
+                  setMinAge(val);
+                }}
                 defaultValue="18"
                 keyboardType="phone-pad"
               >
@@ -313,8 +320,7 @@ const GoingToBar = ({ route }) => {
           activeOpacity={0.7}
           onPress={() => {
             confirmStuff();
-            setVisible(true)}
-          }
+          }}
           style={styles.button}
         >
           <Text
@@ -347,8 +353,8 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     borderRadius: 10,
     marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   image_beer: {
     width: "50%",

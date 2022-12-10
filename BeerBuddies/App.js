@@ -23,6 +23,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import Search from "./pages/Search";
+import Meetings from "./pages/Meetings";
 
 const Tab = createBottomTabNavigator();
 
@@ -114,6 +115,9 @@ export default function App(props) {
     } else if (route.name === "Notifications") {
       iconName = focused ? "notifications-sharp" : "notifications-outline";
       return <Ionicons name={iconName} size={size} color={color} />;
+    } else if (route.name === "Meetings") {
+      iconName = focused ? "people-sharp" : "people-outline";
+      return <Ionicons name={iconName} size={size} color={color} />;
     } else if (route.name === "Profile") {
       iconName = focused ? "account-circle" : "account-circle-outline";
       return (
@@ -144,6 +148,13 @@ export default function App(props) {
             tabBarShowLabel: false,
             tabBarBadge: numberNotifications,
             tabBarBadgeStyle: styles.badge,
+          }}
+        />
+        <Tab.Screen
+          name="Meetings"
+          component={Meetings}
+          options={{
+            tabBarShowLabel: false,
           }}
         />
         <Tab.Screen

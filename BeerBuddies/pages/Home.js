@@ -30,14 +30,15 @@ export default function Home({ navigation }) {
             }}
             underlayColor="#eca921"
             style={{
-              marginLeft: "3%",
+              marginHorizontal: "3%",
               marginTop: "5%",
-              width: "95%",
+              width: "100%",
               height: "8.5%",
               borderRadius: 1,
               borderColor: "black",
               borderWidth: 0.8,
               justifyContent: "center",
+              alignItems: "center",
               backgroundColor: "#ffd086",
             }}
           >
@@ -59,15 +60,15 @@ export default function Home({ navigation }) {
           <TouchableHighlight
             underlayColor="#eca921"
             style={{
-              marginLeft: "3%",
-              marginTop: "4.5%",
-              marginBottom: "0.5%",
-              width: "95%",
+              marginHorizontal: "3%",
+              marginTop: "5%",
+              width: "100%",
               height: "8.5%",
+              borderRadius: 1,
               borderColor: "black",
               borderWidth: 0.8,
-              borderRadius: 1,
               justifyContent: "center",
+              alignItems: "center",
               backgroundColor: "#ffd086",
             }}
             onPress={() => {
@@ -115,6 +116,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#000",
     width: "100%",
+    marginLeft: "3%",
+    marginRight: "3%",
     textAlign: "center",
   },
 
@@ -130,13 +133,15 @@ const styles = StyleSheet.create({
 
   button: {
     alignItems: "center",
-    padding: 10,
+    padding: "2%",
   },
 
   buttonsContainer: {
+    alignItems:"center",
+    marginHorizontal: "3%",
     position: "absolute",
     marginTop: "96%",
-    width: "100%",
+    width: "94%",
     height: "100%",
   },
 });

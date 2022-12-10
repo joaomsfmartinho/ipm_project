@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   choosePhoto: {
     borderRadius: 10,
     backgroundColor: "#ffd086",
-    marginRight: 230,
+    marginRight: "71%",
   },
   signIn: {
     width: "100%",

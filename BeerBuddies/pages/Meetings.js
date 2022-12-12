@@ -67,9 +67,9 @@ export default function Meetings() {
     updateMeetingInDB(updatedMeetings);
     // Update for other person
     updateMeetingForOtherInDB(
-      meetings[i].email,
-      meetings[i].time,
-      meetings[i].place
+      meetings[index].email,
+      meetings[index].time,
+      meetings[index].place
     );
     setVisible(false);
   };
